@@ -12,8 +12,7 @@ export default function Invoice() {
   const [customerPhone, setCustomerPhone] = React.useState('');
   const [customerAddress, setCustomerAddress] = React.useState('');
   const [customerGstin, setCustomerGstin] = React.useState('');
-  const [customerPlaceOfSupply, setCustomerPlaceOfSupply] =
-    React.useState('Bangalore');
+  const [customerPlaceOfSupply, setCustomerPlaceOfSupply] = React.useState('');
   const [invoiceDate, setInvoiceDate] = React.useState(new Date());
   const [dueDate, setDueDate] = React.useState(new Date());
 

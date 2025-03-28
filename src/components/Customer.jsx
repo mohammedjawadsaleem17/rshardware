@@ -28,13 +28,13 @@ export default function Customer() {
   } = useContext(MainContext);
 
   return (
-    <div className="grid grid-cols-12 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 p-4">
       {/* Left Section - Customer Details (9 columns) */}
-      <div className="col-span-8">
+      <div className="col-span-1 md:col-span-8">
         <h1 className="text-xl font-bold mb-8 underline">Customer Details</h1>
 
         {/* Invoice Number and Invoice Date */}
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div className="flex items-center">
             <label className="font-light w-44">Invoice No.</label>
             <input
@@ -48,7 +48,7 @@ export default function Customer() {
           </div>
 
           <div className="flex items-center">
-            <label className="font-light w-34">Invoice Date:</label>
+            <label className="font-light w-33">Invoice Date:</label>
             <DatePicker
               selected={invoiceDate}
               onChange={(date) => setInvoiceDate(date)}
@@ -59,7 +59,7 @@ export default function Customer() {
         </div>
 
         {/* Name and Email */}
-        <div className="grid grid-cols-2 gap-4 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
           <div className="flex items-center">
             <label className="font-light w-44">Name:</label>
             <input
@@ -86,7 +86,7 @@ export default function Customer() {
         </div>
 
         {/* Phone Number and Billing Address */}
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div className="flex items-center">
             <label className="font-light w-44">Phone Number:</label>
             <input
@@ -110,11 +110,11 @@ export default function Customer() {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div className="flex items-center">
             <label className="font-light w-44">GSTIN: </label>
             <input
-              type="number"
+              type="text"
               placeholder="GSTIN"
               required
               value={customerGstin}
@@ -124,9 +124,9 @@ export default function Customer() {
           </div>
 
           <div className="flex items-center">
-            <label className="font-light w-44">Billing Address:</label>
+            <label className="font-light w-44">Place of Supply:</label>
             <input
-              placeholder="Billing Address"
+              placeholder="Place of Supply"
               required
               type="text"
               className="border border-gray-300 p-2 rounded w-full"
@@ -138,22 +138,20 @@ export default function Customer() {
       </div>
 
       {/* Right Section - RS Hardware (3 columns) */}
-      <div className="col-span-4 ml-40">
+      <div className="col-span-1 md:col-span-4 md:ml-40">
         <h1 className="text-xl font-semibold mb-8">
           R S HARDWARE GLASS & ELECTRICALS
         </h1>
-        <h2>GSTIN: 29FKLPP1223G1ZO</h2>
+        <h2>
+          GSTIN: <b> 29FKLPP1223G1ZO</b>
+        </h2>
         <p>
           Building No- 3/7, Shop No-6, Ground Floor
           <br /> Gowri Shankar Complex Arekere Main Road
-          <br />
-          Benagluru Karnataka, India
-          <br />
-          PIN: 560076
-          <br />
-          Mobile: +91 8147465517
-          <br />
-          Email: abdulfahad1436@gmail.com
+          <br /> Bengaluru Karnataka, India
+          <br /> PIN: 560076
+          <br /> Mobile: +91 8147465517
+          <br /> Email: abdulfahad1436@gmail.com
         </p>
       </div>
     </div>

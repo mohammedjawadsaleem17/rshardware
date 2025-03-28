@@ -1,9 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import DataTable from 'react-data-table-component';
 import { format, addDays } from 'date-fns';
 import Customer from './Customer';
+import FinalDetails from './FinalDetails';
+import { MainContext } from './Invoice';
 
 const InvoiceGenerator = () => {
+  const { customerName } = useContext(MainContext);
   const invoiceNumberRef = useRef(1);
   const [customerDetails, setCustomerDetails] = useState({
     name: '',
@@ -137,11 +140,16 @@ const InvoiceGenerator = () => {
     <div className="w-full p-6 bg-gray-50 min-h-screen">
       <div className="bg-white p-8 shadow-lg rounded-lg">
         <h1 className="text-3xl font-bold mb-6">Invoice Generator</h1>
-
         <Customer />
         <h1 className="text-xl font-bold mb-0 mt-8 underline">Particulars</h1>
-        <DataTable columns={columns} data={lineItems} pagination />
-
+        <DataTable
+          columns={columns}
+          data={lineItems}
+          pagination
+          paginationPerPage={50}
+          paginationRowsPerPageOptions={[10, 25, 50, 100]}
+          // title="Particulars"
+        />
         <button
           className="bg-indigo-500 text-white p-2 rounded mb-4"
           onClick={addLineItem}
@@ -152,6 +160,7 @@ const InvoiceGenerator = () => {
           <p>Total Items: {calculateTotals().totalItems}</p>
           <p>Grand Total: ₹{calculateTotals().grandTotal.toFixed(2)}</p>
         </div>
+        {customerName && <FinalDetails />}
       </div>
     </div>
   );
