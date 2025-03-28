@@ -2,9 +2,9 @@ import logo from '../components/assets/qr.png';
 
 export default function Payments() {
   return (
-    <div className="flex justify-between items-start mt-6">
+    <div className="flex flex-col md:flex-row justify-between items-start mt-6">
       {/* Left Section */}
-      <div className="w-1/2">
+      <div className="w-full md:w-1/2 mb-6 md:mb-0">
         <h1 className="text-xl font-bold underline mb-6">Payment Details</h1>
         <div>
           Pay using UPI
@@ -13,8 +13,8 @@ export default function Payments() {
       </div>
 
       {/* Right Section */}
-      <div className="w-1/2 mt-22">
-        <h2 className="text-xl font-bold  mb-6">Bank Details</h2>
+      <div className="w-full md:w-1/2">
+        <h2 className="text-xl font-bold mb-6">Bank Details</h2>
         <p>
           Bank: <b>HDFC BANK</b>
         </p>
