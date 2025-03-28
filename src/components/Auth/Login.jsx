@@ -24,14 +24,22 @@ export default function Login() {
       <div>
         <div className="row">
           <label>Username</label>
-          <input type="text" placeholder="Enter your username" />
+          <input
+            type="text"
+            placeholder="Enter your username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </div>
         <div className="row">
           <label>Password</label>
-          <input type="password" placeholder="Enter your password" />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <div id="button" className="row m-6">
-          <button>Log in</button>
+          <button onClick={handleSubmit}>Log in</button>
         </div>
       </div>
     </div>

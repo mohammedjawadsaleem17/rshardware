@@ -26,20 +26,13 @@ const Header = () => {
             Invoice
           </Link>
         )}
-        {isAuthenticated ? (
+        {isAuthenticated && (
           <button
             className="bg-indigo-500 text-white p-2 rounded mb-4 p-1  "
             onClick={logout}
           >
             Logout
           </button>
-        ) : (
-          <Link
-            to="/login"
-            className="text-indigo-600 hover:text-indigo-700 font-medium  mt-2 transition-colors"
-          >
-            Login
-          </Link>
         )}
       </div>
     </nav>
@@ -47,3 +40,12 @@ const Header = () => {
 };
 
 export default Header;
+
+/*: (
+          <Link
+            to="/login"
+            className="text-indigo-600 hover:text-indigo-700 font-medium  mt-2 transition-colors"
+          >
+            Login
+          </Link>
+        )}*/
