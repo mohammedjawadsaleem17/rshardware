@@ -27,12 +27,11 @@ export default function FinalDetails() {
   } = useContext(MainContext);
   return (
     <div>
-      <h1 className="text-xl font-bold mb-0 mt-8 underline">Summary</h1>
-
+      <h1 className="text-xl font-bold mb-0 mt-8 underline mb-6">Summary</h1>
       <div className="grid grid-cols-3 gap-4">
         <div className="...">
-          <p>{customerName}</p>
-          <p>{customerGstin}</p>
+          <b>{customerName}</b>
+          <p>GSTIN: {customerGstin}</p>
           <p>{customerPhone}</p>
           <p>{customerEmail}</p>
           <p className="mt-4">Place of Supply: {customerPlaceOfSupply}</p>

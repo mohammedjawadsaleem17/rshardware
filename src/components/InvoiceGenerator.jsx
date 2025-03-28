@@ -4,6 +4,7 @@ import { format, addDays } from 'date-fns';
 import Customer from './Customer';
 import FinalDetails from './FinalDetails';
 import { MainContext } from './Invoice';
+import Payments from './Payments';
 
 const InvoiceGenerator = () => {
   const { customerName } = useContext(MainContext);
@@ -161,6 +162,7 @@ const InvoiceGenerator = () => {
           <p>Grand Total: ₹{calculateTotals().grandTotal.toFixed(2)}</p>
         </div>
         {customerName && <FinalDetails />}
+        <Payments />
       </div>
     </div>
   );
