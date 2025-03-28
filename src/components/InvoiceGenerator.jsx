@@ -137,6 +137,7 @@ const InvoiceGenerator = () => {
     <div className="w-full p-6 bg-gray-50 min-h-screen">
       <div className="bg-white p-8 shadow-lg rounded-lg">
         <h1 className="text-3xl font-bold mb-6">Invoice Generator</h1>
+
         <Customer />
 
         <DataTable columns={columns} data={lineItems} pagination />
