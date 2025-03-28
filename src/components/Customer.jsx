@@ -28,7 +28,7 @@ export default function Customer() {
   } = useContext(MainContext);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 p-4">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 p-4 pl-0">
       {/* Left Section - Customer Details (9 columns) */}
       <div className="col-span-1 md:col-span-8">
         <h1 className="text-xl font-bold mb-8 underline">Customer Details</h1>

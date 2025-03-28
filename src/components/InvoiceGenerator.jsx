@@ -56,7 +56,7 @@ const InvoiceGenerator = () => {
     updatedItems[index][field] = value;
     updatedItems[index].taxableValue =
       updatedItems[index].rate * updatedItems[index].qty;
-    updatedItems[index].taxAmount = updatedItems[index].taxableValue * 0.05;
+    updatedItems[index].taxAmount = updatedItems[index].taxableValue * 0.18;
     updatedItems[index].total =
       updatedItems[index].taxableValue + updatedItems[index].taxAmount;
     setLineItems(updatedItems);
@@ -122,7 +122,7 @@ const InvoiceGenerator = () => {
       ),
     },
     { name: 'Taxable Value', selector: (row) => row.taxableValue.toFixed(2) },
-    { name: 'Tax Amount', selector: (row) => row.taxAmount.toFixed(2) },
+    { name: 'Tax Amount (18%)', selector: (row) => row.taxAmount.toFixed(2) },
     { name: 'Total', selector: (row) => row.total.toFixed(2) },
     {
       name: 'Actions',
@@ -149,7 +149,6 @@ const InvoiceGenerator = () => {
           pagination
           paginationPerPage={50}
           paginationRowsPerPageOptions={[10, 25, 50, 100]}
-          // title="Particulars"
         />
         <button
           className="bg-indigo-500 text-white p-2 rounded mb-4"
@@ -157,9 +156,15 @@ const InvoiceGenerator = () => {
         >
           Add Item
         </button>
-        <div className="mt-6">
+        <div className="flex justify-between">
           <p>Total Items: {calculateTotals().totalItems}</p>
-          <p>Grand Total: ₹{calculateTotals().grandTotal.toFixed(2)}</p>
+          <p>Taxable Amount:₹{calculateTotals().taxAmount}</p>
+        </div>
+        <div className="mt-6 flex flex-row-reverse">
+          <p>
+            <hr></hr>
+            <b>Grand Total:</b> ₹{calculateTotals().grandTotal.toFixed(2)}
+          </p>
         </div>
         {customerName && <FinalDetails />}
         <Payments />
