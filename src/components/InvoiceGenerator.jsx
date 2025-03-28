@@ -139,8 +139,8 @@ const InvoiceGenerator = () => {
   ];
 
   return (
-    <div className="w-full p-6 bg-gray-50 min-h-screen">
-      <div className="bg-white p-8 shadow-lg rounded-lg">
+    <div className="w-full p-6 bg-stone-100 min-h-screen">
+      <div className="bg-white p-4 shadow-sm rounded-lg">
         <h1 className="text-3xl font-bold mb-6">Invoice Generator</h1>
         <Customer />
         <h1 className="text-xl font-bold mb-0 mt-8 underline">Particulars</h1>
