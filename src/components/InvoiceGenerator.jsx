@@ -5,6 +5,7 @@ import Customer from './Customer';
 import FinalDetails from './FinalDetails';
 import { MainContext } from './Invoice';
 import Payments from './Payments';
+import Footer from './Footer';
 
 const InvoiceGenerator = () => {
   const { customerName } = useContext(MainContext);
@@ -156,6 +157,12 @@ const InvoiceGenerator = () => {
         >
           Add Item
         </button>
+        <button
+          className="bg-green-600 text-white p-2 rounded mb-4 ml-4"
+          onClick={() => alert('Genaration in Progress')}
+        >
+          Genarate Invoice
+        </button>
         <div className="flex justify-between">
           <p>Total Items: {calculateTotals().totalItems}</p>
           <p>Taxable Amount:₹{calculateTotals().taxAmount}</p>
@@ -168,6 +175,7 @@ const InvoiceGenerator = () => {
         </div>
         {customerName && <FinalDetails />}
         <Payments />
+        <Footer />
       </div>
     </div>
   );

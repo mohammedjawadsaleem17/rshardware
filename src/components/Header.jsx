@@ -10,19 +10,19 @@ const Header = () => {
       <div className="flex space-x-6">
         <Link
           to="/"
-          className="text-indigo-500 hover:text-indigo-600 font-medium transition-colors"
+          className="text-indigo-600 hover:text-indigo-700 font-medium transition-colors"
         >
           Dashboard
         </Link>
         <Link
           to="/invoice"
-          className="text-indigo-500 hover:text-indigo-600 font-medium  transition-colors"
+          className="text-indigo-600 hover:text-indigo-700 font-medium  transition-colors"
         >
           Invoice
         </Link>
         <Link
           to="/login"
-          className="text-indigo-500 hover:text-indigo-600 font-medium  transition-colors"
+          className="text-indigo-600 hover:text-indigo-700 font-medium  transition-colors"
         >
           Login
         </Link>
