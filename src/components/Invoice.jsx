@@ -6,12 +6,14 @@ import InvoiceGenerator from './InvoiceGenerator';
 export const MainContext = createContext();
 
 export default function Invoice() {
-  const [customerName, setCustomerName] = React.useState('jawad');
+  const [customerName, setCustomerName] = React.useState('');
+  const [invoiceNumber, setInvoiceNumber] = React.useState('');
   const [customerEmail, setCustomerEmail] = React.useState('');
   const [customerPhone, setCustomerPhone] = React.useState('');
   const [customerAddress, setCustomerAddress] = React.useState('');
   const [customerGstin, setCustomerGstin] = React.useState('');
-  const [customerPlaceOfSupply, setCustomerPlaceOfSupply] = React.useState('');
+  const [customerPlaceOfSupply, setCustomerPlaceOfSupply] =
+    React.useState('Bangalore');
   const [invoiceDate, setInvoiceDate] = React.useState(new Date());
   const [dueDate, setDueDate] = React.useState(new Date());
 
@@ -19,6 +21,8 @@ export default function Invoice() {
     <div>
       <MainContext.Provider
         value={{
+          invoiceNumber,
+          setInvoiceNumber,
           customerName,
           setCustomerName,
           customerEmail,

@@ -139,7 +139,7 @@ const InvoiceGenerator = () => {
         <h1 className="text-3xl font-bold mb-6">Invoice Generator</h1>
 
         <Customer />
-
+        <h1 className="text-xl font-bold mb-0 mt-8 underline">Particulars</h1>
         <DataTable columns={columns} data={lineItems} pagination />
 
         <button

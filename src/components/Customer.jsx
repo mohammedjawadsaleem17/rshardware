@@ -5,21 +5,33 @@ import { MainContext } from './Invoice';
 
 export default function Customer() {
   const {
-    customer,
-    setCustomer,
+    customerName,
+    setCustomerName,
     invoiceDate,
     setInvoiceDate,
     dueDate,
     setDueDate,
     lineItems,
     setLineItems,
+    invoiceNumber,
+    setInvoiceNumber,
+    customerEmail,
+    setCustomerEmail,
+    customerPhone,
+    setCustomerPhone,
+    customerAddress,
+    setCustomerAddress,
+    customerGstin,
+    setCustomerGstin,
+    customerPlaceOfSupply,
+    setCustomerPlaceOfSupply,
   } = useContext(MainContext);
 
   return (
     <div className="grid grid-cols-12 gap-8">
       {/* Left Section - Customer Details (9 columns) */}
       <div className="col-span-8">
-        <h1 className="text-xl font-bold mb-6">Customer Details</h1>
+        <h1 className="text-xl font-bold mb-8 underline">Customer Details</h1>
 
         {/* Invoice Number and Invoice Date */}
         <div className="grid grid-cols-2 gap-4 mt-4">
@@ -29,6 +41,8 @@ export default function Customer() {
               type="number"
               placeholder="Invoice"
               required
+              onChange={(e) => setInvoiceNumber(e.target.value)}
+              value={invoiceNumber}
               className="border border-gray-300 p-2 rounded w-full"
             />
           </div>
@@ -52,6 +66,8 @@ export default function Customer() {
               type="text"
               placeholder="Name"
               required
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
               className="border border-gray-300 p-2 rounded w-full"
             />
           </div>
@@ -62,7 +78,9 @@ export default function Customer() {
               type="email"
               placeholder="Email"
               required
+              value={customerEmail}
               className="border border-gray-300 p-2 rounded w-full"
+              onChange={(e) => setCustomerEmail(e.target.value)}
             />
           </div>
         </div>
@@ -75,7 +93,9 @@ export default function Customer() {
               type="number"
               placeholder="Phone Number"
               required
+              value={customerPhone}
               className="border border-gray-300 p-2 rounded w-full"
+              onChange={(e) => setCustomerPhone(e.target.value)}
             />
           </div>
 
@@ -85,14 +105,41 @@ export default function Customer() {
               placeholder="Billing Address"
               required
               className="border border-gray-300 p-2 rounded w-full"
+              value={customerAddress}
+              onChange={(e) => setCustomerAddress(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="flex items-center">
+            <label className="font-light w-44">GSTIN: </label>
+            <input
+              type="number"
+              placeholder="GSTIN"
+              required
+              value={customerGstin}
+              className="border border-gray-300 p-2 rounded w-full"
+              onChange={(e) => setCustomerGstin(e.target.value)}
+            />
+          </div>
+
+          <div className="flex items-center">
+            <label className="font-light w-44">Billing Address:</label>
+            <input
+              placeholder="Billing Address"
+              required
+              type="text"
+              className="border border-gray-300 p-2 rounded w-full"
+              value={customerPlaceOfSupply}
+              onChange={(e) => setCustomerPlaceOfSupply(e.target.value)}
             />
           </div>
         </div>
       </div>
 
       {/* Right Section - RS Hardware (3 columns) */}
-      <div className="col-span-4">
-        <h1 className="text-xl font-semibold mb-6">
+      <div className="col-span-4 ml-40">
+        <h1 className="text-xl font-semibold mb-8">
           R S HARDWARE GLASS & ELECTRICALS
         </h1>
         <h2>GSTIN: 29FKLPP1223G1ZO</h2>
