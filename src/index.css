@@ -1,2 +1,30 @@
 @import "tailwindcss";
 
+.satisfy-regular {
+  font-family: "Satisfy", cursive;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 40px;
+  margin-left:0px !important;
+   padding-left:0px !important;
+}
+
+.tangerine-bold {
+  font-family: "Tangerine", cursive;
+  font-weight: 800;
+  font-style: normal;
+   font-size: 25px;
+}
+
+.arizonia-regular {
+  font-family: "Arizonia", cursive;
+  font-weight: 700;
+  font-style: normal;
+  font-size: xx-large;
+}
+.zain-black {
+  font-family: "Zain", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: x-large;
+}
