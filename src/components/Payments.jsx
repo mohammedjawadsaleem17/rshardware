@@ -1,4 +1,4 @@
-import logo from '/Users/mohammedjawadsaleem17/Desktop/fahad/rshardware/src/assets/qr.png';
+import logo from '../components/assets/qr.png';
 
 export default function Payments() {
   return (
