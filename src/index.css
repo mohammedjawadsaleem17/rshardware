@@ -1,70 +1,178 @@
 @import "tailwindcss";
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+
+.satisfy-regular {
+  font-family: "Satisfy", cursive;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 40px;
+  margin-left:0px !important;
+   padding-left:0px !important;
+}
+
+.tangerine-bold {
+  font-family: "Tangerine", cursive;
+  font-weight: 800;
+  font-style: normal;
+   font-size: 25px;
+}
+
+.arizonia-regular {
+  font-family: "Arizonia", cursive;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 250%;
+}
+.zain-black {
+  font-family: "Zain", sans-serif;
   font-weight: 400;
+  font-style: normal;
+  font-size: 78%;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+body{
+
+  font-family: "work sans";
 }
 
-body {
+html{
+  font-size: 100%;
+}
+
+#loginform{
+  max-width: 500px;
+  min-width: 300px;
+  max-height: 500px;
+  width: 30%;
+  height: 60%;
+  margin: 60px auto;
+  color:whitesmoke;
+  border-radius: 25px;
+  background-color:black;
+  opacity:0.75;
+  
+}
+
+#headerTitle{
+  text-align: center;
+  font-family: 'open sans', sans-serif;
+  padding: 2rem 0;
   margin: 0;
+  font-size: 2rem;
+  font-family: "Monomaniac One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 8px;
+}
+
+.row{
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+  max-width: 100%;
+
+  
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.row input{
+  width: 80%;
+  box-sizing: border-box;
+	border: none;
+  font-size: 1.3rem;
+  padding-left: 1.5rem;
+  padding-bottom: 1rem;
+  box-shadow: inset 0px -3px 0px 0px oklch(0.93 0.034 272.788);
+  transition: box-shadow 0.7s ease-in;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.row input:focus{
+   box-shadow: inset 0px -3px 0px 0px oklch(0.93 0.034 272.788);
+   outline: none;
+}
+
+.row input::-webkit-input-placeholder{
+  opacity: 1;
+  transition: opacity 0.50s ease-out;
+}
+
+.row input:hover::-webkit-input-placeholder,
+.row input:focus::-webkit-input-placeholder{
+  opacity: 0;
+}
+
+.row label{
+  align-self: start;
+  padding-left: 4.5rem;
+  padding-bottom: 0.5rem;
+  color: rgba(187,187,187,0.9);
+}
+
+.row button{
+  border-radius: 25px;
+  width: 80%;
+  height: 40px;
+  font-size: 1.3rem;
+  color: white;
+  font-weight: 700;
+  background: oklch(0.511 0.262 276.966);
+  /* background: linear-gradient(90deg, rgba(34,193,195,1) 0%,     rgba(0.673 0.182 276.935) 100%); */
+  border: 0px;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: opacity 0.25s ease-out;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.row button:hover{
+  background-color: oklch(0.673 0.182 276.935);
+  opacity: 0.8;
+}
+
+#button{
+  padding-bottom: 4rem;
+}
+
+#facebookIcon{
+  background-image: url("https://image.flaticon.com/icons/svg/145/145802.svg");
+  background-repeat: no-repeat;
+  width: 3rem;
+  height: 3rem;
+}
+
+#twitterIcon{
+  background-image: url("https://image.flaticon.com/icons/svg/145/145812.svg");
+  background-repeat: no-repeat;
+  width: 3rem;
+  height: 3rem;
+}
+
+#googleIcon{
+  background-image: url("https://image.flaticon.com/icons/svg/145/145804.svg");
+  background-repeat: no-repeat;
+  width: 3rem;
+  height: 3rem;
+}
+
+#iconGroup{
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+#iconGroup a{
+  margin: 0 0.6rem;
+}
+
+#alternativeLogin {
+   text-align: center;
+   padding-top: 2rem;
+   margin-top: 1.5rem;
+}
+
+
+
+.monomaniac-one-regular {
+  font-family: "Monomaniac One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
