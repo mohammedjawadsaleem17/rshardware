@@ -21,19 +21,18 @@
   font-family: "Arizonia", cursive;
   font-weight: 700;
   font-style: normal;
-  font-size: 235%;
+  font-size: 250%;
 }
 .zain-black {
   font-family: "Zain", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 100%;
+  font-size: 78%;
 
 }
 
 body{
-  /* background: oklch(0.93 0.034 272.788); */
-  /* background: linear-gradient(135deg, rgb(213, 214, 214) 0%,  ); */
+
   font-family: "work sans";
 }
 
@@ -47,10 +46,12 @@ html{
   max-height: 500px;
   width: 30%;
   height: 60%;
-  margin: 100px auto;
-  background-color: #FFFFFF;
+  margin: 60px auto;
+  color:whitesmoke;
   border-radius: 25px;
-  background: oklch(0.93 0.034 272);
+  background-color:black;
+  opacity:0.75;
+  
 }
 
 #headerTitle{
@@ -59,6 +60,10 @@ html{
   padding: 2rem 0;
   margin: 0;
   font-size: 2rem;
+  font-family: "Monomaniac One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 8px;
 }
 
 .row{
@@ -79,7 +84,7 @@ html{
   padding-left: 1.5rem;
   padding-bottom: 1rem;
   box-shadow: inset 0px -3px 0px 0px oklch(0.93 0.034 272.788);
-  transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.7s ease-in;
 }
 
 .row input:focus{
@@ -89,7 +94,7 @@ html{
 
 .row input::-webkit-input-placeholder{
   opacity: 1;
-  transition: opacity 0.25s ease-out;
+  transition: opacity 0.50s ease-out;
 }
 
 .row input:hover::-webkit-input-placeholder,
@@ -119,7 +124,7 @@ html{
 }
 
 .row button:hover{
-  background-color: oklch(0.785 0.115 274.713);
+  background-color: oklch(0.673 0.182 276.935);
   opacity: 0.8;
 }
 
@@ -128,7 +133,7 @@ html{
 }
 
 #facebookIcon{
-  background-image:      url("https://image.flaticon.com/icons/svg/145/145802.svg");
+  background-image: url("https://image.flaticon.com/icons/svg/145/145802.svg");
   background-repeat: no-repeat;
   width: 3rem;
   height: 3rem;
@@ -165,3 +170,9 @@ html{
 }
 
 
+
+.monomaniac-one-regular {
+  font-family: "Monomaniac One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

@@ -1,29 +1,41 @@
 import React, { useState } from 'react'
 import { useAuth } from './AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import Footer from '../Footer';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
+  const notifySuccess = () => toast.success('Login Success!');
+  const notifyFailed = () => toast.error('Wrong Credentials!');
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (username === '' || password === '') {
+      toast.error('Please fill in all fields!');
+      return;
+    }
     if (login(username, password)) {
-      alert('Login Successful');
       navigate('/');
+      notifySuccess();
     } else {
-      alert('Invalid Credentials');
+      notifyFailed();
     }
   }
 
   return (
-    <div id="loginform">
-      <h2 id="headerTitle">Login</h2>
+    <form id="loginform" onSubmit={handleSubmit}>
+      <ToastContainer />
+
+      <h2 id="headerTitle" className="monomaniac-one-regular">
+        Login
+      </h2>
       <div>
         <div className="row">
-          <label>Username</label>
+          <label className="text-white opacity-100">USERNAME</label>
           <input
             type="text"
             placeholder="Enter your username"
@@ -31,7 +43,7 @@ export default function Login() {
           />
         </div>
         <div className="row">
-          <label>Password</label>
+          <label className="text-white opacity-100">PASSWORD</label>
           <input
             type="password"
             placeholder="Enter your password"
@@ -42,7 +54,10 @@ export default function Login() {
           <button onClick={handleSubmit}>Log in</button>
         </div>
       </div>
-    </div>
+      <div className="mt-12">
+        <Footer />
+      </div>
+    </form>
   );
 }
 
