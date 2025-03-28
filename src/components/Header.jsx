@@ -1,37 +1,34 @@
-const Navbar = () => {
-  return (
-    <nav className="flex items-center justify-between bg-slate  -100 p-4 ">
-      {/* Logo on the extreme left */}
-      <div className="flex items-center">
-        <h2 className="text-center">
-          <span className="arizonia-regular text-indigo-500">RS&#160;</span>
-          <span className="zain-black">Hardware Glass & Electricals</span>
-        </h2>
-      </div>
+import { Link } from 'react-router-dom';
+import Logo from './Logo';
 
-      {/* Navigation Links on the right */}
+const Header = () => {
+  return (
+    <nav className="flex items-center justify-between  p-4 ">
+      <div className="flex items-center">
+        <Logo />
+      </div>
       <div className="flex space-x-6">
-        <a
-          href="/dashboard"
+        <Link
+          to="/"
           className="text-indigo-500 hover:text-indigo-600 font-medium transition-colors"
         >
           Dashboard
-        </a>
-        <a
-          href="/invoice"
-          className="text-indigo-500 hover:text-indigo-600 font-medium transition-colors"
+        </Link>
+        <Link
+          to="/invoice"
+          className="text-indigo-500 hover:text-indigo-600 font-medium  transition-colors"
         >
           Invoice
-        </a>
-        <a
-          href="/login"
-          className="text-indigo-500 hover:text-indigo-600 font-medium transition-colors"
+        </Link>
+        <Link
+          to="/login"
+          className="text-indigo-500 hover:text-indigo-600 font-medium  transition-colors"
         >
           Login
-        </a>
+        </Link>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default Header;
