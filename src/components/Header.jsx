@@ -10,12 +10,14 @@ const Header = () => {
         <Logo />
       </div>
       <div className="flex space-x-6">
-        <Link
-          to="/"
-          className="text-indigo-600 hover:text-indigo-700 font-medium mt-2 transition-colors"
-        >
-          Dashboard
-        </Link>
+        {isAuthenticated && (
+          <Link
+            to="/"
+            className="text-indigo-600 hover:text-indigo-700 font-medium mt-2 transition-colors"
+          >
+            Dashboard
+          </Link>
+        )}
         {isAuthenticated && (
           <Link
             to="/invoice"
