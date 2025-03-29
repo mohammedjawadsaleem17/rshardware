@@ -28,7 +28,7 @@ export default function Customer() {
   } = useContext(MainContext);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 p-4 pl-0">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 px-4 pl-0">
       {/* Left Section - Customer Details (9 columns) */}
       <div className="col-span-1 md:col-span-8">
         <h1 className="text-xl font-bold mb-8 underline">Customer Details</h1>
@@ -58,7 +58,6 @@ export default function Customer() {
           </div>
         </div>
 
-        {/* Name and Email */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
           <div className="flex items-center">
             <label className="font-light w-44">Name:</label>
@@ -85,7 +84,6 @@ export default function Customer() {
           </div>
         </div>
 
-        {/* Phone Number and Billing Address */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div className="flex items-center">
             <label className="font-light w-44">Phone Number:</label>
@@ -138,7 +136,7 @@ export default function Customer() {
       </div>
 
       {/* Right Section - RS Hardware (3 columns) */}
-      <div className="col-span-1 md:col-span-4 md:ml-40">
+      <div className="col-span-2 md:col-span-4 mt-12 ml-6">
         <h1 className="text-xl font-semibold mb-8">
           R S HARDWARE GLASS & ELECTRICALS
         </h1>

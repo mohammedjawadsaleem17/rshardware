@@ -17,9 +17,7 @@ const Logo = () => {
                      tracking-wider uppercase 
                      transition-all duration-300 hover:text-zinc-900 
                      "
-        >
-          Hardware Glass & Electricals
-        </span>
+        ></span>
       </Link>
     </h2>
   );

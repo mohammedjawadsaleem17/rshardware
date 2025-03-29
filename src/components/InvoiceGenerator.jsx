@@ -139,7 +139,7 @@ const InvoiceGenerator = () => {
   ];
 
   return (
-    <div className="w-full p-6   min-h-screen">
+    <div className="w-full px-4 py-0   min-h-screen">
       <div className="bg-white p-4 shadow-sm rounded-lg">
         <h1 className="text-3xl font-bold mb-6">Invoice Generator</h1>
         <Customer />

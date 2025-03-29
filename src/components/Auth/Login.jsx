@@ -19,7 +19,8 @@ export default function Login() {
       return;
     }
     if (login(username, password)) {
-      navigate('/');
+      // navigate('/');
+      navigate('/invoice');
       notifySuccess();
     } else {
       notifyFailed();
