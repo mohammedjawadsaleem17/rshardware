@@ -28,7 +28,7 @@ export default function FinalDetails() {
   return (
     <div>
       <h1 className="text-xl font-bold mb-0 mt-8 underline mb-6">Summary</h1>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="...">
           <b>{customerName}</b>
           <p>GSTIN: {customerGstin}</p>
@@ -41,13 +41,15 @@ export default function FinalDetails() {
           <p>{customerAddress}</p>
         </div>
         <div className="...">
-          <div className="flex items-center">
-            <label className="font-light w-33">Due Date:</label>
+          <div className="flex flex-col md:flex-row md:items-center">
+            <label className="font-light mb-2 md:mb-0 md:mr-2 w-33">
+              Due Date:
+            </label>
             <DatePicker
               selected={dueDate}
               onChange={(date) => setDueDate(date)}
               dateFormat="dd/MM/yyyy"
-              className="border border-gray-300 p-2 rounded"
+              className="border border-gray-300 p-2 rounded w-full md:w-auto"
             />
           </div>
         </div>

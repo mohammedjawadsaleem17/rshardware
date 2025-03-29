@@ -48,7 +48,7 @@ export default function Customer() {
           </div>
 
           <div className="flex items-center">
-            <label className="font-light w-33">Invoice Date:</label>
+            <label className="font-light w-31">Invoice Date:</label>
             <DatePicker
               selected={invoiceDate}
               onChange={(date) => setInvoiceDate(date)}

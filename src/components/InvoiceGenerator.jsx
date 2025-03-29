@@ -163,11 +163,11 @@ const InvoiceGenerator = () => {
         >
           Genarate Invoice
         </button>
-        <div className="flex justify-between">
+        <div className="flex justify-between mr-6">
           <p>Total Items: {calculateTotals().totalItems}</p>
           <p>Taxable Amount:₹{calculateTotals().taxAmount}</p>
         </div>
-        <div className="mt-6 flex flex-row-reverse">
+        <div className="mt-6 flex flex-row-reverse mr-6">
           <p>
             <hr></hr>
             <b>Grand Total:</b> ₹{calculateTotals().grandTotal.toFixed(2)}
