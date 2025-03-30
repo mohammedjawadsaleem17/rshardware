@@ -142,7 +142,7 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   businessName: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
   },
   logo: {

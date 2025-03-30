@@ -263,19 +263,19 @@ export default function FinalInvoice({ customerDetails, items }) {
             </Text>
             <Text style={styles.cell}>{item.rate}</Text>
             <Text style={styles.cell}>{item.qty}</Text>
-            <Text style={styles.cell}>{item.taxAmount.toFixed(2)}</Text>
-            <Text style={styles.cell}>{item.taxableValue.toFixed(2)}</Text>
-            <Text style={styles.cell}>{item.total.toFixed(2)}</Text>
+            <Text style={styles.cell}>{item.taxAmount?.toFixed(2)}</Text>
+            <Text style={styles.cell}>{item.taxableValue?.toFixed(2)}</Text>
+            <Text style={styles.cell}>{item.total?.toFixed(2)}</Text>
           </View>
         ))}
 
         {/* Totals Section */}
         <View>
           <Text style={styles.totalText}>
-            Taxable Amount: {taxAmt.toFixed(2)}
+            Taxable Amount: {taxAmt?.toFixed(2)}
           </Text>
           <Text style={styles.totalText}>
-            Tax (18.0%): {taxPayable.toFixed(2)}
+            Tax (18.0%): {taxPayable?.toFixed(2)}
           </Text>
           {/* <Text style={styles.totalText}>
             Discount (10.0%): -{discount.toFixed(2)}
@@ -319,7 +319,7 @@ export default function FinalInvoice({ customerDetails, items }) {
           {/* Right Section - Business Name */}
           <View style={styles.businessDetails}>
             <Text style={styles.businessName}>
-              RS HARDWARE GLASS & ELECTRICALS.
+              RS HARDWARE GLASS & ELECTRICALS
             </Text>
           </View>
         </View>
