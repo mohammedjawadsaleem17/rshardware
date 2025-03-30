@@ -97,7 +97,7 @@ function numberToWords(num) {
       .split('')
       .map((digit) => belowTwenty[parseInt(digit)])
       .join(' ');
-    result += ` Only.`;
+    result += ``;
   }
 
   return result;

@@ -175,6 +175,23 @@ const InvoiceGenerator = () => {
     dueDate: due,
   };
 
+  //Test
+  console.log('Tax ', lineItems);
+  const taxAmt = lineItems?.reduce(
+    (acc, item) => acc + Number(item.taxableValue),
+    0
+  );
+  const taxPayable = lineItems?.reduce(
+    (acc, item) => acc + Number(item.taxAmount),
+    0
+  );
+
+  const cgst = (taxAmt / 100) * 9;
+
+  console.log('Taxable Amount ', cgst);
+
+  const total = taxAmt + cgst * 2;
+
   return (
     <div className="w-full px-4 py-0   min-h-screen">
       <div className="bg-white p-4 shadow-sm rounded-lg">
@@ -196,21 +213,33 @@ const InvoiceGenerator = () => {
           Add Item
         </button>
         <div className="flex justify-between mr-6">
-          <p>Total Items: {calculateTotals().totalItems}</p>
-          <p>Taxable Amount:₹{calculateTotals().taxAmount}</p>
-        </div>
-        <div className="mt-6 flex flex-row-reverse mr-6">
           <p>
-            <hr></hr>
-            <b>Grand Total:</b> ₹{calculateTotals().grandTotal.toFixed(2)}
+            Total Items:<b> {calculateTotals()?.totalItems}</b>
+          </p>
+          <p>
+            Taxable Amount: <b>₹{taxAmt}</b>
+          </p>
+        </div>
+        <div className="flex justify-end">
+          <p className="mr-6">
+            CGST: (9%) : ₹ <b>{cgst}</b>
+          </p>
+        </div>
+        <div className="flex justify-end">
+          <p className="mr-6">
+            SGST: (9%) : ₹ <b>{cgst}</b>
           </p>
         </div>
 
+        <div className="mt-6 flex flex-row-reverse mr-6">
+          <p>
+            <hr></hr>
+            <b>Grand Total:</b> ₹ <b>{total?.toFixed(2)}</b>
+          </p>
+        </div>
         <hr />
         {customerName && <FinalDetails />}
         <Payments />
-
-        {/* <h1 className="text-xl font-bold mb-3 mt-8 underline">GST Invoice</h1> */}
         <FinalInvoice customerDetails={customerDetails} items={lineItems} />
         <Footer />
       </div>
