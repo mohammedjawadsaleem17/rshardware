@@ -217,7 +217,7 @@ const InvoiceGenerator = () => {
         <Payments />
         <hr />
         <h1 className="text-xl font-bold mb-0 mt-8 underline">GST Invoice</h1>
-        <FinalInvoice customerDetails={customerDetails} />
+        <FinalInvoice customerDetails={customerDetails} items={lineItems} />
         <Footer />
       </div>
     </div>

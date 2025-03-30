@@ -74,4 +74,80 @@ export const styles = StyleSheet.create({
   normalFont: {
     fontWeight: 'normal',
   },
+  //   Table CSS
+  table: {
+    display: 'table',
+    width: '100%',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  cell: {
+    borderWidth: 1,
+    borderColor: '#000',
+    padding: 8,
+    fontSize: 10,
+    flex: 1,
+    textAlign: 'center',
+  },
+  descriptionCell: {
+    flex: 3,
+    textAlign: 'left',
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  totalText: {
+    textAlign: 'right',
+    marginTop: 4,
+    fontWeight: 'bold',
+    fontSize: '9px',
+    marginBottom: '0px',
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  total: {
+    textAlign: 'right',
+    marginTop: 8,
+    fontWeight: 'bold',
+    // borderTop: '1px solid dottted',
+    fontSize: '15px',
+    marginBottom: '0px',
+  },
+  img: {
+    marginTop: '2px',
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    fontSize: 10,
+    color: '#555',
+  },
+  bankContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 30,
+  },
+  bankDetails: {
+    flex: 1,
+    marginTop: '12px',
+  },
+  businessDetails: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  businessName: {
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    marginTop: 10,
+  },
 });
