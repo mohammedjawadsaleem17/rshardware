@@ -11,7 +11,13 @@ const Header = () => {
           <Logo />
         </div>
       )}
-      {!isAuthenticated && <p className="text-center">Hello World</p>}
+      {!isAuthenticated && (
+        <div className="text-center lg:ml-140 sm:ml-20 md:ml-30 hover:text-indigo-800">
+          <p className="text-center font-bold text-4xl shadow-lg p-4 font-mono  hover:text-indigo-800 text-indigo-500">
+            RS Hardware Glass & Electricals.
+          </p>
+        </div>
+      )}
 
       <div className="flex space-x-6">
         {isAuthenticated && (
