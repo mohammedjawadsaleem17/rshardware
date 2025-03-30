@@ -48,12 +48,14 @@ export default function Customer() {
           </div>
 
           <div className="flex items-center">
-            <label className="font-light w-31">Invoice Date:</label>
+            <label className="font-light w-28 sm:w-28 lg:w-31">
+              Invoice Date:
+            </label>
             <DatePicker
               selected={invoiceDate}
               onChange={(date) => setInvoiceDate(date)}
               dateFormat="dd/MM/yyyy"
-              className="border border-gray-300 p-2 rounded"
+              className="border border-gray-300 p-2 rounded w-full sm:w-48 lg:w-64"
             />
           </div>
         </div>
