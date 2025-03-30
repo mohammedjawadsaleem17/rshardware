@@ -6,18 +6,18 @@ const Header = () => {
   const { isAuthenticated, logout } = useAuth();
   return (
     <nav className="flex items-center justify-between p-2 pb-0 mt-0 mx-5">
-      {isAuthenticated && (
+      {
         <div className="flex items-center">
-          <Logo />
+          <Logo />{' '}
+          {isAuthenticated ? (
+            ''
+          ) : (
+            <p className="unifrakturmaguntia-regular mt-2 ml-1 text-neutral-800">
+              Hardware Glass & Electricals.
+            </p>
+          )}
         </div>
-      )}
-      {!isAuthenticated && (
-        <div className="text-center lg:ml-140 sm:ml-20 md:ml-30 hover:text-indigo-800">
-          <p className="text-center font-bold text-4xl shadow-lg p-4 font-mono  hover:text-indigo-800 text-indigo-500">
-            RS Hardware Glass & Electricals.
-          </p>
-        </div>
-      )}
+      }
 
       <div className="flex space-x-6">
         {isAuthenticated && (

@@ -6,7 +6,7 @@ const Logo = () => {
     <h2 className="text-center transform transition-all duration-100 hover:scale-105 ">
       <Link to="/" className="inline-block p-2 rounded-lg">
         <span
-          className="arizonia-regular text-indigo-700 text-4xl font-bold drop-shadow-md 
+          className="dancing-script-test text-indigo-700 text-4xl font-bold drop-shadow-md 
                      transition-all duration-300 
                      "
         >
