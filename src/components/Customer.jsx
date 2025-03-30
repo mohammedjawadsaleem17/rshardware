@@ -55,7 +55,7 @@ export default function Customer() {
               selected={invoiceDate}
               onChange={(date) => setInvoiceDate(date)}
               dateFormat="dd/MM/yyyy"
-              className="border border-gray-300 p-2 rounded w-full sm:w-48 lg:w-64"
+              className="border border-gray-300 p-2 lg:ml-2 sm:m-4 rounded w-full  sm:w-48 lg:w-64"
             />
           </div>
         </div>

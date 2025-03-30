@@ -140,10 +140,12 @@ export const styles = StyleSheet.create({
   businessDetails: {
     flex: 1,
     alignItems: 'flex-end',
+    marginBottom: '12px',
   },
   businessName: {
     fontSize: 12,
     fontWeight: 'bold',
+    marginTop: '-40px',
   },
   logo: {
     width: 100,
