@@ -6,9 +6,12 @@ const Header = () => {
   const { isAuthenticated, logout } = useAuth();
   return (
     <nav className="flex items-center justify-between p-2 pb-0 mt-0 mx-5">
-      <div className="flex items-center">
-        <Logo />
-      </div>
+      {isAuthenticated && (
+        <div className="flex items-center">
+          <Logo />
+        </div>
+      )}
+
       <div className="flex space-x-6">
         {isAuthenticated && (
           <Link

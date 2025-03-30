@@ -23,7 +23,7 @@
   font-style: normal;
   font-size: 250%;
   position:absolute;
-  top:-35%;
+  top:-30%;
   left:-60%;
 }
 .zain-black {
@@ -49,7 +49,7 @@ html{
   max-height: 500px;
   width: 30%;
   height: 60%;
-  margin: 60px auto;
+  margin: 150px auto;
   color:whitesmoke;
   border-radius: 25px;
   background-color:black;
