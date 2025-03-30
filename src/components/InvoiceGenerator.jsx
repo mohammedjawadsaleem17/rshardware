@@ -143,6 +143,7 @@ const InvoiceGenerator = () => {
       <div className="bg-white p-4 shadow-sm rounded-lg">
         <h1 className="text-3xl font-bold mb-6">Invoice Generator</h1>
         <Customer />
+
         <h1 className="text-xl font-bold mb-0 mt-8 underline">Particulars</h1>
         <DataTable
           columns={columns}
@@ -173,6 +174,7 @@ const InvoiceGenerator = () => {
             <b>Grand Total:</b> ₹{calculateTotals().grandTotal.toFixed(2)}
           </p>
         </div>
+        <hr />
         {customerName && <FinalDetails />}
         <Payments />
         <Footer />
