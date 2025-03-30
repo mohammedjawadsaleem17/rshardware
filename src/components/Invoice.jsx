@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { createContext, useContext } from 'react';
-import InvoiceTemplate from './InvoiceTemplate';
+import InvoiceTemplate from '../../InvoiceTemplate';
 import InvoiceGenerator from './InvoiceGenerator';
 
 export const MainContext = createContext();

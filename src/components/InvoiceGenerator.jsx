@@ -6,21 +6,22 @@ import FinalDetails from './FinalDetails';
 import { MainContext } from './Invoice';
 import Payments from './Payments';
 import Footer from './Footer';
+import FinalInvoice from './PDF/FinalInvoice';
 
 const InvoiceGenerator = () => {
-  const { customerName } = useContext(MainContext);
-  const invoiceNumberRef = useRef(1);
-  const [customerDetails, setCustomerDetails] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    gstin: '',
-    placeOfSupply: '',
-  });
+  const {
+    customerName,
+    invoiceDate,
+    dueDate,
+    lineItems: items,
+    invoiceNumber,
+    customerEmail,
+    customerPhone,
+    customerAddress,
+    customerGstin,
+    customerPlaceOfSupply,
+  } = useContext(MainContext);
 
-  const [invoiceDate, setInvoiceDate] = useState(new Date());
-  const [dueDate, setDueDate] = useState(addDays(new Date(), 7));
   const [lineItems, setLineItems] = useState([
     {
       sno: 1,
@@ -138,6 +139,19 @@ const InvoiceGenerator = () => {
     },
   ];
 
+  //!Final Data
+  console.log('-----------------Final Data-----------------');
+  console.log(customerName);
+  console.log(invoiceDate);
+  console.log(dueDate);
+  console.log(invoiceNumber);
+  console.log(customerEmail);
+  console.log(customerPhone);
+  console.log(customerAddress);
+  console.log(customerGstin);
+  console.log(customerPlaceOfSupply);
+  console.log('Line Items', lineItems);
+
   return (
     <div className="w-full px-4 py-0   min-h-screen">
       <div className="bg-white p-4 shadow-sm rounded-lg">
@@ -174,9 +188,13 @@ const InvoiceGenerator = () => {
             <b>Grand Total:</b> ₹{calculateTotals().grandTotal.toFixed(2)}
           </p>
         </div>
+
         <hr />
         {customerName && <FinalDetails />}
         <Payments />
+        <hr />
+        <h1 className="text-xl font-bold mb-0 mt-8 underline">GST Invoice</h1>
+        <FinalInvoice />
         <Footer />
       </div>
     </div>
