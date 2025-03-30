@@ -59,4 +59,19 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: '40px',
   },
+  sr2: {
+    fontWeight: 'bold',
+  },
+
+  rspace: {
+    marginBottom: '0px',
+    marginTop: '1px',
+  },
+  test: {
+    marginBottom: '0px',
+    marginTop: '1px',
+  },
+  normalFont: {
+    fontWeight: 'normal',
+  },
 });

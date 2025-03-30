@@ -141,16 +141,39 @@ const InvoiceGenerator = () => {
 
   //!Final Data
   console.log('-----------------Final Data-----------------');
-  console.log(customerName);
+  // console.log(customerName);
   console.log(invoiceDate);
   console.log(dueDate);
   console.log(invoiceNumber);
-  console.log(customerEmail);
-  console.log(customerPhone);
-  console.log(customerAddress);
-  console.log(customerGstin);
-  console.log(customerPlaceOfSupply);
+  // console.log(customerEmail);
+  // console.log(customerPhone);
+  // console.log(customerAddress);
+  // console.log(customerGstin);
+  // console.log(customerPlaceOfSupply);
   console.log('Line Items', lineItems);
+
+  const invoice = new Date(invoiceDate).toLocaleDateString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+  const due = new Date(dueDate).toLocaleDateString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+
+  const customerDetails = {
+    name: customerName,
+    email: customerEmail,
+    phone: customerPhone,
+    address: customerAddress,
+    gstin: customerGstin,
+    place: customerPlaceOfSupply,
+    invoiceNum: invoiceNumber,
+    invoiceDate: invoice,
+    dueDate: due,
+  };
 
   return (
     <div className="w-full px-4 py-0   min-h-screen">
@@ -194,7 +217,7 @@ const InvoiceGenerator = () => {
         <Payments />
         <hr />
         <h1 className="text-xl font-bold mb-0 mt-8 underline">GST Invoice</h1>
-        <FinalInvoice />
+        <FinalInvoice customerDetails={customerDetails} />
         <Footer />
       </div>
     </div>
