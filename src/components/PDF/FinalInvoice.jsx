@@ -9,6 +9,7 @@ import {
   PDFDownloadLink,
 } from '@react-pdf/renderer';
 import { styles } from './style';
+import logo from '../../components/assets/logo.png';
 
 function numberToWords(num) {
   if (num === 0) return 'Zero';
@@ -106,43 +107,6 @@ function numberToWords(num) {
 export default function FinalInvoice({ customerDetails, items }) {
   console.log('Items, ', items);
   console.log('Received Customer Details ', customerDetails);
-  const items3 = [
-    {
-      id: 1,
-      description: 'Projecting - Context menu for invoices list',
-      qty: 'x1.0',
-      units: 'hours',
-      unitPrice: 50.0,
-      total: 50.0,
-    },
-    {
-      id: 2,
-      description:
-        'Develop - Invoice number format template\n - [PRO] Duplicating invoices\n - Language support\n - Context menu for invoices list',
-      qty: 'x17.0',
-      units: 'hours',
-      unitPrice: 40.0,
-      total: 680.0,
-    },
-    {
-      id: 3,
-      description: 'Analysis - [PRO] Duplicating invoices\n - Language support',
-      qty: 'x3.0',
-      units: 'hours',
-      unitPrice: 35.0,
-      total: 105.0,
-    },
-  ];
-
-  /***  {
-      sno: 1,
-      item: 'Glass Sheet',
-      rate: 200,
-      qty: 10,
-      taxableValue: 2000,
-      taxAmount: 100,
-      total: 2100,
-    }, */
 
   const taxAmt = items?.reduce(
     (acc, item) => acc + Number(item.taxableValue),
@@ -165,7 +129,7 @@ export default function FinalInvoice({ customerDetails, items }) {
           <View>
             {/* <Text>Invoice</Text>
           <Text>Invoice #INV-2024-001</Text> */}
-            <Image src="src/components/assets/logo.png" style={styles.logo} />
+            <Image src={logo} style={styles.logo} />
           </View>
           <View>
             <Text style={styles.heading}>

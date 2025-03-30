@@ -3,7 +3,7 @@
 export default function Footer() {
     const year = new Date().getFullYear();
   return (
-    <div className="text-center mt-7">
+    <div className="text-center mt-3">
       <p className="text-slate-500 ">
         &copy; {year} This Application is Developed & Maintained by &#160;
         <a
