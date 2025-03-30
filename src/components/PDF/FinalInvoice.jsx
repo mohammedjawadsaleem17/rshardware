@@ -10,6 +10,7 @@ import {
 } from '@react-pdf/renderer';
 import { styles } from './style';
 import logo from '../../components/assets/logo.png';
+import qr from '../../components/assets/qr.png';
 
 function numberToWords(num) {
   if (num === 0) return 'Zero';
@@ -117,7 +118,11 @@ export default function FinalInvoice({ customerDetails, items }) {
     0
   );
 
-  const totalPayable = taxAmt + taxPayable;
+  const cgst = (taxAmt / 100) * 9;
+
+  console.log('Taxable Amount ', cgst);
+
+  const totalPayable = taxAmt + cgst * 2;
 
   const wordsAmount = numberToWords(totalPayable);
   console.log(wordsAmount);
@@ -238,9 +243,8 @@ export default function FinalInvoice({ customerDetails, items }) {
           <Text style={styles.totalText}>
             Taxable Amount: {taxAmt?.toFixed(2)}
           </Text>
-          <Text style={styles.totalText}>
-            Tax (18.0%): {taxPayable?.toFixed(2)}
-          </Text>
+          <Text style={styles.totalText}>CGST (9.0%): {cgst?.toFixed(2)}</Text>
+          <Text style={styles.totalText}>SGST (9.0%): {cgst?.toFixed(2)}</Text>
           {/* <Text style={styles.totalText}>
             Discount (10.0%): -{discount.toFixed(2)}
           </Text> */}
@@ -277,7 +281,7 @@ export default function FinalInvoice({ customerDetails, items }) {
             <Text>
               Branch: <Text style={styles.rs}>VIJAYA BANK LAYOUT</Text>
             </Text>
-            <Image src="src/components/assets/qr.png" style={styles.logo} />
+            <Image src={qr} style={styles.logo} />
           </View>
 
           {/* Right Section - Business Name */}
@@ -297,11 +301,6 @@ export default function FinalInvoice({ customerDetails, items }) {
   );
   return (
     <div>
-      {/* <div className="w-full h-[750px]">
-        <PDFViewer width="100%" height="100%">
-          <InvoicePDF customerDetails={customerDetails} />
-        </PDFViewer>
-      </div> */}
       <div className="mt-7">
         <PDFDownloadLink
           document={

@@ -11,6 +11,7 @@ const Header = () => {
           <Logo />
         </div>
       )}
+      {!isAuthenticated && <p className="text-center">Hello World</p>}
 
       <div className="flex space-x-6">
         {isAuthenticated && (
