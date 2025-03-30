@@ -6,6 +6,7 @@ import {
   PDFViewer,
   Text,
   View,
+  PDFDownloadLink,
 } from '@react-pdf/renderer';
 import { styles } from './style';
 
@@ -94,13 +95,12 @@ function numberToWords(num) {
       .split('')
       .map((digit) => belowTwenty[parseInt(digit)])
       .join(' ');
-    result += `.`;
+    result += ` Only.`;
   }
 
   return result;
 }
 
-console.log(numberToWords(356595.6));
 // Output: Three Hundred Fifty-Six Thousand Five Hundred Ninety-Five And 60/100 (Six Zero)
 
 export default function FinalInvoice({ customerDetails, items }) {
@@ -333,10 +333,23 @@ export default function FinalInvoice({ customerDetails, items }) {
   );
   return (
     <div>
-      <div className="w-full h-[750px]">
+      {/* <div className="w-full h-[750px]">
         <PDFViewer width="100%" height="100%">
           <InvoicePDF customerDetails={customerDetails} />
         </PDFViewer>
+      </div> */}
+      <div className="mt-7">
+        <PDFDownloadLink
+          document={
+            <InvoicePDF customerDetails={customerDetails} items={items} />
+          }
+          fileName={`Invoice-${customerDetails.invoiceNum}.pdf`}
+          className="bg-green-600 text-white p-3 rounded w-full block text-center font-bold"
+        >
+          {({ blob, url, loading, error }) =>
+            loading ? 'Preparing document...' : 'Generate Invoice'
+          }
+        </PDFDownloadLink>
       </div>
     </div>
   );

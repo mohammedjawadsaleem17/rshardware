@@ -21,7 +21,7 @@ const InvoiceGenerator = () => {
     customerGstin,
     customerPlaceOfSupply,
   } = useContext(MainContext);
-
+  const [shouldDownload, setShouldDownload] = useState(false);
   const [lineItems, setLineItems] = useState([
     {
       sno: 1,
@@ -195,12 +195,6 @@ const InvoiceGenerator = () => {
         >
           Add Item
         </button>
-        <button
-          className="bg-green-600 text-white p-2 rounded mb-4 ml-4"
-          onClick={() => alert('Genaration in Progress')}
-        >
-          Genarate Invoice
-        </button>
         <div className="flex justify-between mr-6">
           <p>Total Items: {calculateTotals().totalItems}</p>
           <p>Taxable Amount:₹{calculateTotals().taxAmount}</p>
@@ -215,8 +209,8 @@ const InvoiceGenerator = () => {
         <hr />
         {customerName && <FinalDetails />}
         <Payments />
-        <hr />
-        <h1 className="text-xl font-bold mb-0 mt-8 underline">GST Invoice</h1>
+
+        <h1 className="text-xl font-bold mb-3 mt-8 underline">GST Invoice</h1>
         <FinalInvoice customerDetails={customerDetails} items={lineItems} />
         <Footer />
       </div>
