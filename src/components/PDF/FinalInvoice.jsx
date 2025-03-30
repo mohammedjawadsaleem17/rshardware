@@ -85,7 +85,7 @@ function numberToWords(num) {
       unitIndex++;
     }
 
-    return word.trim();
+    return word.trim().concat(' Only.');
   }
 
   // Handling decimal part
@@ -291,7 +291,7 @@ export default function FinalInvoice({ customerDetails, items }) {
             </Text>
           </View>
         </View>
-        <View style={{ textAlign: 'center', fontSize: 10 }}>
+        <View style={{ marginTop: '2px', textAlign: 'center', fontSize: 10 }}>
           <Text>
             This is a computer-generated invoice and does not need a signature.
           </Text>
