@@ -287,7 +287,7 @@ export default function FinalInvoice({ customerDetails, items }) {
             </Text>
           </View>
         </View>
-        <View style={{ marginTop: 30, textAlign: 'center', fontSize: 10 }}>
+        <View style={{ marginTop: 3, textAlign: 'center', fontSize: 10 }}>
           <Text>
             This is a computer-generated invoice and does not need a signature.
           </Text>
