@@ -468,7 +468,7 @@ export default function Dashboard() {
                 whileHover={{ rotate: [0, 20, -20, 0] }}
                 transition={{ duration: 0.5 }}
               >
-                📄
+                📄!
               </motion.span>
             </span>
             <motion.span
