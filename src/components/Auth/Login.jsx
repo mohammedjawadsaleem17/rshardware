@@ -5,8 +5,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import Footer from '../Footer';
 
 export default function Login() {
-  const [username, setUsername] = useState('fahad');
-  const [password, setPassword] = useState('rshardware1436');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
