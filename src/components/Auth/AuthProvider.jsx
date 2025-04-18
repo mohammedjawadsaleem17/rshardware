@@ -7,8 +7,8 @@ export default function AuthProvider({ children }) {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const login = (username, password) => {
-    // if (username === 'rshardware' && password === 'fahad@1436') {
-    if (true) {
+    if (username === 'rshardware' && password === 'fahad@1436') {
+      // if (true) {
       setId(username);
       setIsAuthenticated(true);
       return true;
