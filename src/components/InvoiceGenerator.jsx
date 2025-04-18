@@ -267,37 +267,39 @@ const InvoiceGenerator = () => {
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <motion.h1
-              variants={itemVariants}
-              className="text-2xl font-bold text-gray-800 border-b-2 border-indigo-200 pb-2"
-            >
-              Particulars
-            </motion.h1>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full">
-                Items: {lineItems.length}
-              </span>
-              <button
-                onClick={addNewRow}
-                className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded flex items-center"
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+              <motion.h1
+                variants={itemVariants}
+                className="text-xl sm:text-2xl font-bold text-gray-800 border-b-2 border-indigo-200 pb-2 w-full sm:w-auto"
               >
-                <svg
-                  className="w-5 h-5 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                Particulars
+              </motion.h1>
+              <div className="flex flex-col xs:flex-row items-start xs:items-center gap-3 w-full sm:w-auto">
+                <span className="text-sm bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full whitespace-nowrap">
+                  Items: {lineItems.length}
+                </span>
+                <button
+                  onClick={addNewRow}
+                  className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded flex items-center w-full xs:w-auto justify-center"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  />
-                </svg>
-                Add Item
-              </button>
+                  <svg
+                    className="w-5 h-5 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                  Add Item
+                </button>
+              </div>
             </div>
           </div>
 
