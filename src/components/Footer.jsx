@@ -4,7 +4,7 @@ export default function Footer() {
     const year = new Date().getFullYear();
   return (
     <div className="text-center">
-      <p className="text-slate-500 mt-4">
+      <p className="text-slate-500 mt-7">
         &copy; {year} This Application is Developed & Maintained by &#160;
         <a
           style={{ textDecoration: 'underline' }}

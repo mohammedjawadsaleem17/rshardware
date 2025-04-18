@@ -215,7 +215,7 @@ export default function FinalInvoice({ customerDetails, items }) {
           <Text style={[styles.cell, styles.descriptionCell]}>
             Item/Particulars
           </Text>
-          {/* <Text style={styles.cell}>HSN Code</Text> */}
+          <Text style={styles.cell}>HSN Code</Text>
           <Text style={styles.cell}>Rate</Text>
           <Text style={styles.cell}>QTY</Text>
           <Text style={styles.cell}>Taxable Value</Text>
@@ -230,6 +230,7 @@ export default function FinalInvoice({ customerDetails, items }) {
             <Text style={[styles.cell, styles.descriptionCell]}>
               {item.item}
             </Text>
+            <Text style={styles.cell}>{item.hsn?.slice(0, 7)}</Text>
             <Text style={styles.cell}>{item.rate}</Text>
             <Text style={styles.cell}>{item.qty}</Text>
             <Text style={styles.cell}>{item.taxAmount?.toFixed(2)}</Text>
