@@ -1,5 +1,6 @@
 module.exports = {
   darkMode: ['class'],
+
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -15,6 +16,15 @@ module.exports = {
       },
     },
     extend: {
+      animation: {
+        shine: 'shine 2s linear infinite',
+      },
+      keyframes: {
+        shine: {
+          '0%': { backgroundPosition: '-200% center' },
+          '100%': { backgroundPosition: '200% center' },
+        },
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

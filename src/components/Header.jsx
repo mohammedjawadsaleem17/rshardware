@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from './Auth/AuthProvider';
@@ -7,6 +7,8 @@ import { useAuth } from './Auth/AuthProvider';
 const Header = () => {
   const { isAuthenticated, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -87,54 +89,75 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden sm:flex sm:items-center sm:space-x-1">
-              {isAuthenticated && (
+              {
                 <>
-                  <motion.div whileHover={{ scale: 1.05 }}>
-                    <Link
-                      to="/"
-                      className="relative text-gray-600 hover:text-indigo-600 font-medium px-3 py-2 transition-colors"
-                    >
-                      Dashboard
-                      <motion.div
-                        className="absolute bottom-0 left-0 h-0.5 bg-indigo-600"
-                        initial={{ width: 0 }}
-                        whileHover={{ width: '100%' }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </Link>
-                  </motion.div>
+                  {isAuthenticated && (
+                    <motion.div whileHover={{ scale: 1.05 }}>
+                      <Link
+                        to="/dashboard"
+                        className="relative text-gray-600 hover:text-indigo-600 font-medium px-3 py-2 transition-colors"
+                      >
+                        Dashboard
+                        <motion.div
+                          className="absolute bottom-0 left-0 h-0.5 bg-indigo-600"
+                          initial={{ width: 0 }}
+                          whileHover={{ width: '100%' }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      </Link>
+                    </motion.div>
+                  )}
 
-                  <motion.div whileHover={{ scale: 1.05 }}>
-                    <Link
-                      to="/invoice"
-                      className="relative text-gray-600 hover:text-indigo-600 font-medium px-3 py-2 transition-colors"
-                    >
-                      Invoice
-                      <motion.div
-                        className="absolute bottom-0 left-0 h-0.5 bg-indigo-600"
-                        initial={{ width: 0 }}
-                        whileHover={{ width: '100%' }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </Link>
-                  </motion.div>
+                  {isAuthenticated && (
+                    <motion.div whileHover={{ scale: 1.05 }}>
+                      <Link
+                        to="/invoice"
+                        className="relative text-gray-600 hover:text-indigo-600 font-medium px-3 py-2 transition-colors"
+                      >
+                        Invoice
+                        <motion.div
+                          className="absolute bottom-0 left-0 h-0.5 bg-indigo-600"
+                          initial={{ width: 0 }}
+                          whileHover={{ width: '100%' }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      </Link>
+                    </motion.div>
+                  )}
 
-                  <motion.button
-                    onClick={logout}
-                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium shadow-sm"
-                    whileHover={{
-                      y: -2,
-                      boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)',
-                    }}
-                    whileTap={{
-                      y: 1,
-                      boxShadow: '0 2px 4px rgba(79, 70, 229, 0.1)',
-                    }}
-                  >
-                    Logout
-                  </motion.button>
+                  {isAuthenticated ? (
+                    <motion.button
+                      onClick={logout}
+                      className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium shadow-sm"
+                      whileHover={{
+                        y: -2,
+                        boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)',
+                      }}
+                      whileTap={{
+                        y: 1,
+                        boxShadow: '0 2px 4px rgba(79, 70, 229, 0.1)',
+                      }}
+                    >
+                      Logout
+                    </motion.button>
+                  ) : (
+                    <motion.button
+                      onClick={() => navigate('/login')}
+                      className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium shadow-sm"
+                      whileHover={{
+                        y: -2,
+                        boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)',
+                      }}
+                      whileTap={{
+                        y: 1,
+                        boxShadow: '0 2px 4px rgba(79, 70, 229, 0.1)',
+                      }}
+                    >
+                      Login
+                    </motion.button>
+                  )}
                 </>
-              )}
+              }
             </div>
 
             {/* Mobile Menu Button */}
@@ -182,7 +205,7 @@ const Header = () => {
               className="sm:hidden overflow-hidden"
             >
               <div className="px-4 pt-2 pb-4 space-y-2 bg-gray-50 border-t">
-                {isAuthenticated && (
+                {
                   <>
                     <motion.div
                       initial={{ x: 20, opacity: 0 }}
@@ -226,7 +249,7 @@ const Header = () => {
                       </button>
                     </motion.div>
                   </>
-                )}
+                }
               </div>
             </motion.div>
           )}
