@@ -57,54 +57,107 @@ export default function ImageCarousel() {
   };
 
   return (
-    <div
-      className="w-4/5 mx-auto relative overflow-hidden py-12"
-      ref={carouselRef}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div className="w-full px-4 overflow-hidden py-12">
       <h2 className="text-2xl font-bold text-center mb-8">Our Products</h2>
 
       {/* Carousel container */}
-      <div className="flex justify-center items-center relative h-96">
-        {/* Previous image (blurred) */}
-        <div className="absolute transform -translate-x-64 z-10">
-          <img
-            src={images[prevIndex]}
-            alt="Previous slide"
-            className="h-64 w-64 object-cover rounded-lg filter blur-sm opacity-60"
-          />
+      <div
+        className="relative mx-auto max-w-lg overflow-hidden"
+        ref={carouselRef}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div className="flex justify-center items-center relative h-64 md:h-80">
+          {/* Previous image (blurred) - hidden on mobile */}
+          <div className="hidden md:block absolute transform -translate-x-40 md:-translate-x-48 z-10">
+            <img
+              src={images[prevIndex]}
+              alt="Previous slide"
+              className="h-40 w-40 md:h-48 md:w-48 object-cover rounded-lg filter blur-sm opacity-60"
+            />
+          </div>
+
+          {/* Current image (focused) */}
+          <div className="z-20 transition-all duration-500 transform scale-100 md:scale-110">
+            <img
+              src={images[currentIndex]}
+              alt="Current slide"
+              className="h-56 w-56 md:h-64 md:w-64 object-cover rounded-lg shadow-xl"
+            />
+          </div>
+
+          {/* Next image (blurred) - hidden on mobile */}
+          <div className="hidden md:block absolute transform translate-x-40 md:translate-x-48 z-10">
+            <img
+              src={images[nextIndex]}
+              alt="Next slide"
+              className="h-40 w-40 md:h-48 md:w-48 object-cover rounded-lg filter blur-sm opacity-60"
+            />
+          </div>
         </div>
 
-        {/* Current image (focused) */}
-        <div className="z-20 transition-all duration-500 transform scale-110">
-          <img
-            src={images[currentIndex]}
-            alt="Current slide"
-            className="h-80 w-80 object-cover rounded-lg shadow-xl"
-          />
-        </div>
-
-        {/* Next image (blurred) */}
-        <div className="absolute transform translate-x-64 z-10">
-          <img
-            src={images[nextIndex]}
-            alt="Next slide"
-            className="h-64 w-64 object-cover rounded-lg filter blur-sm opacity-60"
-          />
+        {/* Navigation arrows */}
+        <div className="absolute inset-0 flex items-center justify-between px-4">
+          <button
+            onClick={() =>
+              setCurrentIndex(
+                (prevIndex) => (prevIndex - 1 + images.length) % images.length
+              )
+            }
+            className="bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 focus:outline-none"
+            aria-label="Previous image"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <button
+            onClick={() =>
+              setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+            }
+            className="bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 focus:outline-none"
+            aria-label="Next image"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
         </div>
       </div>
 
       {/* Indicators */}
-      <div className="flex justify-center mt-6 gap-2">
+      <div className="flex justify-center mt-6 gap-2 flex-wrap">
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full ${
+            className={`w-2 h-2 md:w-3 md:h-3 rounded-full ${
               index === currentIndex ? 'bg-blue-500' : 'bg-gray-300'
             }`}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>

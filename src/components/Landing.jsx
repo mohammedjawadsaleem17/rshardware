@@ -58,7 +58,7 @@ const FadeInSection = ({ children, direction = 'up' }) => {
 // Main component
 export default function Landing() {
   return (
-    <div className="font-sans">
+    <div className="font-sans overflow-x-hidden w-full">
       {/* Hero Section */}
       <section className="relative bg-gray-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-40 z-10"></div>
@@ -83,14 +83,14 @@ export default function Landing() {
           </style>
         </div>
 
-        <div className="container mx-auto px-6 py-24 relative z-20">
+        <div className="container mx-auto px-4 py-24 relative z-20">
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
             <img
               src="https://lh3.googleusercontent.com/p/AF1QipPwq1gXy2YNyyUnwsu_j5IfB708HK0cX1LgeIb4=s1360-w1360-h1020-rw"
               alt="RS Hardware Logo"
               className="h-20 mb-8"
             />
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Your Trusted <span className="text-yellow-600"></span> &{' '}
               <span
                 className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400 animate-shine"
@@ -110,7 +110,7 @@ export default function Landing() {
               </span>
               Supplier
             </h1>
-            <p className="text-xl md:text-2xl mb-8">
+            <p className="text-lg md:text-2xl mb-8">
               Premium quality products at competitive prices since 2024
             </p>
             <a href="tel:+918147465517">
@@ -124,26 +124,26 @@ export default function Landing() {
 
       {/* Features */}
       <section className="bg-indigo-800 text-white py-12">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
             <div className="flex flex-col items-center">
-              <Heart size={40} className="mb-4" />
+              <Heart size={32} className="mb-4" />
               <p className="text-sm">
                 Loved & trusted by over 10,000 customers
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <ChevronRight size={40} className="mb-4" />
+              <ChevronRight size={32} className="mb-4" />
               <p className="text-sm">
                 Top quality materials & branded products
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <Truck size={40} className="mb-4" />
+              <Truck size={32} className="mb-4" />
               <p className="text-sm">Free shipping on orders over ₹1000</p>
             </div>
             <div className="flex flex-col items-center">
-              <DollarSign size={40} className="mb-4" />
+              <DollarSign size={32} className="mb-4" />
               <p className="text-sm">Best price guarantee on all products</p>
             </div>
           </div>
@@ -151,15 +151,15 @@ export default function Landing() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
           <FadeInSection>
-            <h2 className="text-4xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               Featured Products
             </h2>
           </FadeInSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FadeInSection direction="left">
               <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
                 <img
@@ -167,8 +167,10 @@ export default function Landing() {
                   alt="Hardware products"
                   className="w-full h-64 object-cover"
                 />
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2">Premium Hardware</h3>
+                <div className="p-4 md:p-6">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2">
+                    Premium Hardware
+                  </h3>
                   <p className="text-gray-700 mb-4">
                     Our extensive collection of high-quality hardware products
                     caters to both professional contractors and DIY enthusiasts.
@@ -184,8 +186,8 @@ export default function Landing() {
                   alt="Electrical supplies"
                   className="w-full h-64 object-cover"
                 />
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2">
+                <div className="p-4 md:p-6">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2">
                     Electrical Supplies
                   </h3>
                   <p className="text-gray-700 mb-4">
@@ -203,8 +205,8 @@ export default function Landing() {
                   alt="Tools collection"
                   className="w-full h-64 object-cover"
                 />
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2">
+                <div className="p-4 md:p-6">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2">
                     Professional Tools
                   </h3>
                   <p className="text-gray-700 mb-4">
@@ -219,21 +221,23 @@ export default function Landing() {
       </section>
 
       {/* About Section */}
-      <section className="py-20 bg-gray-100">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row gap-12 items-center">
-            <div className="md:w-1/2">
+      <section className="py-16 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row gap-8 items-center">
+            <div className="w-full md:w-1/2">
               <FadeInSection direction="left">
                 <img
                   src="https://lh3.googleusercontent.com/p/AF1QipPkpYbIIjAIjpTS83-ECSHDFpVnpL5I5GOTA2mv=s1360-w1360-h1020-rw"
                   alt="RS Hardware Store"
-                  className="rounded-lg shadow-xl"
+                  className="rounded-lg shadow-xl w-full"
                 />
               </FadeInSection>
             </div>
-            <div className="md:w-1/2">
+            <div className="w-full md:w-1/2">
               <FadeInSection direction="right">
-                <h2 className="text-4xl font-bold mb-6">About RS Hardware</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  About RS Hardware
+                </h2>
                 <p className="text-gray-700 mb-6">
                   Founded in 2024 by Fahad Pasha, RS Hardware has been a
                   cornerstone of the community for more than 1+ years. What
@@ -258,17 +262,17 @@ export default function Landing() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
           <FadeInSection>
-            <h2 className="text-4xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               What Our Customers Say
             </h2>
           </FadeInSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FadeInSection>
-              <div className="bg-gray-50 p-8 rounded-lg shadow">
+              <div className="bg-gray-50 p-6 rounded-lg shadow">
                 <div className="flex items-center text-yellow-400 mb-4">
                   {'★'.repeat(5)}
                 </div>
@@ -282,7 +286,7 @@ export default function Landing() {
             </FadeInSection>
 
             <FadeInSection>
-              <div className="bg-gray-50 p-8 rounded-lg shadow">
+              <div className="bg-gray-50 p-6 rounded-lg shadow">
                 <div className="flex items-center text-yellow-400 mb-4">
                   {'★'.repeat(5)}
                 </div>
@@ -296,7 +300,7 @@ export default function Landing() {
             </FadeInSection>
 
             <FadeInSection>
-              <div className="bg-gray-50 p-8 rounded-lg shadow">
+              <div className="bg-gray-50 p-6 rounded-lg shadow">
                 <div className="flex items-center text-yellow-400 mb-4">
                   {'★'.repeat(5)}
                 </div>
@@ -315,18 +319,18 @@ export default function Landing() {
       <ImageCarousel />
 
       {/* CTA Section */}
-      <section className="py-20 bg-blue-600 text-white">
-        <div className="container mx-auto px-6 text-center">
+      <section className="py-16 bg-indigo-800 text-white">
+        <div className="container mx-auto px-4 text-center">
           <FadeInSection>
-            <h2 className="text-4xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to Start Your Construction?
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
               Visit our store for the best selection of hardware and electrical
               supplies in the region.
             </p>
             <a href="tel:+918147465517">
-              <button className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-md transition-all">
+              <button className="bg-white text-indigo-800 hover:bg-gray-100 font-bold py-3 px-8 rounded-md transition-all">
                 Contact Now
               </button>
             </a>
@@ -336,8 +340,8 @@ export default function Landing() {
 
       {/* Contact & Footer */}
       <section className="py-12 bg-gray-900 text-white">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-bold mb-4">RS Hardware</h3>
               <p className="text-gray-400 mb-2">
@@ -373,15 +377,19 @@ export default function Landing() {
               <h3 className="text-lg font-bold mb-4">Contact Us</h3>
               <ul className="space-y-2 text-gray-400">
                 <li className="flex items-center">
-                  <Phone size={16} className="mr-2" /> (+91) 8147465517
+                  <Phone size={16} className="mr-2 flex-shrink-0" />
+                  <span className="break-words">(+91) 8147465517</span>
                 </li>
                 <li className="flex items-center">
-                  <Mail size={16} className="mr-2" /> rshardware2210@gmail.com
+                  <Mail size={16} className="mr-2 flex-shrink-0" />
+                  <span className="break-words">rshardware2210@gmail.com</span>
                 </li>
-                <li className="flex items-center">
-                  <MapPin size={16} className="mr-2" /> Building No - 3/7, Shop
-                  No-6, Ground Floor Arekere Main Road Benagaluru, Karnataka,
-                  India 560076
+                <li className="flex items-start">
+                  <MapPin size={16} className="mr-2 mt-1 flex-shrink-0" />
+                  <span className="break-words">
+                    Building No - 3/7, Shop No-6, Ground Floor Arekere Main Road
+                    Benagaluru, Karnataka, India 560076
+                  </span>
                 </li>
               </ul>
             </div>
