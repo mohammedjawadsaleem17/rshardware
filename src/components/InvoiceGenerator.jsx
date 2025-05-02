@@ -8,6 +8,7 @@ import Payments from './Payments';
 import Footer from './Footer';
 import FinalInvoice from './PDF/FinalInvoice';
 import { motion } from 'framer-motion';
+import ProformaInvoice from './PDF/ProformaInvoice';
 
 const InvoiceGenerator = () => {
   const {
@@ -389,11 +390,15 @@ const InvoiceGenerator = () => {
           <Payments />
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
+        <div className="bg-white p-6 rounded-lg shadow">
+          <ProformaInvoice
+            customerDetails={customerDetails}
+            items={lineItems}
+          />
           <FinalInvoice customerDetails={customerDetails} items={lineItems} />
         </div>
 
-        <div className="mt-8 p-4">
+        <div className="mt-1">
           <Footer />
         </div>
       </div>
