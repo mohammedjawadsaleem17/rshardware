@@ -207,47 +207,68 @@ const Header = () => {
               <div className="px-4 pt-2 pb-4 space-y-2 bg-gray-50 border-t">
                 {
                   <>
-                    <motion.div
-                      initial={{ x: 20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.1 }}
-                    >
-                      <Link
-                        to="/"
-                        className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
-                        onClick={() => setMobileMenuOpen(false)}
+                    {isAuthenticated && (
+                      <motion.div
+                        initial={{ x: 20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.1 }}
                       >
-                        Dashboard
-                      </Link>
-                    </motion.div>
-                    <motion.div
-                      initial={{ x: 20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <Link
-                        to="/invoice"
-                        className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
-                        onClick={() => setMobileMenuOpen(false)}
+                        <Link
+                          to="/"
+                          className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          Dashboard
+                        </Link>
+                      </motion.div>
+                    )}
+                    {isAuthenticated && (
+                      <motion.div
+                        initial={{ x: 20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
                       >
-                        Invoice
-                      </Link>
-                    </motion.div>
-                    <motion.div
-                      initial={{ x: 20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.3 }}
-                    >
-                      <button
-                        onClick={() => {
-                          logout();
-                          setMobileMenuOpen(false);
-                        }}
-                        className="w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                        <Link
+                          to="/invoice"
+                          className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          Invoice
+                        </Link>
+                      </motion.div>
+                    )}
+                    {isAuthenticated ? (
+                      <motion.div
+                        initial={{ x: 20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.3 }}
                       >
-                        Logout
-                      </button>
-                    </motion.div>
+                        <button
+                          onClick={() => {
+                            logout();
+                            setMobileMenuOpen(false);
+                          }}
+                          className="w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                        >
+                          Logout
+                        </button>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        initial={{ x: 20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <button
+                          onClick={() => {
+                            navigate('/login');
+                          }}
+                          className="w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                        >
+                          Login
+                        </button>
+                      </motion.div>
+                    )}
                   </>
                 }
               </div>

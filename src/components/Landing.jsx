@@ -407,6 +407,15 @@ export default function Landing() {
               &copy; {new Date().getFullYear()} RS Hardware. All rights
               reserved.
             </p>
+            <p>
+              This Application is Developed & Maintained by{' '}
+              <a
+                target="_blank"
+                href="https://mohammedjawadsaleem11.github.io/portfolio"
+              >
+                2x+1
+              </a>
+            </p>
           </div>
         </div>
       </section>
