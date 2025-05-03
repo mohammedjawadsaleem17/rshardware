@@ -182,7 +182,7 @@ const SpaceSection = () => {
       className="space-section"
       style={{
         position: 'relative',
-        minHeight: '77vh',
+        minHeight: '75vh',
         margin: 0,
         padding: 0,
         display: 'flex',
@@ -228,7 +228,7 @@ const SpaceSection = () => {
           src="https://lh3.googleusercontent.com/p/AF1QipPwq1gXy2YNyyUnwsu_j5IfB708HK0cX1LgeIb4=s1360-w1360-h1020-rw"
           alt="RS Hardware Logo"
           style={{
-            height: 170,
+            height: 175,
             marginBottom: 37,
             animation: 'pulse 5s ease-in-out infinite',
             display: 'block',
@@ -239,7 +239,7 @@ const SpaceSection = () => {
 
         <h1
           style={{
-            fontSize: '1.5rem',
+            fontSize: '2rem',
             fontWeight: 'bold',
             marginTop: '1rem',
             marginBottom: '1rem',
@@ -251,12 +251,14 @@ const SpaceSection = () => {
           }}
         >
           Your Trusted <span className="">Hardware</span> &{' '}
-          <span className=" ">Electrical</span> Supplier
+          <span className=" ">Electrical</span> Supplier !
         </h1>
         <p
-          style={{ fontSize: '1.2rem', marginBottom: '2rem', fontWeight: 300 }}
+          style={{ fontSize: '0.8rem', marginBottom: '2rem', fontWeight: 300 }}
+          className="text-indigo-50"
         >
-          Premium quality products at competitive prices since 2024
+          Premium quality products at competitive
+          <br /> prices since 2024
         </p>
         <a href="tel:+918147465517">
           <button

@@ -271,7 +271,37 @@ const Header = () => {
                       </motion.div>
                     ) : (
                       <>
-                        <motion.div
+                        {
+                          <>
+                            <motion.div
+                              initial={{ x: 20, opacity: 0 }}
+                              animate={{ x: 0, opacity: 1 }}
+                              transition={{ delay: 0.2 }}
+                            >
+                              <Link
+                                to="/"
+                                className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                                onClick={() => setMobileMenuOpen(false)}
+                              >
+                                Home
+                              </Link>
+                            </motion.div>
+                            <motion.div
+                              initial={{ x: 20, opacity: 0 }}
+                              animate={{ x: 0, opacity: 1 }}
+                              transition={{ delay: 0.2 }}
+                            >
+                              <Link
+                                to="/login"
+                                className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                                onClick={() => setMobileMenuOpen(false)}
+                              >
+                                Login
+                              </Link>
+                            </motion.div>
+                          </>
+                        }
+                        {/* <motion.div
                           initial={{ x: 20, opacity: 0 }}
                           animate={{ x: 0, opacity: 1 }}
                           transition={{ delay: 0.3 }}
@@ -279,6 +309,7 @@ const Header = () => {
                           <button
                             onClick={() => {
                               navigate('/');
+                              () => setMobileMenuOpen(false);
                             }}
                             className="w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
                           >
@@ -293,12 +324,13 @@ const Header = () => {
                           <button
                             onClick={() => {
                               navigate('/login');
+                              () => setMobileMenuOpen(false);
                             }}
                             className="w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
                           >
                             Login
                           </button>
-                        </motion.div>
+                        </motion.div> */}
                       </>
                     )}
                   </>
