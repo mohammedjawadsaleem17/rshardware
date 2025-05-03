@@ -17,7 +17,7 @@ module.exports = {
     },
     extend: {
       animation: {
-        shine: 'shine 2s linear infinite',
+        shine: 'shine 5s linear infinite',
       },
       keyframes: {
         shine: {
