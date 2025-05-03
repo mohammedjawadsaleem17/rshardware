@@ -141,20 +141,36 @@ const Header = () => {
                       Logout
                     </motion.button>
                   ) : (
-                    <motion.button
-                      onClick={() => navigate('/login')}
-                      className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium shadow-sm"
-                      whileHover={{
-                        y: -2,
-                        boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)',
-                      }}
-                      whileTap={{
-                        y: 1,
-                        boxShadow: '0 2px 4px rgba(79, 70, 229, 0.1)',
-                      }}
-                    >
-                      Login
-                    </motion.button>
+                    <>
+                      <motion.button
+                        onClick={() => navigate('/')}
+                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium shadow-sm"
+                        whileHover={{
+                          y: -2,
+                          boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)',
+                        }}
+                        whileTap={{
+                          y: 1,
+                          boxShadow: '0 2px 4px rgba(79, 70, 229, 0.1)',
+                        }}
+                      >
+                        Home
+                      </motion.button>
+                      <motion.button
+                        onClick={() => navigate('/login')}
+                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium shadow-sm"
+                        whileHover={{
+                          y: -2,
+                          boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)',
+                        }}
+                        whileTap={{
+                          y: 1,
+                          boxShadow: '0 2px 4px rgba(79, 70, 229, 0.1)',
+                        }}
+                      >
+                        Login
+                      </motion.button>
+                    </>
                   )}
                 </>
               }
@@ -254,20 +270,36 @@ const Header = () => {
                         </button>
                       </motion.div>
                     ) : (
-                      <motion.div
-                        initial={{ x: 20, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        <button
-                          onClick={() => {
-                            navigate('/login');
-                          }}
-                          className="w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                      <>
+                        <motion.div
+                          initial={{ x: 20, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: 0.3 }}
                         >
-                          Login
-                        </button>
-                      </motion.div>
+                          <button
+                            onClick={() => {
+                              navigate('/');
+                            }}
+                            className="w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                          >
+                            Home
+                          </button>
+                        </motion.div>
+                        <motion.div
+                          initial={{ x: 20, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: 0.3 }}
+                        >
+                          <button
+                            onClick={() => {
+                              navigate('/login');
+                            }}
+                            className="w-full text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                          >
+                            Login
+                          </button>
+                        </motion.div>
+                      </>
                     )}
                   </>
                 }

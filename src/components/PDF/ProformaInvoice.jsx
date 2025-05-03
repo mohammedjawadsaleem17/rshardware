@@ -9,6 +9,7 @@ import {
 } from '@react-pdf/renderer';
 import { styles } from './style';
 import logo from '../../components/assets/logo.png';
+import qr from '../../components/assets/qr.png';
 
 function numberToWords(num) {
   if (num === 0) return 'Zero';
@@ -97,6 +98,7 @@ export default function ProformaInvoice({ customerDetails, items }) {
   const InvoicePDF = () => (
     <Document>
       <Page size="A4" style={styles.page}>
+        {/* Header */}
         <View style={styles.header}>
           <View>
             <Image src={logo} style={styles.logo} />
@@ -107,11 +109,15 @@ export default function ProformaInvoice({ customerDetails, items }) {
           </View>
         </View>
 
+        {/* Seller & Buyer Info */}
         <View style={styles.soldByContainer}>
           <View style={styles.soldBy}>
             <Text style={styles.rs}>Prepared By:</Text>
             <Text style={styles.rspace}>R S HARDWARE GLASS & ELECTRICALS</Text>
-            <Text>Building No- 3/7, Shop No-6, Ground Floor, Bangalore</Text>
+            <Text>
+              Building No- 3/7, Shop No-6, Ground Floor, Gowri Shankar Complex,
+              Arekere Main Road, Bengaluru, Karnataka, PIN: 560076
+            </Text>
             <Text>Mob: 8147465517</Text>
             <Text>Email: abdulfahad1436@gmail.com</Text>
           </View>
@@ -125,6 +131,7 @@ export default function ProformaInvoice({ customerDetails, items }) {
           </View>
         </View>
 
+        {/* Table Header */}
         <View style={[styles.row, styles.bold]}>
           <Text style={styles.cell}>Sl No.</Text>
           <Text style={[styles.cell, styles.descriptionCell]}>Item</Text>
@@ -133,6 +140,7 @@ export default function ProformaInvoice({ customerDetails, items }) {
           <Text style={styles.cell}>Amount</Text>
         </View>
 
+        {/* Table Rows */}
         {items?.map((item) => (
           <View style={styles.row} key={item.sno}>
             <Text style={styles.cell}>{item.sno}</Text>
@@ -145,6 +153,7 @@ export default function ProformaInvoice({ customerDetails, items }) {
           </View>
         ))}
 
+        {/* Total */}
         <View>
           <Text style={styles.total}>
             Total (INR): {totalAmount.toFixed(2)}
@@ -154,6 +163,43 @@ export default function ProformaInvoice({ customerDetails, items }) {
           </Text>
         </View>
 
+        {/* Bank & QR Details */}
+        <View style={styles.bankContainer}>
+          {/* Left - Bank Details */}
+          <View style={styles.bankDetails}>
+            <Text
+              style={{
+                marginTop: 20,
+                fontSize: 12,
+                textDecoration: 'underline',
+              }}
+            >
+              Bank Details:
+            </Text>
+            <Text>
+              Bank: <Text style={styles.rs}>HDFC BANK</Text>
+            </Text>
+            <Text>
+              Account: <Text style={styles.rs}>50200093163651</Text>
+            </Text>
+            <Text>
+              IFSC CODE: <Text style={styles.rs}>HDFC0002841</Text>
+            </Text>
+            <Text>
+              Branch: <Text style={styles.rs}>VIJAYA BANK LAYOUT</Text>
+            </Text>
+            <Image src={qr} style={styles.logo} />
+          </View>
+
+          {/* Right - Business Info */}
+          <View style={styles.businessDetails}>
+            <Text style={styles.businessName}>
+              RS HARDWARE GLASS & ELECTRICALS
+            </Text>
+          </View>
+        </View>
+
+        {/* Footer */}
         <View style={{ marginTop: 20, textAlign: 'center', fontSize: 10 }}>
           <Text>
             This is a Proforma Invoice – not valid for tax credit or payment.
