@@ -14,14 +14,12 @@ const Error = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br  flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br  flex items-center justify-center mt-2">
       <div className="bg-white shadow-xl rounded-xl max-w-2xl w-full text-center transform transition-all duration-300 hover:scale-105">
         <div className="relative">
-
           <div className="text-9xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-indigo-600 animate-pulse">
             404
           </div>
-
 
           <div className="absolute top-0 right-0 animate-bounce">
             <Layers className="text-purple-300 w-16 h-16 opacity-50" />
@@ -66,7 +64,7 @@ const Error = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex justify-center space-x-4">
+        <div className="flex justify-center space-x-4 mb-32">
           <button
             onClick={handleRetry}
             className="bg-purple-500 text-white px-6 py-3 rounded-xl hover:bg-purple-600 transition-all flex items-center gap-2 group"

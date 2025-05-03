@@ -193,7 +193,7 @@ export default function Landing() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" id="products">
         <div className="container mx-auto px-4">
           <FadeInSection>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
@@ -275,7 +275,7 @@ export default function Landing() {
                 />
               </FadeInSection>
             </div>
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2" id="about">
               <FadeInSection direction="right">
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   About RS Hardware
@@ -394,12 +394,12 @@ export default function Landing() {
               <h3 className="text-lg font-bold mb-4">Quick Links</h3>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#about" className="hover:text-white">
                     About Us
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#products" className="hover:text-white">
                     Products
                   </a>
                 </li>
@@ -409,13 +409,13 @@ export default function Landing() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#contact" className="hover:text-white">
                     Contact
                   </a>
                 </li>
               </ul>
             </div>
-            <div>
+            <div id="contact">
               <h3 className="text-lg font-bold mb-4">Contact Us</h3>
               <ul className="space-y-2 text-gray-400">
                 <li className="flex items-center">

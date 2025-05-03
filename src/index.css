@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-
+html {
+  scroll-behavior: smooth;
+}
 .satisfy-regular {
   font-family: "Satisfy", cursive;
   font-weight: 700;
