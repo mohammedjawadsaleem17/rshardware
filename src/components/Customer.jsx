@@ -71,7 +71,7 @@ export default function Customer() {
             </label>
             <div>
               <input
-                type="number"
+                type="text"
                 placeholder="INV-001"
                 required
                 onChange={(e) => setInvoiceNumber(e.target.value)}
@@ -81,16 +81,16 @@ export default function Customer() {
             </div>
           </div>
 
-          <div className="space-y-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Invoice Date
-            </label>
-            <div>
+          <div className="...">
+            <div className="flex flex-col md:flex-row md:items-center">
+              <label className="font-light mb-2 md:mb-0 md:mr-2 w-33">
+                Invoice Date
+              </label>
               <DatePicker
                 selected={invoiceDate}
                 onChange={(date) => setInvoiceDate(date)}
                 dateFormat="dd/MM/yyyy"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+                className="border border-gray-300 p-2 rounded w-full md:w-auto"
               />
             </div>
           </div>

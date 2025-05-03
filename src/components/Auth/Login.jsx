@@ -181,7 +181,7 @@ export default function Login() {
         <h2
           style={{
             color: 'white',
-            fontSize: '2rem',
+            fontSize: '1.5rem',
             fontWeight: '600',
             textAlign: 'center',
             marginBottom: '30px',
@@ -191,7 +191,7 @@ export default function Login() {
             WebkitTextFillColor: 'transparent',
           }}
         >
-          Welcome to SmartSettle
+          Welcome to SmartSettle Login
         </h2>
 
         <form onSubmit={handleSubmit}>
