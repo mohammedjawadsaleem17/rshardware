@@ -182,7 +182,7 @@ const SpaceSection = () => {
       className="space-section"
       style={{
         position: 'relative',
-        minHeight: '75vh',
+        minHeight: '77vh',
         margin: 0,
         padding: 0,
         display: 'flex',
@@ -228,9 +228,9 @@ const SpaceSection = () => {
           src="https://lh3.googleusercontent.com/p/AF1QipPwq1gXy2YNyyUnwsu_j5IfB708HK0cX1LgeIb4=s1360-w1360-h1020-rw"
           alt="RS Hardware Logo"
           style={{
-            height: 150,
-            marginBottom: 30,
-            animation: 'pulse 2s ease-in-out infinite',
+            height: 170,
+            marginBottom: 37,
+            animation: 'pulse 5s ease-in-out infinite',
             display: 'block',
             marginLeft: 'auto',
             marginRight: 'auto',
@@ -239,8 +239,9 @@ const SpaceSection = () => {
 
         <h1
           style={{
-            fontSize: '2.5rem',
+            fontSize: '1.5rem',
             fontWeight: 'bold',
+            marginTop: '1rem',
             marginBottom: '1rem',
             background: 'linear-gradient(to right, #facc15, #fde68a, #facc15)',
             WebkitBackgroundClip: 'text',
@@ -249,8 +250,8 @@ const SpaceSection = () => {
             animation: 'shine 7s linear infinite',
           }}
         >
-          Your Trusted <span className="underline">Hardware</span> &{' '}
-          <span className="underline ">Electrical</span> Supplier
+          Your Trusted <span className="">Hardware</span> &{' '}
+          <span className=" ">Electrical</span> Supplier
         </h1>
         <p
           style={{ fontSize: '1.2rem', marginBottom: '2rem', fontWeight: 300 }}
