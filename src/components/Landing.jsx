@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import ImageCarousel from './ImageCarousel';
 import EnhancedImageCarousel from './ImageCarousel';
+import Section from './Section';
 
 // Animation component for fade-in effect when scrolling
 const FadeInSection = ({ children, direction = 'up' }) => {
@@ -161,118 +162,7 @@ export default function Landing() {
   return (
     <div className="font-sans overflow-x-hidden w-full">
       {/* Hero Section with Animated Background */}
-      <section className="relative bg-gray-900 text-white overflow-hidden">
-        {/* Animated Canvas Background */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 z-0"
-          style={{
-            background:
-              'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
-          }}
-        />
-
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black opacity-40 z-10"></div>
-
-        {/* Content Container */}
-        <div className="container mx-auto px-4 py-24 relative z-20">
-          <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-            <img
-              src="https://lh3.googleusercontent.com/p/AF1QipPwq1gXy2YNyyUnwsu_j5IfB708HK0cX1LgeIb4=s1360-w1360-h1020-rw"
-              alt="RS Hardware Logo"
-              className="h-20 mb-8"
-              style={{
-                animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              }}
-            />
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Your Trusted{' '}
-              <span
-                className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400"
-                style={{
-                  backgroundSize: '400% 100%',
-                  animation: 'shine 3s linear infinite',
-                }}
-              >
-                Hardware
-              </span>{' '}
-              &{' '}
-              <span
-                className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400"
-                style={{
-                  backgroundSize: '400% 100%',
-                  animation: 'shine 3s linear infinite',
-                  animationDelay: '0.5s',
-                }}
-              >
-                Electrical
-              </span>{' '}
-              Supplier
-            </h1>
-            <p className="text-lg md:text-2xl mb-8">
-              Premium quality products at competitive prices since 2024
-            </p>
-            <a href="tel:+918147465517">
-              <button
-                className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-md transition-all"
-                style={{
-                  transform: 'translateY(0)',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 14px 0 rgba(0, 118, 255, 0.39)',
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow =
-                    '0 6px 20px rgba(0, 118, 255, 0.23)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow =
-                    '0 4px 14px 0 rgba(0, 118, 255, 0.39)';
-                }}
-              >
-                Contact Now
-              </button>
-            </a>
-          </div>
-        </div>
-
-        {/* Add floating hardware icons */}
-        <div
-          className="hidden md:block absolute bottom-10 left-10 z-20 opacity-30"
-          style={{
-            animation: 'float 6s ease-in-out infinite',
-          }}
-        >
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
-            <path d="M11 1L1 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-10-4z"></path>
-          </svg>
-        </div>
-        <div
-          className="hidden md:block absolute top-20 right-20 z-20 opacity-20"
-          style={{
-            animation: 'float 7s ease-in-out infinite',
-            animationDelay: '1s',
-          }}
-        >
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
-            <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"></path>
-          </svg>
-        </div>
-        <div
-          className="hidden md:block absolute bottom-32 right-32 z-20 opacity-25"
-          style={{
-            animation: 'float 8s ease-in-out infinite',
-            animationDelay: '0.5s',
-          }}
-        >
-          <svg width="35" height="35" viewBox="0 0 24 24" fill="white">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
-            <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"></path>
-          </svg>
-        </div>
-      </section>
+      <Section />
 
       {/* Features */}
       <section className="bg-indigo-800 text-white py-12">
