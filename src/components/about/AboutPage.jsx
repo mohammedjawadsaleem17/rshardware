@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import profileImage from '../../assets/profile.jpg';
 
 export default function AboutPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,7 +28,7 @@ export default function AboutPage() {
             <div className="relative overflow-hidden rounded-lg shadow-2xl">
               <div className="absolute inset-0 bg-blue-500 opacity-20 hover:opacity-0 transition-opacity duration-500"></div>
               <img
-                src="src/assets/profile.jpg"
+                src={profileImage}
                 alt="RS Hardware Store"
                 className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
               />
