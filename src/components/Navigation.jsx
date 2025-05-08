@@ -9,6 +9,7 @@ import Error from './Error';
 import AuthProvider, { useAuth } from './Auth/AuthProvider';
 import Login from './Auth/Login';
 import Landing from './Landing';
+import AboutPage from './about/AboutPage';
 
 function ProtectedRoute({ element }) {
   const { isAuthenticated } = useAuth();
@@ -37,6 +38,10 @@ export default function Navigation() {
             <Route
               path="/invoice"
               element={<ProtectedRoute element={<Invoice />} />}
+            />
+            <Route
+              path="/about"
+              element={<ProtectedRoute element={<AboutPage />} />}
             />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<Error />} />
