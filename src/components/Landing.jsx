@@ -11,6 +11,7 @@ import {
 import ImageCarousel from './ImageCarousel';
 import EnhancedImageCarousel from './ImageCarousel';
 import Section from './Section';
+import Loader from './Loader/Loader';
 
 // Animation component for fade-in effect when scrolling
 const FadeInSection = ({ children, direction = 'up' }) => {
