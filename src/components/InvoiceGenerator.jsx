@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback, useMemo } from 'react';
 import DataTable from 'react-data-table-component';
 import { format } from 'date-fns';
 import Customer from './Customer';
@@ -37,12 +37,14 @@ const InvoiceGenerator = () => {
     },
   ]);
 
-  const calculateValues = (row) => {
-    const taxableValue = row.rate * row.qty;
+  const calculateValues = useCallback((row) => {
+    const rate = parseFloat(row.rate) || 0;
+    const qty = parseFloat(row.qty) || 0;
+    const taxableValue = rate * qty;
     const taxAmount = taxableValue * 0.18;
     const total = taxableValue + taxAmount;
     return { taxableValue, taxAmount, total };
-  };
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -59,32 +61,35 @@ const InvoiceGenerator = () => {
     },
   };
 
-  const handleRowUpdate = (id, field, value) => {
-    setLineItems((prevItems) =>
-      prevItems.map((item) => {
-        if (item.id === id) {
-          const updatedItem = { ...item, [field]: value };
-          if (['rate', 'qty'].includes(field)) {
-            const calculated = calculateValues(updatedItem);
-            return { ...updatedItem, ...calculated };
+  const handleRowUpdate = useCallback(
+    (id, field, value) => {
+      setLineItems((prevItems) =>
+        prevItems.map((item) => {
+          if (item.id === id) {
+            const updatedItem = { ...item, [field]: value };
+            if (['rate', 'qty'].includes(field)) {
+              const calculated = calculateValues(updatedItem);
+              return { ...updatedItem, ...calculated };
+            }
+            return updatedItem;
           }
-          return updatedItem;
-        }
-        return item;
-      })
-    );
-  };
+          return item;
+        })
+      );
+    },
+    [calculateValues]
+  );
 
-  const addNewRow = () => {
+  const addNewRow = useCallback(() => {
     const newId =
       lineItems.length > 0
         ? Math.max(...lineItems.map((item) => item.id)) + 1
         : 1;
-    setLineItems([
-      ...lineItems,
+    setLineItems((prevItems) => [
+      ...prevItems,
       {
         id: newId,
-        sno: lineItems.length + 1,
+        sno: prevItems.length + 1,
         item: '',
         hsn: '',
         rate: '',
@@ -94,131 +99,142 @@ const InvoiceGenerator = () => {
         total: 0,
       },
     ]);
-  };
+  }, [lineItems]);
 
-  const deleteRow = (id) => {
-    const updatedItems = lineItems.filter((item) => item.id !== id);
-    const reindexedItems = updatedItems.map((item, idx) => ({
-      ...item,
-      sno: idx + 1,
-    }));
-    setLineItems(reindexedItems);
-  };
+  const deleteRow = useCallback((id) => {
+    setLineItems((prevItems) => {
+      const updatedItems = prevItems.filter((item) => item.id !== id);
+      return updatedItems.map((item, idx) => ({
+        ...item,
+        sno: idx + 1,
+      }));
+    });
+  }, []);
 
-  const columns = [
-    {
-      name: '#',
-      selector: (row) => row.sno,
-      width: '60px',
-      center: true,
-    },
-    {
-      name: 'Item Description',
-      cell: (row) => (
+  const InputField = useCallback(
+    ({ row, fieldName, type = 'text', placeholder = '', min, step }) => {
+      return (
         <input
-          type="text"
-          value={row.item}
-          onChange={(e) => handleRowUpdate(row.id, 'item', e.target.value)}
-          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Item name"
+          type={type}
+          value={row[fieldName]}
+          onChange={(e) => handleRowUpdate(row.id, fieldName, e.target.value)}
+          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          placeholder={placeholder}
+          min={min}
+          step={step}
         />
-      ),
-      grow: 2,
+      );
     },
-    {
-      name: 'HSN Code',
-      cell: (row) => (
-        <input
-          type="text"
-          value={row.hsn}
-          onChange={(e) => handleRowUpdate(row.id, 'hsn', e.target.value)}
-          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="HSN code"
-        />
-      ),
-      width: '120px',
-    },
-    {
-      name: 'Rate (₹)',
-      cell: (row) => (
-        <input
-          type="number"
-          value={row.rate}
-          onChange={(e) => handleRowUpdate(row.id, 'rate', e.target.value)}
-          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          min="0"
-          step="0.01"
-        />
-      ),
-      width: '120px',
-    },
-    {
-      name: 'Qty',
-      cell: (row) => (
-        <input
-          type="number"
-          value={row.qty}
-          onChange={(e) => handleRowUpdate(row.id, 'qty', e.target.value)}
-          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          min="0"
-        />
-      ),
-      width: '80px',
-    },
-    {
-      name: 'Taxable Value',
-      selector: (row) => row.taxableValue,
-      format: (row) => `₹${row.taxableValue.toFixed(2)}`,
-      width: '120px',
-      right: true,
-    },
-    {
-      name: 'Tax (18%)',
-      selector: (row) => row.taxAmount,
-      format: (row) => `₹${row.taxAmount.toFixed(2)}`,
-      width: '120px',
-      right: true,
-    },
-    {
-      name: 'Total',
-      selector: (row) => row.total,
-      format: (row) => `₹${row.total.toFixed(2)}`,
-      width: '120px',
-      right: true,
-      style: {
-        fontWeight: 'bold',
+    [handleRowUpdate]
+  );
+
+  const columns = useMemo(
+    () => [
+      {
+        name: '#',
+        selector: (row) => row.sno,
+        width: '60px',
+        style: {
+          justifyContent: 'center',
+        },
       },
-    },
-    {
-      name: 'Actions',
-      cell: (row) => (
-        <button
-          onClick={() => deleteRow(row.id)}
-          className="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100"
-          title="Delete row"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+      {
+        name: 'Item Description',
+        cell: (row) => (
+          <InputField row={row} fieldName="item" placeholder="Item name" />
+        ),
+        minWidth: '200px',
+      },
+      {
+        name: 'HSN Code',
+        cell: (row) => (
+          <InputField row={row} fieldName="hsn" placeholder="HSN code" />
+        ),
+        width: '120px',
+      },
+      {
+        name: 'Rate (₹)',
+        cell: (row) => (
+          <InputField
+            row={row}
+            fieldName="rate"
+            type="number"
+            min="0"
+            step="0.01"
+          />
+        ),
+        width: '120px',
+      },
+      {
+        name: 'Qty',
+        cell: (row) => (
+          <InputField row={row} fieldName="qty" type="number" min="0" />
+        ),
+        width: '80px',
+      },
+      {
+        name: 'Taxable Value',
+        selector: (row) => row.taxableValue,
+        format: (row) => `₹${row.taxableValue.toFixed(2)}`,
+        width: '120px',
+        style: {
+          justifyContent: 'flex-end',
+        },
+      },
+      {
+        name: 'Tax (18%)',
+        selector: (row) => row.taxAmount,
+        format: (row) => `₹${row.taxAmount.toFixed(2)}`,
+        width: '120px',
+        style: {
+          justifyContent: 'flex-end',
+        },
+      },
+      {
+        name: 'Total',
+        selector: (row) => row.total,
+        format: (row) => `₹${row.total.toFixed(2)}`,
+        width: '120px',
+        style: {
+          justifyContent: 'flex-end',
+          fontWeight: 'bold',
+        },
+      },
+      {
+        name: 'Actions',
+        cell: (row) => (
+          <button
+            onClick={() => deleteRow(row.id)}
+            className="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition-colors"
+            title="Delete row"
+            type="button"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-            />
-          </svg>
-        </button>
-      ),
-      width: '80px',
-      center: true,
-    },
-  ];
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+          </button>
+        ),
+        width: '80px',
+        style: {
+          justifyContent: 'center',
+        },
+      },
+    ],
+    [InputField, deleteRow]
+  );
 
-  const calculateTotals = () => {
+  const calculateTotals = useMemo(() => {
     const subtotal = lineItems.reduce(
       (sum, item) => sum + item.taxableValue,
       0
@@ -226,9 +242,9 @@ const InvoiceGenerator = () => {
     const taxAmount = lineItems.reduce((sum, item) => sum + item.taxAmount, 0);
     const total = subtotal + taxAmount;
     return { subtotal, taxAmount, total };
-  };
+  }, [lineItems]);
 
-  const { subtotal, taxAmount, total } = calculateTotals();
+  const { subtotal, taxAmount, total } = calculateTotals;
   const cgst = taxAmount / 2;
   const sgst = taxAmount / 2;
 
@@ -244,17 +260,30 @@ const InvoiceGenerator = () => {
     year: 'numeric',
   });
 
-  const customerDetails = {
-    name: customerName,
-    email: customerEmail,
-    phone: customerPhone,
-    address: customerAddress,
-    gstin: customerGstin,
-    place: customerPlaceOfSupply,
-    invoiceNum: invoiceNumber,
-    invoiceDate: invoice,
-    dueDate: due,
-  };
+  const customerDetails = useMemo(
+    () => ({
+      name: customerName,
+      email: customerEmail,
+      phone: customerPhone,
+      address: customerAddress,
+      gstin: customerGstin,
+      place: customerPlaceOfSupply,
+      invoiceNum: invoiceNumber,
+      invoiceDate: invoice,
+      dueDate: due,
+    }),
+    [
+      customerName,
+      customerEmail,
+      customerPhone,
+      customerAddress,
+      customerGstin,
+      customerPlaceOfSupply,
+      invoiceNumber,
+      invoice,
+      due,
+    ]
+  );
 
   return (
     <div className="mx-auto bg-gray-100 min-h-screen pb-16">
@@ -282,7 +311,8 @@ const InvoiceGenerator = () => {
                 </span>
                 <button
                   onClick={addNewRow}
-                  className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded flex items-center w-full xs:w-auto justify-center"
+                  className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded flex items-center w-full xs:w-auto justify-center transition-colors"
+                  type="button"
                 >
                   <svg
                     className="w-5 h-5 mr-1"
@@ -348,6 +378,7 @@ const InvoiceGenerator = () => {
                 },
               },
             }}
+            pagination={false}
           />
         </div>
 
@@ -402,28 +433,6 @@ const InvoiceGenerator = () => {
           <Footer />
         </div>
       </div>
-
-      {/* <div className="fixed bottom-6 right-6">
-        <button
-          className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105"
-          onClick={() => console.log('Generate invoice')}
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"  
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </button>
-      </div> */}
     </div>
   );
 };

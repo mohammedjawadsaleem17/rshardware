@@ -106,8 +106,8 @@ function numberToWords(num) {
 // Output: Three Hundred Fifty-Six Thousand Five Hundred Ninety-Five And 60/100 (Six Zero)
 
 export default function FinalInvoice({ customerDetails, items }) {
-  console.log('Items, ', items);
-  console.log('Received Customer Details ', customerDetails);
+  // console.log('Items, ', items);
+  // console.log('Received Customer Details ', customerDetails);
 
   const taxAmt = items?.reduce(
     (acc, item) => acc + Number(item.taxableValue),

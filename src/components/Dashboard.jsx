@@ -267,7 +267,7 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Global Styles */}
-      <style jsx global>{`
+      <style global="true">{`
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
         .font-arabic {
           font-family: 'Amiri', serif;
