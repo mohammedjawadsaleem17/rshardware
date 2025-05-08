@@ -9,9 +9,14 @@ import Footer from './Footer';
 import FinalInvoice from './PDF/FinalInvoice';
 import { motion } from 'framer-motion';
 import ProformaInvoice from './PDF/ProformaInvoice';
+import Loader from './Loader/Loader';
+import { toast } from 'react-toastify';
 
 const InvoiceGenerator = () => {
   const {
+    isLoading,
+    connection,
+    fetchInvoiceNo,
     customerName,
     invoiceDate,
     dueDate,
@@ -21,6 +26,16 @@ const InvoiceGenerator = () => {
     customerAddress,
     customerGstin,
     customerPlaceOfSupply,
+    invoiceNo,
+    setInvoiceNo,
+    setCustomerName,
+    setCustomerEmail,
+    setCustomerPhone,
+    setCustomerAddress,
+    setCustomerGstin,
+    setInvoiceDate,
+    setCustomerPlaceOfSupply,
+    setDueDate,
   } = useContext(MainContext);
 
   const [lineItems, setLineItems] = useState([
@@ -287,6 +302,7 @@ const InvoiceGenerator = () => {
 
   return (
     <div className="mx-auto bg-gray-100 min-h-screen pb-16">
+      {isLoading && <Loader />}
       <div className="bg-indigo-600 text-white p-4 sticky top-0 z-10 shadow-md">
         <h1 className="text-xl font-bold text-center">Invoice Generator</h1>
       </div>
@@ -430,7 +446,28 @@ const InvoiceGenerator = () => {
             customerDetails={customerDetails}
             items={lineItems}
             total={total}
+            invoiceNo={invoiceNo}
+            setInvoiceNo={setInvoiceNo}
+            connection={connection}
           />
+          <br />
+          <button
+            className="bg-red-600 text-white p-3 rounded w-full block text-center font-bold"
+            onClick={async () => {
+              toast.success('Refreshed!!');
+              await fetchInvoiceNo();
+              setCustomerName('');
+              setCustomerEmail('');
+              setCustomerPhone('');
+              setCustomerAddress('');
+              setCustomerGstin('');
+              setCustomerPlaceOfSupply('');
+              setInvoiceDate('');
+              setDueDate('');
+            }}
+          >
+            Reset to Default
+          </button>
         </div>
 
         <div className="mt-1">

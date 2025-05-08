@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { MainContext } from './Invoice';
@@ -23,6 +23,9 @@ export default function Customer() {
     setCustomerGstin,
     customerPlaceOfSupply,
     setCustomerPlaceOfSupply,
+    setInvoiceNo,
+    invoiceNo,
+    connection,
   } = useContext(MainContext);
 
   return (
@@ -43,12 +46,27 @@ export default function Customer() {
               type="text"
               placeholder="INV-001"
               required
-              onChange={(e) => setInvoiceNumber(e.target.value)}
-              value={invoiceNumber}
+              value={invoiceNo}
+              disabled={true}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
             />
           </div>
-
+          {!connection && (
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Invoice No.
+              </label>
+              <input
+                type="text"
+                placeholder="INV-001"
+                required
+                value={invoiceNo}
+                onChange={(e) => setInvoiceNumber(e.target.value)}
+                disabled={false}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+              />
+            </div>
+          )}
           <div className="space-y-1">
             <label className="block text-sm font-medium text-gray-700">
               Invoice Date
