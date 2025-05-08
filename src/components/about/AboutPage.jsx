@@ -92,8 +92,3 @@ export default function AboutPage() {
   );
 }
 
- <a href="tel:+918147465517">
-   <button className="bg-white text-indigo-800 hover:bg-gray-100 font-bold py-3 px-8 rounded-md transition-all">
-     Contact Now
-   </button>
- </a>;

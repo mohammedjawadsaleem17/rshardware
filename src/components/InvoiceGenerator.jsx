@@ -426,7 +426,11 @@ const InvoiceGenerator = () => {
             customerDetails={customerDetails}
             items={lineItems}
           />
-          <FinalInvoice customerDetails={customerDetails} items={lineItems} />
+          <FinalInvoice
+            customerDetails={customerDetails}
+            items={lineItems}
+            total={total}
+          />
         </div>
 
         <div className="mt-1">

@@ -11,6 +11,9 @@ import {
 import { styles } from './style';
 import logo from '../../components/assets/logo.png';
 import qr from '../../components/assets/qr.png';
+import { ToastContainer, toast } from 'react-toastify';
+import { useState } from 'react';
+import Loader from '../Loader/Loader';
 
 function numberToWords(num) {
   if (num === 0) return 'Zero';
@@ -105,9 +108,34 @@ function numberToWords(num) {
 
 // Output: Three Hundred Fifty-Six Thousand Five Hundred Ninety-Five And 60/100 (Six Zero)
 
-export default function FinalInvoice({ customerDetails, items }) {
-  // console.log('Items, ', items);
-  // console.log('Received Customer Details ', customerDetails);
+export default function FinalInvoice({ customerDetails, items, total }) {
+  const [loading, setLoading] = useState(false);
+  console.log('Customer details');
+  const handleGenerateInvoice = async () => {
+    try {
+      setLoading(true);
+      console.log('Invoice generated - making API call', total);
+      toast.success(`Invoice Generated for ${customerDetails?.name}`);
+      const response = await fetch('https://rshardware.up.railway.app/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: customerDetails?.name,
+          email: customerDetails?.email,
+          phoneNumber: customerDetails?.phone,
+          totalAmount: total,
+        }),
+      });
+      const data = await response.json();
+      setLoading(false);
+    } catch (error) {
+      console.error('Error updating invoice in database:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const taxAmt = items?.reduce(
     (acc, item) => acc + Number(item.taxableValue),
@@ -303,12 +331,15 @@ export default function FinalInvoice({ customerDetails, items }) {
   return (
     <div>
       <div className="mt-7">
+        {loading && <Loader />}
+        <ToastContainer />
         <PDFDownloadLink
           document={
             <InvoicePDF customerDetails={customerDetails} items={items} />
           }
           fileName={`Invoice-${customerDetails.invoiceNum}.pdf`}
           className="bg-green-600 text-white p-3 rounded w-full block text-center font-bold"
+          onClick={handleGenerateInvoice}
         >
           {({ blob, url, loading, error }) =>
             loading ? 'Preparing document...' : 'Generate Invoice'
