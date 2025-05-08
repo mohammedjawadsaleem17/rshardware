@@ -5,6 +5,7 @@ import Loader from '../Loader/Loader';
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [record, setRecord] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   async function fetchInvoiceRecords() {
     setLoading(true);
     const res = await fetch('https://rshardware.up.railway.app/users');
@@ -60,6 +61,13 @@ export default function Dashboard() {
 
   data = record;
 
+  const filteredData = data?.filter(
+    (item) =>
+      item?.invoiceId?.toString().includes(searchTerm) ||
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.phoneNumber?.toString().includes(searchTerm)
+  );
   return (
     <div>
       {loading && <Loader />}
@@ -76,12 +84,14 @@ export default function Dashboard() {
           type="text"
           placeholder="Search Invoices"
           className="border-1 p-1 border- rounded-md"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
       <DataTable
         columns={columns}
-        data={data}
+        data={filteredData}
         striped
         title="Invoice Records"
       />
