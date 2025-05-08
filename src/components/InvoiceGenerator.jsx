@@ -449,9 +449,18 @@ const InvoiceGenerator = () => {
             invoiceNo={invoiceNo}
             setInvoiceNo={setInvoiceNo}
             connection={connection}
+            fetchInvoiceNo={fetchInvoiceNo}
+            setCustomerName={setCustomerName}
+            setCustomerEmail={setCustomerEmail}
+            setCustomerPhone={setCustomerPhone}
+            setCustomerAddress={setCustomerAddress}
+            setCustomerGstin={setCustomerGstin}
+            setInvoiceDate={setInvoiceDate}
+            setCustomerPlaceOfSupply={setCustomerPlaceOfSupply}
+            setDueDate={setDueDate}
           />
           <br />
-          <button
+          {/* <button
             className="bg-red-600 text-white p-3 rounded w-full block text-center font-bold"
             onClick={async () => {
               toast.success('Refreshed!!');
@@ -467,7 +476,7 @@ const InvoiceGenerator = () => {
             }}
           >
             Reset to Default
-          </button>
+          </button> */}
         </div>
 
         <div className="mt-1">
