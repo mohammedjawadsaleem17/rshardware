@@ -3,16 +3,15 @@ import {
   Document,
   Image,
   Page,
-  PDFViewer,
+  PDFDownloadLink,
   Text,
   View,
-  PDFDownloadLink,
 } from '@react-pdf/renderer';
 import { styles } from './style';
 import logo from '../../components/assets/logo.png';
 import qr from '../../components/assets/qr.png';
 import { ToastContainer, toast } from 'react-toastify';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Loader from '../Loader/Loader';
 
 function numberToWords(num) {
@@ -40,7 +39,6 @@ function numberToWords(num) {
     'Eighteen',
     'Nineteen',
   ];
-
   const tens = [
     '',
     '',
@@ -53,29 +51,26 @@ function numberToWords(num) {
     'Eighty',
     'Ninety',
   ];
-
   const thousandUnits = ['', 'Thousand', 'Million', 'Billion'];
 
   function convertChunk(num) {
     if (num === 0) return '';
-    else if (num < 20) return belowTwenty[num];
-    else if (num < 100)
+    if (num < 20) return belowTwenty[num];
+    if (num < 100)
       return (
         tens[Math.floor(num / 10)] +
         (num % 10 !== 0 ? ' ' + belowTwenty[num % 10] : '')
       );
-    else
-      return (
-        belowTwenty[Math.floor(num / 100)] +
-        ' Hundred' +
-        (num % 100 !== 0 ? ' ' + convertChunk(num % 100) : '')
-      );
+    return (
+      belowTwenty[Math.floor(num / 100)] +
+      ' Hundred' +
+      (num % 100 !== 0 ? ' ' + convertChunk(num % 100) : '')
+    );
   }
 
   function convertInteger(num) {
     let word = '';
     let unitIndex = 0;
-
     while (num > 0) {
       const chunk = num % 1000;
       if (chunk !== 0) {
@@ -87,22 +82,11 @@ function numberToWords(num) {
       num = Math.floor(num / 1000);
       unitIndex++;
     }
-
-    return word.trim().concat(' Only.');
+    return word.trim() + ' Only.';
   }
 
-  const [integerPart, decimalPart] = num.toString().split('.');
-  let result = convertInteger(parseInt(integerPart));
-
-  if (decimalPart) {
-    const decimalWords = decimalPart
-      .split('')
-      .map((digit) => belowTwenty[parseInt(digit)])
-      .join(' ');
-    result += ``;
-  }
-
-  return result;
+  const [integerPart] = num.toString().split('.');
+  return convertInteger(parseInt(integerPart));
 }
 
 export default function FinalInvoice({
@@ -112,24 +96,25 @@ export default function FinalInvoice({
   invoiceNo,
   setInvoiceNo,
   connection,
+  fetchInvoiceNo,
+  setCustomerName,
+  setCustomerEmail,
+  setCustomerPhone,
+  setCustomerAddress,
+  setCustomerGstin,
+  setInvoiceDate,
+  setCustomerPlaceOfSupply,
+  setDueDate,
 }) {
   const [loading, setLoading] = useState(false);
+  const [invoiceReady, setInvoiceReady] = useState(false);
 
-  //Invoice Id Start
-  console.log('Main-----', invoiceNo);
-  //Invoice Id
-
-  console.log('Customer details');
   const handleGenerateInvoice = async () => {
     try {
       setLoading(true);
-      console.log('Invoice generated - making API call', total);
-      toast.success(`Invoice Generated for ${customerDetails?.name}`);
       const response = await fetch('https://rshardware.up.railway.app/users', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: customerDetails?.name,
           email: customerDetails?.email,
@@ -137,42 +122,45 @@ export default function FinalInvoice({
           totalAmount: total,
         }),
       });
+
       const data = await response.json();
-      setLoading(false);
+      toast.success(`Invoice Generated for ${customerDetails?.name}`);
+      setInvoiceReady(true);
     } catch (error) {
       console.error('Error updating invoice in database:', error);
+      toast.error('Failed to generate invoice');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleReset = async () => {
+    setInvoiceReady(false);
+    toast.info('Reset to default');
+    await fetchInvoiceNo();
+    setCustomerName('');
+    setCustomerEmail('');
+    setCustomerPhone('');
+    setCustomerAddress('');
+    setCustomerGstin('');
+    setCustomerPlaceOfSupply('');
+    setInvoiceDate('');
+    setDueDate('');
   };
 
   const taxAmt = items?.reduce(
     (acc, item) => acc + Number(item.taxableValue),
     0
   );
-  const taxPayable = items?.reduce(
-    (acc, item) => acc + Number(item.taxAmount),
-    0
-  );
-
   const cgst = (taxAmt / 100) * 9;
-
-  console.log('Taxable Amount ', cgst);
-
   const totalPayable = taxAmt + cgst * 2;
-
   const wordsAmount = numberToWords(totalPayable);
-  console.log(wordsAmount);
 
   const InvoicePDF = () => (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <View>
-            {/* <Text>Invoice</Text>
-          <Text>Invoice #INV-2024-001</Text> */}
-            <Image src={logo} style={styles.logo} />
-          </View>
+          <Image src={logo} style={styles.logo} />
           <View>
             <Text style={styles.heading}>
               Tax Invoice/Bill of Supply/Cash Memo
@@ -184,85 +172,53 @@ export default function FinalInvoice({
           <View style={styles.soldBy}>
             <Text style={styles.rs}>Sold By:</Text>
             <Text style={styles.rspace}>R S HARDWARE GLASS & ELECTRICALS</Text>
-            <Text>
-              Building No- 3/7, Shop No-6, Ground Floor Gowri Shankar Complex
-              Arekere Main Road Bengaluru, Karnataka, India PIN: 560076
-            </Text>
+            <Text>Building No-3/7, Shop No-6, Ground Floor...</Text>
             <Text>Mob: 8147465517</Text>
             <Text>Email: abdulfahad1436@gmail.com</Text>
-            <Text style={styles.pan}>
-              PAN No:<Text style={styles.sr}></Text>
-            </Text>
+            <Text style={styles.pan}>PAN No:</Text>
             <Text style={styles.heading}>
-              GST Registration No:
-              <Text style={styles.sr}> 29FKLPP1223G1ZO</Text>
+              GST No: <Text style={styles.sr}>29FKLPP1223G1ZO</Text>
             </Text>
             <Text style={styles.invoice}>
-              Invoice Number:
+              Invoice Number:{' '}
               <Text style={styles.sr}>
                 {connection ? invoiceNo : customerDetails.invoiceNum}
               </Text>
             </Text>
             <Text style={styles.pos}>
-              Invoice Date:
-              <Text style={styles.sr}> {customerDetails?.invoiceDate}</Text>
+              Invoice Date:{' '}
+              <Text style={styles.sr}>{customerDetails?.invoiceDate}</Text>
             </Text>
             <Text style={styles.pos}>
-              Due Date:
-              <Text style={styles.sr}> {customerDetails?.dueDate}</Text>
+              Due Date:{' '}
+              <Text style={styles.sr}>{customerDetails?.dueDate}</Text>
             </Text>
           </View>
           <View style={styles.soldBy}>
-            <View style={styles.rightBill}>
-              <Text style={styles.rs}>Billing Address:</Text>
-              <Text>{customerDetails?.name}</Text>
-              <Text>{customerDetails?.address}</Text>
-              <Text style={styles.sr2}>
-                GST Registration No:
-                <Text style={styles.normalFont}>
-                  {customerDetails?.gstin?.toUpperCase()}
-                </Text>
-              </Text>
-              <Text style={styles.heading}>
-                Email:
-                <Text style={styles.sr}> {customerDetails?.email}</Text>
-              </Text>
-              <Text style={styles.heading}>
-                Ph:
-                <Text style={styles.sr}> {customerDetails?.phone}</Text>
-              </Text>
-              <Text style={styles.shippingAddress}>
-                <Text style={styles.rs}>Shipping Address:</Text>
-              </Text>
-              <Text style={styles.sr}>{customerDetails?.name}</Text>
-              <Text>{customerDetails?.address}</Text>
-
-              <Text style={styles.sr2}>
-                Place of Supply:
-                <Text style={styles.sr}> {customerDetails?.place}</Text>
-              </Text>
-              <Text style={styles.sr2}>
-                Place of Delivery:
-                <Text style={styles.sr}> {customerDetails?.place}</Text>
-              </Text>
-            </View>
+            <Text style={styles.rs}>Billing Address:</Text>
+            <Text>{customerDetails?.name}</Text>
+            <Text>{customerDetails?.address}</Text>
+            <Text>GST No: {customerDetails?.gstin?.toUpperCase()}</Text>
+            <Text>Email: {customerDetails?.email}</Text>
+            <Text>Ph: {customerDetails?.phone}</Text>
+            <Text>Shipping Address: {customerDetails?.address}</Text>
+            <Text>Place of Supply: {customerDetails?.place}</Text>
           </View>
         </View>
-        {/* Table Comes here */}
+
+        {/* Table Header */}
         <View style={[styles.row, styles.bold]}>
           <Text style={styles.cell}>Sl No.</Text>
-          <Text style={[styles.cell, styles.descriptionCell]}>
-            Item/Particulars
-          </Text>
-          <Text style={styles.cell}>HSN Code</Text>
+          <Text style={[styles.cell, styles.descriptionCell]}>Item</Text>
+          <Text style={styles.cell}>HSN</Text>
           <Text style={styles.cell}>Rate</Text>
           <Text style={styles.cell}>QTY</Text>
-          <Text style={styles.cell}>Taxable Value</Text>
-          <Text style={styles.cell}>Tax Amount</Text>
-          <Text style={styles.cell}>Amount</Text>
+          <Text style={styles.cell}>Taxable</Text>
+          <Text style={styles.cell}>Tax</Text>
+          <Text style={styles.cell}>Total</Text>
         </View>
 
-        {/* Table Data */}
+        {/* Table Rows */}
         {items?.map((item) => (
           <View style={styles.row} key={item.sno}>
             <Text style={styles.cell}>{item.sno}</Text>
@@ -272,33 +228,29 @@ export default function FinalInvoice({
             <Text style={styles.cell}>{item.hsn?.slice(0, 7)}</Text>
             <Text style={styles.cell}>{item.rate}</Text>
             <Text style={styles.cell}>{item.qty}</Text>
-            <Text style={styles.cell}>{item.taxAmount?.toFixed(2)}</Text>
             <Text style={styles.cell}>{item.taxableValue?.toFixed(2)}</Text>
+            <Text style={styles.cell}>{item.taxAmount?.toFixed(2)}</Text>
             <Text style={styles.cell}>{item.total?.toFixed(2)}</Text>
           </View>
         ))}
 
-        {/* Totals Section */}
+        {/* Totals */}
         <View>
           <Text style={styles.totalText}>
             Taxable Amount: {taxAmt?.toFixed(2)}
           </Text>
           <Text style={styles.totalText}>CGST (9.0%): {cgst?.toFixed(2)}</Text>
           <Text style={styles.totalText}>SGST (9.0%): {cgst?.toFixed(2)}</Text>
-          {/* <Text style={styles.totalText}>
-            Discount (10.0%): -{discount.toFixed(2)}
-          </Text> */}
           <Text style={styles.total}>
             Total (INR): {totalPayable.toFixed(2)}
           </Text>
           <Text style={{ marginTop: 20, fontSize: 10 }}>
-            Amount in Words:<Text style={styles.rs}> {wordsAmount}</Text>
+            Amount in Words: <Text style={styles.rs}>{wordsAmount}</Text>
           </Text>
         </View>
 
-        {/* Footer */}
+        {/* Bank */}
         <View style={styles.bankContainer}>
-          {/* Left Section - Bank Details */}
           <View style={styles.bankDetails}>
             <Text
               style={{
@@ -309,29 +261,19 @@ export default function FinalInvoice({
             >
               Bank Details:
             </Text>
-            <Text>
-              Bank: <Text style={styles.rs}>HDFC BANK</Text>
-            </Text>
-            <Text>
-              Account: <Text style={styles.rs}>50200093163651</Text>
-            </Text>
-            <Text>
-              IFSC CODE: <Text style={styles.rs}>HDFC0002841</Text>
-            </Text>
-            <Text>
-              Branch: <Text style={styles.rs}>VIJAYA BANK LAYOUT</Text>
-            </Text>
+            <Text>Bank: HDFC BANK</Text>
+            <Text>Account: 50200093163651</Text>
+            <Text>IFSC: HDFC0002841</Text>
+            <Text>Branch: VIJAYA BANK LAYOUT</Text>
             <Image src={qr} style={styles.logo} />
           </View>
-
-          {/* Right Section - Business Name */}
           <View style={styles.businessDetails}>
             <Text style={styles.businessName}>
               RS HARDWARE GLASS & ELECTRICALS
             </Text>
           </View>
         </View>
-        <View style={{ marginTop: '2px', textAlign: 'center', fontSize: 10 }}>
+        <View style={{ textAlign: 'center', fontSize: 10 }}>
           <Text>
             This is a computer-generated invoice and does not need a signature.
           </Text>
@@ -339,23 +281,40 @@ export default function FinalInvoice({
       </Page>
     </Document>
   );
+
   return (
     <div>
-      <div className="mt-7">
-        {loading && <Loader />}
-        <ToastContainer />
-        <PDFDownloadLink
-          document={
-            <InvoicePDF customerDetails={customerDetails} items={items} />
-          }
-          fileName={`Invoice-${customerDetails.invoiceNum}.pdf`}
-          className="bg-green-600 text-white p-3 rounded w-full block text-center font-bold"
-          onClick={handleGenerateInvoice}
-        >
-          {({ blob, url, loading, error }) =>
-            loading ? 'Preparing document...' : 'Generate Invoice'
-          }
-        </PDFDownloadLink>
+      <ToastContainer />
+      {loading && <Loader />}
+      <div className="mt-7 space-y-4">
+        {!invoiceReady && (
+          <button
+            onClick={handleGenerateInvoice}
+            className="bg-indigo-600 text-white p-3 rounded w-full block text-center font-bold"
+          >
+            Generate Invoice
+          </button>
+        )}
+
+        {invoiceReady && (
+          <>
+            <PDFDownloadLink
+              document={<InvoicePDF />}
+              fileName={`Invoice-${customerDetails.invoiceNum}.pdf`}
+              className="bg-green-600 text-white p-3 rounded w-full block text-center font-bold my-7"
+            >
+              {({ loading }) =>
+                loading ? 'Preparing document...' : 'Download Invoice'
+              }
+            </PDFDownloadLink>
+            <button
+              onClick={handleReset}
+              className="bg-red-600 text-white p-3 rounded w-full block text-center font-bold "
+            >
+              Reset to Default
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
