@@ -94,6 +94,22 @@ const Header = () => {
                   {isAuthenticated && (
                     <motion.div whileHover={{ scale: 1.05 }}>
                       <Link
+                        to="/home"
+                        className="relative text-gray-600 hover:text-indigo-600 font-medium px-3 py-2 transition-colors"
+                      >
+                        Home
+                        <motion.div
+                          className="absolute bottom-0 left-0 h-0.5 bg-indigo-600"
+                          initial={{ width: 0 }}
+                          whileHover={{ width: '100%' }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      </Link>
+                    </motion.div>
+                  )}
+                  {isAuthenticated && (
+                    <motion.div whileHover={{ scale: 1.05 }}>
+                      <Link
                         to="/dashboard"
                         className="relative text-gray-600 hover:text-indigo-600 font-medium px-3 py-2 transition-colors"
                       >
@@ -247,7 +263,22 @@ const Header = () => {
                         transition={{ delay: 0.1 }}
                       >
                         <Link
-                          to="/"
+                          to="/home"
+                          className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          Home
+                        </Link>
+                      </motion.div>
+                    )}
+                    {isAuthenticated && (
+                      <motion.div
+                        initial={{ x: 20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        <Link
+                          to="/dashboard"
                           className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-indigo-100 font-medium"
                           onClick={() => setMobileMenuOpen(false)}
                         >

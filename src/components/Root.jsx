@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
 
-export default function Dashboard() {
+export default function Root() {
   const [healingVerse, setHealingVerse] = useState({
     text: 'وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ',
     translation:
