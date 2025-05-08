@@ -17,15 +17,18 @@ export default function Invoice() {
   const [dueDate, setDueDate] = React.useState(new Date());
   const [invoiceNo, setInvoiceNo] = useState('');
   const [isLoading, SetIsLoading] = useState(false);
+  const [connection, setConnection] = useState(false);
   async function fetchInvoiceNumber() {
     try {
       SetIsLoading(true);
       const res = await fetch('https://rshardware.up.railway.app/users');
       const data = await res.json();
       console.log('Data Received', data);
+      setConnection(true);
     } catch (e) {
       console.log(e);
       SetIsLoading(false);
+      setConnection(false);
     } finally {
       SetIsLoading(false);
     }
@@ -39,6 +42,7 @@ export default function Invoice() {
       console.log(data);
       setInvoiceNo(`INV-${data}`);
       SetIsLoading(false);
+      setConnection(true);
     } catch (e) {
       console.log('Error');
     } finally {
@@ -75,6 +79,8 @@ export default function Invoice() {
           dueDate,
           setDueDate,
           isLoading,
+          fetchInvoiceNo,
+          connection,
         }}
       >
         <InvoiceGenerator />

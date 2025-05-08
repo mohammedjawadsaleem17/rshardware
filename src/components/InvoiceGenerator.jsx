@@ -10,10 +10,13 @@ import FinalInvoice from './PDF/FinalInvoice';
 import { motion } from 'framer-motion';
 import ProformaInvoice from './PDF/ProformaInvoice';
 import Loader from './Loader/Loader';
+import { toast } from 'react-toastify';
 
 const InvoiceGenerator = () => {
   const {
     isLoading,
+    connection,
+    fetchInvoiceNo,
     customerName,
     invoiceDate,
     dueDate,
@@ -25,6 +28,14 @@ const InvoiceGenerator = () => {
     customerPlaceOfSupply,
     invoiceNo,
     setInvoiceNo,
+    setCustomerName,
+    setCustomerEmail,
+    setCustomerPhone,
+    setCustomerAddress,
+    setCustomerGstin,
+    setInvoiceDate,
+    setCustomerPlaceOfSupply,
+    setDueDate,
   } = useContext(MainContext);
 
   const [lineItems, setLineItems] = useState([
@@ -437,7 +448,26 @@ const InvoiceGenerator = () => {
             total={total}
             invoiceNo={invoiceNo}
             setInvoiceNo={setInvoiceNo}
+            connection={connection}
           />
+          <br />
+          <button
+            className="bg-red-600 text-white p-3 rounded w-full block text-center font-bold"
+            onClick={async () => {
+              toast.success('Refreshed!!');
+              await fetchInvoiceNo();
+              setCustomerName('');
+              setCustomerEmail('');
+              setCustomerPhone('');
+              setCustomerAddress('');
+              setCustomerGstin('');
+              setCustomerPlaceOfSupply('');
+              setInvoiceDate('');
+              setDueDate('');
+            }}
+          >
+            Reset to Default
+          </button>
         </div>
 
         <div className="mt-1">

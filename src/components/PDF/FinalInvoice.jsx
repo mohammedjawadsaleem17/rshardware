@@ -111,6 +111,7 @@ export default function FinalInvoice({
   total,
   invoiceNo,
   setInvoiceNo,
+  connection,
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -198,7 +199,9 @@ export default function FinalInvoice({
             </Text>
             <Text style={styles.invoice}>
               Invoice Number:
-              <Text style={styles.sr}> {invoiceNo}</Text>
+              <Text style={styles.sr}>
+                {connection ? invoiceNo : customerDetails.invoiceNum}
+              </Text>
             </Text>
             <Text style={styles.pos}>
               Invoice Date:
