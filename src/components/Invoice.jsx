@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import InvoiceTemplate from '../../InvoiceTemplate';
 import InvoiceGenerator from './InvoiceGenerator';
 
@@ -15,6 +15,16 @@ export default function Invoice() {
   const [customerPlaceOfSupply, setCustomerPlaceOfSupply] = React.useState('');
   const [invoiceDate, setInvoiceDate] = React.useState(new Date());
   const [dueDate, setDueDate] = React.useState(new Date());
+
+  async function fetchInvoiceNumber() {
+    const res = await fetch('https://rshardware.up.railway.app/users');
+    const data = await res.json();
+    console.log('Data Received', data);
+  }
+
+  useEffect(() => {
+    fetchInvoiceNumber();
+  }, []);
 
   return (
     <div>

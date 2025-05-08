@@ -81,9 +81,20 @@ export default function Customer() {
             </div>
           </div>
 
-          <div className="...">
+          <div className="space-y-1">
+            <label className="block text-sm font-medium text-gray-700">
+              Invoice Date
+            </label>
+            <DatePicker
+              selected={invoiceDate}
+              onChange={(date) => setInvoiceDate(date)}
+              dateFormat="dd/MM/yyyy"
+              className="border border-gray-300 p-2 rounded w-full md:w-auto"
+            />
+          </div>
+          {/* <div className="...">
             <div className="flex flex-col md:flex-row md:items-center">
-              <label className="font-light mb-2 md:mb-0 md:mr-2 w-33">
+              <label className="font-light mb-2 mt-1 md:mr-2 w-33 lg:mt-5">
                 Invoice Date
               </label>
               <DatePicker
@@ -93,7 +104,7 @@ export default function Customer() {
                 className="border border-gray-300 p-2 rounded w-full md:w-auto"
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
 
-export default function Dashboard() {
+export default function Root() {
   const [healingVerse, setHealingVerse] = useState({
     text: 'وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ',
     translation:
@@ -267,7 +267,7 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Global Styles */}
-      <style jsx global>{`
+      <style global="true">{`
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
         .font-arabic {
           font-family: 'Amiri', serif;
