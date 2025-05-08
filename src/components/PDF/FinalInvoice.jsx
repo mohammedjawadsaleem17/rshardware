@@ -12,7 +12,7 @@ import { styles } from './style';
 import logo from '../../components/assets/logo.png';
 import qr from '../../components/assets/qr.png';
 import { ToastContainer, toast } from 'react-toastify';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Loader from '../Loader/Loader';
 
 function numberToWords(num) {
@@ -91,7 +91,6 @@ function numberToWords(num) {
     return word.trim().concat(' Only.');
   }
 
-  // Handling decimal part
   const [integerPart, decimalPart] = num.toString().split('.');
   let result = convertInteger(parseInt(integerPart));
 
@@ -106,10 +105,19 @@ function numberToWords(num) {
   return result;
 }
 
-// Output: Three Hundred Fifty-Six Thousand Five Hundred Ninety-Five And 60/100 (Six Zero)
-
-export default function FinalInvoice({ customerDetails, items, total }) {
+export default function FinalInvoice({
+  customerDetails,
+  items,
+  total,
+  invoiceNo,
+  setInvoiceNo,
+}) {
   const [loading, setLoading] = useState(false);
+
+  //Invoice Id Start
+  console.log('Main-----', invoiceNo);
+  //Invoice Id
+
   console.log('Customer details');
   const handleGenerateInvoice = async () => {
     try {
@@ -190,7 +198,7 @@ export default function FinalInvoice({ customerDetails, items, total }) {
             </Text>
             <Text style={styles.invoice}>
               Invoice Number:
-              <Text style={styles.sr}> {customerDetails.invoiceNum}</Text>
+              <Text style={styles.sr}> {invoiceNo}</Text>
             </Text>
             <Text style={styles.pos}>
               Invoice Date:

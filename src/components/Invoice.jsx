@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import InvoiceTemplate from '../../InvoiceTemplate';
 import InvoiceGenerator from './InvoiceGenerator';
 
@@ -15,14 +15,38 @@ export default function Invoice() {
   const [customerPlaceOfSupply, setCustomerPlaceOfSupply] = React.useState('');
   const [invoiceDate, setInvoiceDate] = React.useState(new Date());
   const [dueDate, setDueDate] = React.useState(new Date());
-
+  const [invoiceNo, setInvoiceNo] = useState('');
+  const [isLoading, SetIsLoading] = useState(false);
   async function fetchInvoiceNumber() {
-    const res = await fetch('https://rshardware.up.railway.app/users');
-    const data = await res.json();
-    console.log('Data Received', data);
+    try {
+      SetIsLoading(true);
+      const res = await fetch('https://rshardware.up.railway.app/users');
+      const data = await res.json();
+      console.log('Data Received', data);
+    } catch (e) {
+      console.log(e);
+      SetIsLoading(false);
+    } finally {
+      SetIsLoading(false);
+    }
   }
 
+  async function fetchInvoiceNo() {
+    try {
+      SetIsLoading(true);
+      const res = await fetch('https://rshardware.up.railway.app/invoiceId');
+      const data = await res.json();
+      console.log(data);
+      setInvoiceNo(`INV-${data}`);
+      SetIsLoading(false);
+    } catch (e) {
+      console.log('Error');
+    } finally {
+      SetIsLoading(false);
+    }
+  }
   useEffect(() => {
+    fetchInvoiceNo();
     fetchInvoiceNumber();
   }, []);
 
@@ -30,6 +54,8 @@ export default function Invoice() {
     <div>
       <MainContext.Provider
         value={{
+          invoiceNo,
+          setInvoiceNo,
           invoiceNumber,
           setInvoiceNumber,
           customerName,
@@ -48,6 +74,7 @@ export default function Invoice() {
           setInvoiceDate,
           dueDate,
           setDueDate,
+          isLoading,
         }}
       >
         <InvoiceGenerator />
