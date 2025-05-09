@@ -1,6 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import Loader from '../Loader/Loader';
+import { Link } from 'react-router-dom';
+
+const customStyles = {
+  headCells: {
+    style: {
+      backgroundColor: '#6366F1', // Tailwind's indigo-500
+      color: 'white',
+      fontWeight: 'bold',
+    },
+  },
+  cells: {
+    style: {
+      wordBreak: 'break-word',
+    },
+  },
+  title: {
+    style: {
+      textAlign: 'center',
+      width: '100%',
+      fontSize: '1.25rem',
+      fontWeight: '600',
+      color: '#111827', // Tailwind gray-900
+      marginBottom: '1rem',
+    },
+  },
+};
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
@@ -22,23 +48,40 @@ export default function Dashboard() {
   const columns = [
     {
       name: 'Invoice ID',
-      selector: (row) => row.invoiceId,
+      selector: (row) => (
+        <Link
+          to={`/dashboard/${row._id}`}
+          className="underline text-indigo-400 break-all"
+        >
+          {row.invoiceId}
+        </Link>
+      ),
+      sortable: true,
+      wrap: true,
     },
     {
       name: 'Customer Name',
       selector: (row) => row.name,
+      sortable: true,
+      wrap: true,
     },
     {
       name: 'Customer Email',
       selector: (row) => row.email,
+      sortable: true,
+      wrap: true,
     },
     {
       name: 'Customer Phone Number',
       selector: (row) => row.phoneNumber,
+      sortable: true,
+      wrap: true,
     },
     {
       name: 'Total Amount',
       selector: (row) => row.totalAmount,
+      sortable: true,
+      wrap: true,
     },
   ];
 
@@ -69,11 +112,11 @@ export default function Dashboard() {
       item.phoneNumber?.toString().includes(searchTerm)
   );
   return (
-    <div>
+    <div className="mx-auto px-5">
       {loading && <Loader />}
       <div className="px-4 pt-8 flex justify-end">
         <button
-          className="bg-blue-600 hover:bg-blue-700 text-white font-light py-3 px-6 rounded-lg transition-colors duration-300 flex items-center gap-2"
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-light py-2 px-5 rounded-lg transition-colors duration-300 flex items-center gap-2"
           onClick={fetchInvoiceRecords}
         >
           Refresh Records
@@ -93,7 +136,12 @@ export default function Dashboard() {
         columns={columns}
         data={filteredData}
         striped
-        title="Invoice Records"
+        title={
+          <div className="w-full text-center text-2xl font-semibold text-gray-800">
+            Invoice Records
+          </div>
+        }
+        customStyles={customStyles}
       />
     </div>
   );

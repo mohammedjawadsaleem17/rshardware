@@ -12,6 +12,7 @@ import Landing from './Landing';
 import AboutPage from './about/AboutPage';
 import Root from './Root';
 import Dashboard from './dashboard/Dashboard';
+import InvoiceDetails from './PDF/InvoiceDetails';
 
 function ProtectedRoute({ element }) {
   const { isAuthenticated } = useAuth();
@@ -40,6 +41,10 @@ export default function Navigation() {
             <Route
               path="/dashboard"
               element={<ProtectedRoute element={<Dashboard />} />}
+            />
+            <Route
+              path="/dashboard/:invoiceId"
+              element={<ProtectedRoute element={<InvoiceDetails />} />}
             />
             <Route
               path="/invoice"
