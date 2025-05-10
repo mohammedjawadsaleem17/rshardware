@@ -79,17 +79,19 @@ function numberToWords(num) {
   return convertInteger(parseInt(integerPart));
 }
 
-export default function InvoicePDF() {
+export default function InvoicePDF({ userData }) {
   const connection = '';
   const items = [];
-    const invoiceNo = '';
-    const customerDetails={}
+  const invoiceNo = '';
+  const customerDetails = {};
 
-  const taxAmt = 10 / 1.18; 
+  const taxAmt = 10 / 1.18;
   const cgst = (taxAmt / 100) * 9;
   const totalPayable = taxAmt + cgst * 2;
   const wordsAmount = numberToWords(totalPayable);
+  console.log('--hrwehfoqehvoichqoih----', userData.items);
 
+  console.log('PDF WAS CALLEDee', userData);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -109,34 +111,31 @@ export default function InvoicePDF() {
             <Text>Building No-3/7, Shop No-6, Ground Floor...</Text>
             <Text>Mob: 8147465517</Text>
             <Text>Email: abdulfahad1436@gmail.com</Text>
-            <Text style={styles.pan}>PAN No:</Text>
+            <Text style={styles.pan}>PAN No: -</Text>
             <Text style={styles.heading}>
               GST No: <Text style={styles.sr}>29FKLPP1223G1ZO</Text>
             </Text>
             <Text style={styles.invoice}>
               Invoice Number:{' '}
-              <Text style={styles.sr}>
-                {connection ? invoiceNo : customerDetails.invoiceNum}
-              </Text>
+              <Text style={styles.sr}> {userData?.invoiceId}</Text>
             </Text>
             <Text style={styles.pos}>
               Invoice Date:{' '}
-              <Text style={styles.sr}>{customerDetails?.invoiceDate}</Text>
+              <Text style={styles.sr}> {userData?.invoiceDate}</Text>
             </Text>
             <Text style={styles.pos}>
-              Due Date:{' '}
-              <Text style={styles.sr}>{customerDetails?.dueDate}</Text>
+              Due Date: <Text style={styles.sr}> {userData?.dueDate}</Text>
             </Text>
           </View>
           <View style={styles.soldBy}>
-            <Text style={styles.rs}>Billing Address:</Text>
-            <Text>{customerDetails?.name}</Text>
-            <Text>{customerDetails?.address}</Text>
-            <Text>GST No: {customerDetails?.gstin?.toUpperCase()}</Text>
-            <Text>Email: {customerDetails?.email}</Text>
-            <Text>Ph: {customerDetails?.phone}</Text>
-            <Text>Shipping Address: {customerDetails?.address}</Text>
-            <Text>Place of Supply: {customerDetails?.place}</Text>
+            <Text style={styles.rs}>Billing Address: </Text>
+            <Text>{userData?.name}</Text>
+            <Text>{userData?.billingAddress}</Text>
+            <Text>GST No: {userData?.gstIn?.toUpperCase()}</Text>
+            <Text>Email: {userData?.email}</Text>
+            <Text>Ph: {userData?.phoneNumber}</Text>
+            <Text>Shipping Address: {userData?.billingAddress}</Text>
+            <Text>Place of Supply: {userData?.placeOfSupply}</Text>
           </View>
         </View>
 
@@ -152,7 +151,22 @@ export default function InvoicePDF() {
           <Text style={styles.cell}>Total</Text>
         </View>
 
-        {/* Table Rows */}
+        {/* Table Rows
+        {items?.map((item) => (
+          <View style={styles.row} key={item.sno}>
+            <Text style={styles.cell}>{item.sno}</Text>
+            <Text style={[styles.cell, styles.descriptionCell]}>
+              {item.item}
+            </Text>
+            <Text style={styles.cell}>{item.hsn?.slice(0, 7)}</Text>
+            <Text style={styles.cell}>{item.rate}</Text>
+            <Text style={styles.cell}>{item.qty}</Text>
+            <Text style={styles.cell}>{item.taxableValue?.toFixed(2)}</Text>
+            <Text style={styles.cell}>{item.taxAmount?.toFixed(2)}</Text>
+            <Text style={styles.cell}>{item.total?.toFixed(2)}</Text>
+          </View>
+        ))} */}
+
         {items?.map((item) => (
           <View style={styles.row} key={item.sno}>
             <Text style={styles.cell}>{item.sno}</Text>

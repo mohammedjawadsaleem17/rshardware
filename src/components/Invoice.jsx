@@ -18,12 +18,15 @@ export default function Invoice() {
   const [invoiceNo, setInvoiceNo] = useState('');
   const [isLoading, SetIsLoading] = useState(false);
   const [connection, setConnection] = useState(false);
+  const [items, setItems] = useState([]);
   async function fetchInvoiceNumber() {
     try {
       SetIsLoading(true);
-      const res = await fetch('https://rshardware.up.railway.app/users');
+      // const res = await fetch('https://rshardware.up.railway.app/users');
+      const res = await fetch('http://localhost:8080/users');
       const data = await res.json();
       console.log('Data Received', data);
+      setItems(data?.items);
       setConnection(true);
     } catch (e) {
       console.log(e);
@@ -81,6 +84,7 @@ export default function Invoice() {
           isLoading,
           fetchInvoiceNo,
           connection,
+          items,
         }}
       >
         <InvoiceGenerator />

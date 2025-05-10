@@ -110,18 +110,52 @@ export default function FinalInvoice({
   const [invoiceReady, setInvoiceReady] = useState(false);
 
   const handleGenerateInvoice = async () => {
+    console.log('Customer Details ', customerDetails);
+    console.log('-------------------------------------------');
+    console.log('Invoice Date: ', customerDetails?.invoiceDate);
+    console.log('name: ', customerDetails?.name);
+    console.log('email: ', customerDetails?.email);
+    console.log('Phone Number', customerDetails?.phone);
+    console.log('billingAddress: ', customerDetails?.customerAddress);
+    console.log('gstIn: ', customerDetails?.gstin);
+    console.log('placeOfSupply: ', customerDetails?.customerPlaceOfSupply);
+    console.log('dueDate: ', customerDetails?.dueDate);
+    console.log('items: ', customerDetails?.lineItems);
+    console.log('-------------------------------------------');
+    console.log('ITEM', items);
     try {
       setLoading(true);
       const response = await fetch('https://rshardware.up.railway.app/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+
         body: JSON.stringify({
+          invoiceId: invoiceNo,
+          invoiceDate: customerDetails?.invoiceDate,
           name: customerDetails?.name,
           email: customerDetails?.email,
           phoneNumber: customerDetails?.phone,
-          totalAmount: total,
+          billingAddress: customerDetails?.customerAddress,
+          gstIn: customerDetails?.gstin,
+          placeOfSupply: customerDetails?.customerPlaceOfSupply,
+          dueDate: customerDetails?.dueDate,
+          items: customerDetails?.lineItems,
         }),
       });
+
+      console.log(
+        JSON.stringify({
+          invoiceDate: customerDetails?.invoiceDate,
+          name: customerDetails?.name,
+          email: customerDetails?.email,
+          phoneNumber: customerDetails?.phone,
+          billingAddress: customerDetails?.customerAddress,
+          gstIn: customerDetails?.gstin,
+          placeOfSupply: customerDetails?.customerPlaceOfSupply,
+          dueDate: customerDetails?.dueDate,
+          items: customerDetails?.lineItems,
+        })
+      );
 
       const data = await response.json();
       toast.success(`Invoice Generated for ${customerDetails?.name}`);
@@ -219,6 +253,7 @@ export default function FinalInvoice({
         </View>
 
         {/* Table Rows */}
+
         {items?.map((item) => (
           <View style={styles.row} key={item.sno}>
             <Text style={styles.cell}>{item.sno}</Text>
