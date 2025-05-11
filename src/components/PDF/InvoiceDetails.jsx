@@ -1,38 +1,43 @@
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import React, { useEffect, useState } from 'react';
 import InvoicePDF from './InvoicePDF';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 const InvoiceDetails = () => {
-  const Navigate = useNavigate();
-  const [userData, setUserData] = useState({});
-  const { invoiceId :ID} = useParams();
-  console.log(ID);
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { invoiceId: ID } = useParams();
 
-    async function getDetails(){
-    const res = await fetch(
-      `https://rshardware.up.railway.app/users/${ID}`
-    );
-    const data = await res.json();
-    console.log(data);
-    setUserData(data);
-    }
-  
-  
   useEffect(() => {
-    getDetails();
-  },[])
-  
+    async function getDetails() {
+      try {
+        const res = await fetch(
+          `https://rshardware.up.railway.app/users/${ID}`
+        );
+        const data = await res.json();
+        setUserData(data);
+      } catch (error) {
+        console.error('Failed to fetch invoice data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  console.log('-------------');
-  console.log(userData);
-  console.log('-------------');
+    getDetails();
+  }, [ID]);
+
+  if (loading || !userData) {
+    return <Loader />;
+  }
+
   const amount = userData?.items?.reduce(
-    (acc, ele) => acc + Number(ele?.taxableValue),
+    (acc, ele) => acc + Number(ele?.taxableValue || 0),
     0
   );
   const taxAmt = userData?.items?.reduce(
-    (acc, ele) => acc + Number(ele?.taxAmount),
+    (acc, ele) => acc + Number(ele?.taxAmount || 0),
     0
   );
 
@@ -42,7 +47,7 @@ const InvoiceDetails = () => {
         <div className="px-4 pt-8 flex justify-end">
           <button
             className="bg-indigo-500 hover:bg-indigo-700 text-white font-light py-2 px-5 rounded-lg transition-colors duration-300 flex items-center gap-2 mb-2"
-            onClick={() => Navigate('/dashboard')}
+            onClick={() => navigate('/dashboard')}
           >
             Back
           </button>
@@ -99,13 +104,6 @@ const InvoiceDetails = () => {
             <p>
               <span className="font-semibold">Ph: </span>
               {userData?.phoneNumber}
-            </p>
-            <p>
-              <span className="font-semibold">Due Date:</span>
-              {userData?.dueDate}
-            </p>
-            <p className="font-semibold">
-              <span> </span>
             </p>
           </div>
         </div>
@@ -167,13 +165,13 @@ const InvoiceDetails = () => {
                     {ele?.qty}
                   </td>
                   <td className="border border-gray-300 px-2 py-1">
-                    {ele?.taxableValue}
+                    ₹ {Number(ele?.taxableValue || 0).toFixed(2)}
                   </td>
                   <td className="border border-gray-300 px-2 py-1">
-                    {ele?.taxAmount}
+                    ₹ {Number(ele?.taxAmount || 0).toFixed(2)}
                   </td>
                   <td className="border border-gray-300 px-2 py-1">
-                    {ele?.total}
+                    ₹ {Number(ele?.total || 0).toFixed(2)}
                   </td>
                 </tr>
               ))}
@@ -184,17 +182,22 @@ const InvoiceDetails = () => {
         {/* Totals */}
         <div className="mt-4 space-y-1">
           <p>
-            <span className="font-semibold">Taxable Amount:</span> ₹ {amount}
+            <span className="font-semibold">Taxable Amount:</span> ₹{' '}
+            {amount ? amount.toFixed(2) : '0.00'}
           </p>
           <p>
-            <span className="font-semibold">CGST (9.0%):</span> ₹{taxAmt / 2}
+            <span className="font-semibold">CGST (9.0%):</span> ₹{' '}
+            {taxAmt ? (taxAmt / 2).toFixed(2) : '0.00'}
           </p>
           <p>
-            <span className="font-semibold">SGST (9.0%):</span> ₹{taxAmt / 2}
+            <span className="font-semibold">SGST (9.0%):</span> ₹{' '}
+            {taxAmt ? (taxAmt / 2).toFixed(2) : '0.00'}
           </p>
           <p>
             <span className="font-semibold">Total (INR):</span> ₹
-            <b className="underline">{amount + taxAmt}</b>
+            <b className="underline">
+              {amount && taxAmt ? (amount + taxAmt).toFixed(2) : '0.00'}
+            </b>
           </p>
         </div>
 

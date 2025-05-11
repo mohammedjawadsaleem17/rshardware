@@ -85,7 +85,7 @@ function numberToWords(num) {
     return word.trim() + ' Only.';
   }
 
-  const [integerPart] = num.toString().split('.');
+  const [integerPart] = parseFloat(num).toFixed(2).split('.');
   return convertInteger(parseInt(integerPart));
 }
 
@@ -110,25 +110,11 @@ export default function FinalInvoice({
   const [invoiceReady, setInvoiceReady] = useState(false);
 
   const handleGenerateInvoice = async () => {
-    console.log('Customer Details ', customerDetails);
-    console.log('-------------------------------------------');
-    console.log('Invoice Date: ', customerDetails?.invoiceDate);
-    console.log('name: ', customerDetails?.name);
-    console.log('email: ', customerDetails?.email);
-    console.log('Phone Number', customerDetails?.phone);
-    console.log('billingAddress: ', customerDetails?.customerAddress);
-    console.log('gstIn: ', customerDetails?.gstin);
-    console.log('placeOfSupply: ', customerDetails?.customerPlaceOfSupply);
-    console.log('dueDate: ', customerDetails?.dueDate);
-    console.log('items: ', customerDetails?.lineItems);
-    console.log('-------------------------------------------');
-    console.log('ITEM', items);
     try {
       setLoading(true);
       const response = await fetch('https://rshardware.up.railway.app/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-
         body: JSON.stringify({
           invoiceId: invoiceNo,
           invoiceDate: customerDetails?.invoiceDate,
@@ -142,22 +128,7 @@ export default function FinalInvoice({
           items: customerDetails?.lineItems,
         }),
       });
-
-      console.log(
-        JSON.stringify({
-          invoiceDate: customerDetails?.invoiceDate,
-          name: customerDetails?.name,
-          email: customerDetails?.email,
-          phoneNumber: customerDetails?.phone,
-          billingAddress: customerDetails?.customerAddress,
-          gstIn: customerDetails?.gstin,
-          placeOfSupply: customerDetails?.customerPlaceOfSupply,
-          dueDate: customerDetails?.dueDate,
-          items: customerDetails?.lineItems,
-        })
-      );
-
-      const data = await response.json();
+      await response.json();
       toast.success(`Invoice Generated for ${customerDetails?.name}`);
       setInvoiceReady(true);
     } catch (error) {
@@ -183,7 +154,7 @@ export default function FinalInvoice({
   };
 
   const taxAmt = items?.reduce(
-    (acc, item) => acc + Number(item.taxableValue),
+    (acc, item) => acc + parseFloat(item.taxableValue || 0),
     0
   );
   const cgst = (taxAmt / 100) * 9;
@@ -202,6 +173,7 @@ export default function FinalInvoice({
             <Text>(Original for Recipient)</Text>
           </View>
         </View>
+
         <View style={styles.soldByContainer}>
           <View style={styles.soldBy}>
             <Text style={styles.rs}>Sold By:</Text>
@@ -228,6 +200,7 @@ export default function FinalInvoice({
               <Text style={styles.sr}>{customerDetails?.dueDate}</Text>
             </Text>
           </View>
+
           <View style={styles.soldBy}>
             <Text style={styles.rs}>Billing Address:</Text>
             <Text>{customerDetails?.name}</Text>
@@ -253,7 +226,6 @@ export default function FinalInvoice({
         </View>
 
         {/* Table Rows */}
-
         {items?.map((item) => (
           <View style={styles.row} key={item.sno}>
             <Text style={styles.cell}>{item.sno}</Text>
@@ -261,21 +233,25 @@ export default function FinalInvoice({
               {item.item}
             </Text>
             <Text style={styles.cell}>{item.hsn?.slice(0, 7)}</Text>
-            <Text style={styles.cell}>{item.rate}</Text>
+            <Text style={styles.cell}>{parseFloat(item.rate).toFixed(2)}</Text>
             <Text style={styles.cell}>{item.qty}</Text>
-            <Text style={styles.cell}>{item.taxableValue?.toFixed(2)}</Text>
-            <Text style={styles.cell}>{item.taxAmount?.toFixed(2)}</Text>
-            <Text style={styles.cell}>{item.total?.toFixed(2)}</Text>
+            <Text style={styles.cell}>
+              {parseFloat(item.taxableValue).toFixed(2)}
+            </Text>
+            <Text style={styles.cell}>
+              {parseFloat(item.taxAmount).toFixed(2)}
+            </Text>
+            <Text style={styles.cell}>{parseFloat(item.total).toFixed(2)}</Text>
           </View>
         ))}
 
         {/* Totals */}
         <View>
           <Text style={styles.totalText}>
-            Taxable Amount: {taxAmt?.toFixed(2)}
+            Taxable Amount: {taxAmt.toFixed(2)}
           </Text>
-          <Text style={styles.totalText}>CGST (9.0%): {cgst?.toFixed(2)}</Text>
-          <Text style={styles.totalText}>SGST (9.0%): {cgst?.toFixed(2)}</Text>
+          <Text style={styles.totalText}>CGST (9.0%): {cgst.toFixed(2)}</Text>
+          <Text style={styles.totalText}>SGST (9.0%): {cgst.toFixed(2)}</Text>
           <Text style={styles.total}>
             Total (INR): {totalPayable.toFixed(2)}
           </Text>
@@ -308,6 +284,7 @@ export default function FinalInvoice({
             </Text>
           </View>
         </View>
+
         <View style={{ textAlign: 'center', fontSize: 10 }}>
           <Text>
             This is a computer-generated invoice and does not need a signature.
@@ -330,7 +307,6 @@ export default function FinalInvoice({
             Generate Invoice
           </button>
         )}
-
         {invoiceReady && (
           <>
             <PDFDownloadLink
