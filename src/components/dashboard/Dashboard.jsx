@@ -37,7 +37,7 @@ export default function Dashboard() {
   async function fetchInvoiceRecords() {
     try {
       setLoading(true);
-      const res = await fetch('https://rsjhardware.up.railway.app/users');
+      const res = await fetch('https://rshardware.up.railway.app/users');
       const data = await res.json();
 
       setRecord(data);
