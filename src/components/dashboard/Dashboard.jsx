@@ -7,7 +7,7 @@ import { toast, ToastContainer } from 'react-toastify';
 const customStyles = {
   headCells: {
     style: {
-      backgroundColor: '#6366F1', // Tailwind's indigo-500
+      backgroundColor: '#6366F1',
       color: 'white',
       fontWeight: 'bold',
     },
@@ -23,7 +23,7 @@ const customStyles = {
       width: '100%',
       fontSize: '1.25rem',
       fontWeight: '600',
-      color: '#111827', // Tailwind gray-900
+      color: '#111827',
       marginBottom: '1rem',
     },
   },
@@ -45,7 +45,9 @@ export default function Dashboard() {
     } catch (e) {
       console.log('Error Occured');
       setLoading(false);
-      toast.error(`Backed Server is Down!! contact Developer`);
+      toast.error(
+        `Backed Server is Down!!\n Contact Support +91 8884760377 (Mohammed Shayaan)`
+      );
     }
   }
 
@@ -70,7 +72,9 @@ export default function Dashboard() {
     } catch (e) {
       console.log(e);
       setLoading(false);
-      toast.error(`Backed Server is Down!! contact Developer`);
+      toast.error(
+        `Backed Server is Down!!\n Contact Support +91 8884760377 (Mohammed Shayaan)`
+      );
     }
   }
 
@@ -89,19 +93,19 @@ export default function Dashboard() {
       wrap: true,
     },
     {
-      name: 'Customer Name',
+      name: 'Name',
       selector: (row) => row.name,
       sortable: true,
       wrap: true,
     },
     {
-      name: 'Customer Email',
+      name: 'Email',
       selector: (row) => row.email,
       sortable: true,
       wrap: true,
     },
     {
-      name: 'Customer Phone Number',
+      name: 'Ph No',
       selector: (row) => row.phoneNumber,
       sortable: true,
       wrap: true,
@@ -162,7 +166,6 @@ export default function Dashboard() {
       item.phoneNumber?.toString().includes(searchTerm)
   );
 
-
   return (
     <div className="mx-auto px-5">
       <ToastContainer />
@@ -175,7 +178,7 @@ export default function Dashboard() {
           Refresh Records
         </button>
         <button
-          className="bg-indigo-500 hover:bg-indigo-700 text-white font-light py-2 px-5 rounded-lg transition-colors duration-300 flex items-center gap-2"
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-extralight py-2 px-2  rounded-lg transition-colors duration-300 flex items-center gap-2"
           onClick={() => setAdminMode(!adminMode)}
         >
           {adminMode ? 'Disable Admin Mode' : 'Admin Mode'}

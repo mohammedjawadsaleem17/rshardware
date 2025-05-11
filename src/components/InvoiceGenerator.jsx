@@ -53,6 +53,8 @@ const InvoiceGenerator = () => {
     },
   ]);
 
+  
+
 
   const calculateValues = useCallback((row) => {
     const rate = parseFloat(row.rate) || 0;
@@ -464,6 +466,7 @@ const InvoiceGenerator = () => {
             setInvoiceDate={setInvoiceDate}
             setCustomerPlaceOfSupply={setCustomerPlaceOfSupply}
             setDueDate={setDueDate}
+            setLineItems={setLineItems}
           />
           <br />
           {/* <button

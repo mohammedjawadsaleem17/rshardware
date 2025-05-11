@@ -105,6 +105,7 @@ export default function FinalInvoice({
   setInvoiceDate,
   setCustomerPlaceOfSupply,
   setDueDate,
+  setLineItems,
 }) {
   const [loading, setLoading] = useState(false);
   const [invoiceReady, setInvoiceReady] = useState(false);
@@ -134,12 +135,12 @@ export default function FinalInvoice({
     } catch (error) {
       console.error('Error updating invoice in database:', error);
       toast.error('Failed to generate invoice');
+      toast.warn('Switching to Survival Mode');
+      setInvoiceReady(true);
     } finally {
       setLoading(false);
     }
   };
-
-
 
   const handleReset = async () => {
     setInvoiceReady(false);
@@ -153,6 +154,20 @@ export default function FinalInvoice({
     setCustomerPlaceOfSupply('');
     setInvoiceDate('');
     setDueDate('');
+
+    setLineItems([
+      {
+        id: 1,
+        sno: 1,
+        item: '',
+        hsn: '',
+        rate: '',
+        qty: '',
+        taxableValue: 0,
+        taxAmount: 0,
+        total: 0,
+      },
+    ]);
   };
 
   const taxAmt = items?.reduce(
