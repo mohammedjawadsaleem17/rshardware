@@ -214,7 +214,7 @@ export default function ProformaInvoice({ customerDetails, items }) {
       <PDFDownloadLink
         document={<InvoicePDF />}
         fileName={`ProformaInvoice-${customerDetails.name}.pdf`}
-        className="bg-yellow-600 text-white p-3 rounded w-full block text-center font-bold"
+        className="bg-slate-500 text-white p-3 rounded w-full block text-center font-bold"
       >
         {({ loading }) => 'Download Proforma Invoice'}
       </PDFDownloadLink>
