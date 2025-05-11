@@ -39,7 +39,7 @@ export default function Dashboard() {
       setLoading(true);
       const res = await fetch('https://rshardware.up.railway.app/users');
       const data = await res.json();
-      console.log(data);
+
       setRecord(data);
       setLoading(false);
     } catch (e) {
@@ -54,7 +54,6 @@ export default function Dashboard() {
   }, []);
 
   async function handleDelete(rowId) {
-    console.log('Delete was clicked', rowId);
     setLoading(true);
     try {
       const res = await fetch(
@@ -163,7 +162,7 @@ export default function Dashboard() {
       item.phoneNumber?.toString().includes(searchTerm)
   );
 
-  console.log(filteredData);
+
   return (
     <div className="mx-auto px-5">
       <ToastContainer />

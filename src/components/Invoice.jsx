@@ -22,14 +22,13 @@ export default function Invoice() {
   async function fetchInvoiceNumber() {
     try {
       SetIsLoading(true);
-      // const res = await fetch('https://rshardware.up.railway.app/users');
-      const res = await fetch('http://localhost:8080/users');
+      const res = await fetch('https://rshardware.up.railway.app/users');
+      // const res = await fetch('http://localhost:8080/users');
       const data = await res.json();
-      console.log('Data Received', data);
+
       setItems(data?.items);
       setConnection(true);
     } catch (e) {
-      console.log(e);
       SetIsLoading(false);
       setConnection(false);
     } finally {
@@ -42,7 +41,6 @@ export default function Invoice() {
       SetIsLoading(true);
       const res = await fetch('https://rshardware.up.railway.app/invoiceId');
       const data = await res.json();
-      console.log(data);
       setInvoiceNo(`INV-${data}`);
       SetIsLoading(false);
       setConnection(true);
