@@ -1,12 +1,12 @@
 /* InvoicePDF.js */
 import { Document, Image, Page, Text, View } from '@react-pdf/renderer';
 import { styles } from './style';
+import { newStyle } from './newStyles';
 import logo from '../../components/assets/logo.png';
 import qr from '../../components/assets/qr.png';
 
 function numberToWords(num) {
   if (num === 0) return 'Zero';
-
   const belowTwenty = [
     'Zero',
     'One',
@@ -59,8 +59,8 @@ function numberToWords(num) {
   }
 
   function convertInteger(num) {
-    let word = '';
-    let unitIndex = 0;
+    let word = '',
+      unitIndex = 0;
     while (num > 0) {
       const chunk = num % 1000;
       if (chunk !== 0) {
@@ -80,21 +80,26 @@ function numberToWords(num) {
 }
 
 export default function InvoicePDF({ userData }) {
-  const connection = '';
-  const items = [];
-  const invoiceNo = '';
-  const customerDetails = {};
+  const items = userData?.items || [];
 
-  const taxAmt = 10 / 1.18;
-  const cgst = (taxAmt / 100) * 9;
-  const totalPayable = taxAmt + cgst * 2;
+  // Convert and round amounts
+  const taxAbleAmount = items.reduce(
+    (acc, ele) => acc + Number(ele?.taxableValue || 0),
+    0
+  );
+  const taxAmt = items.reduce(
+    (acc, ele) => acc + Number(ele?.taxAmount || 0),
+    0
+  );
+  const cgst = taxAmt / 2;
+  const sgst = taxAmt / 2;
+  const totalPayable = taxAbleAmount + taxAmt;
   const wordsAmount = numberToWords(totalPayable);
-  console.log('--hrwehfoqehvoichqoih----', userData.items);
 
-  console.log('PDF WAS CALLEDee', userData);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        {/* Header */}
         <View style={styles.header}>
           <Image src={logo} style={styles.logo} />
           <View>
@@ -104,6 +109,8 @@ export default function InvoicePDF({ userData }) {
             <Text>(Original for Recipient)</Text>
           </View>
         </View>
+
+        {/* Seller and Buyer Info */}
         <View style={styles.soldByContainer}>
           <View style={styles.soldBy}>
             <Text style={styles.rs}>Sold By:</Text>
@@ -112,23 +119,14 @@ export default function InvoicePDF({ userData }) {
             <Text>Mob: 8147465517</Text>
             <Text>Email: abdulfahad1436@gmail.com</Text>
             <Text style={styles.pan}>PAN No: -</Text>
-            <Text style={styles.heading}>
-              GST No: <Text style={styles.sr}>29FKLPP1223G1ZO</Text>
-            </Text>
-            <Text style={styles.invoice}>
-              Invoice Number:{' '}
-              <Text style={styles.sr}> {userData?.invoiceId}</Text>
-            </Text>
-            <Text style={styles.pos}>
-              Invoice Date:{' '}
-              <Text style={styles.sr}> {userData?.invoiceDate}</Text>
-            </Text>
-            <Text style={styles.pos}>
-              Due Date: <Text style={styles.sr}> {userData?.dueDate}</Text>
-            </Text>
+            <Text>GST No: 29FKLPP1223G1ZO</Text>
+            <Text>Invoice Number: {userData?.invoiceId}</Text>
+            <Text>Invoice Date: {userData?.invoiceDate}</Text>
+            <Text>Due Date: {userData?.dueDate}</Text>
           </View>
+
           <View style={styles.soldBy}>
-            <Text style={styles.rs}>Billing Address: </Text>
+            <Text style={styles.rs}>Billing Address:</Text>
             <Text>{userData?.name}</Text>
             <Text>{userData?.billingAddress}</Text>
             <Text>GST No: {userData?.gstIn?.toUpperCase()}</Text>
@@ -151,44 +149,33 @@ export default function InvoicePDF({ userData }) {
           <Text style={styles.cell}>Total</Text>
         </View>
 
-        {/* Table Rows
-        {items?.map((item) => (
-          <View style={styles.row} key={item.sno}>
-            <Text style={styles.cell}>{item.sno}</Text>
-            <Text style={[styles.cell, styles.descriptionCell]}>
+        {/* Table Rows */}
+        {items.map((item, index) => (
+          <View style={newStyle.row} key={item.id || index}>
+            <Text style={newStyle.cell}>{index + 1}</Text>
+            <Text style={[newStyle.cell, newStyle.descriptionCell]}>
               {item.item}
             </Text>
-            <Text style={styles.cell}>{item.hsn?.slice(0, 7)}</Text>
-            <Text style={styles.cell}>{item.rate}</Text>
-            <Text style={styles.cell}>{item.qty}</Text>
-            <Text style={styles.cell}>{item.taxableValue?.toFixed(2)}</Text>
-            <Text style={styles.cell}>{item.taxAmount?.toFixed(2)}</Text>
-            <Text style={styles.cell}>{item.total?.toFixed(2)}</Text>
-          </View>
-        ))} */}
-
-        {items?.map((item) => (
-          <View style={styles.row} key={item.sno}>
-            <Text style={styles.cell}>{item.sno}</Text>
-            <Text style={[styles.cell, styles.descriptionCell]}>
-              {item.item}
+            <Text style={newStyle.cell}>{item.hsn}</Text>
+            <Text style={newStyle.cell}>{Number(item.rate).toFixed(2)}</Text>
+            <Text style={newStyle.cell}>{item.qty}</Text>
+            <Text style={newStyle.cell}>
+              {Number(item.taxableValue).toFixed(2)}
             </Text>
-            <Text style={styles.cell}>{item.hsn?.slice(0, 7)}</Text>
-            <Text style={styles.cell}>{item.rate}</Text>
-            <Text style={styles.cell}>{item.qty}</Text>
-            <Text style={styles.cell}>{item.taxableValue?.toFixed(2)}</Text>
-            <Text style={styles.cell}>{item.taxAmount?.toFixed(2)}</Text>
-            <Text style={styles.cell}>{item.total?.toFixed(2)}</Text>
+            <Text style={newStyle.cell}>
+              {Number(item.taxAmount).toFixed(2)}
+            </Text>
+            <Text style={newStyle.cell}>{Number(item.total).toFixed(2)}</Text>
           </View>
         ))}
 
         {/* Totals */}
         <View>
           <Text style={styles.totalText}>
-            Taxable Amount: {taxAmt?.toFixed(2)}
+            Taxable Amount: {taxAbleAmount.toFixed(2)}
           </Text>
-          <Text style={styles.totalText}>CGST (9.0%): {cgst?.toFixed(2)}</Text>
-          <Text style={styles.totalText}>SGST (9.0%): {cgst?.toFixed(2)}</Text>
+          <Text style={styles.totalText}>CGST (9.0%): {cgst.toFixed(2)}</Text>
+          <Text style={styles.totalText}>SGST (9.0%): {sgst.toFixed(2)}</Text>
           <Text style={styles.total}>
             Total (INR): {totalPayable.toFixed(2)}
           </Text>
@@ -197,7 +184,7 @@ export default function InvoicePDF({ userData }) {
           </Text>
         </View>
 
-        {/* Bank */}
+        {/* Bank Info */}
         <View style={styles.bankContainer}>
           <View style={styles.bankDetails}>
             <Text
@@ -221,6 +208,8 @@ export default function InvoicePDF({ userData }) {
             </Text>
           </View>
         </View>
+
+        {/* Footer */}
         <View style={{ textAlign: 'center', fontSize: 10 }}>
           <Text>
             This is a computer-generated invoice and does not need a signature.

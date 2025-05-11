@@ -1,5 +1,5 @@
 import { StyleSheet } from '@react-pdf/renderer';
-export const styles = StyleSheet.create({
+export const newStyle = StyleSheet.create({
   page: {
     backgroundColor: '#fff',
     color: '#262626',
@@ -82,18 +82,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#000',
   },
-  cell: {
-    borderWidth: 1,
-    borderColor: '#000',
-    padding: 8,
-    fontSize: 10,
-    flex: 1,
-    textAlign: 'center',
-  },
-  descriptionCell: {
-    flex: 3,
-    textAlign: 'left',
-  },
+
   bold: {
     fontWeight: 'bold',
   },
@@ -104,9 +93,7 @@ export const styles = StyleSheet.create({
     fontSize: '9px',
     marginBottom: '0px',
   },
-  row: {
-    flexDirection: 'row',
-  },
+
   total: {
     textAlign: 'right',
     marginTop: 8,
@@ -166,5 +153,37 @@ export const styles = StyleSheet.create({
   },
   descriptionCellInvoice: {
     flex: 2, // or whatever is needed
+  },
+  row: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    alignItems: 'center',
+    paddingVertical: 4,
+  },
+  cell: {
+    fontSize: 10,
+    width: '10%',
+    padding: 2,
+    textAlign: 'center',
+  },
+  descriptionCell: {
+    width: '20%',
+    textAlign: 'left',
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  cell: {
+    borderWidth: 1,
+    borderColor: '#000',
+    padding: 8,
+    fontSize: 10,
+    flex: 1,
+    textAlign: 'center',
+  },
+  descriptionCell: {
+    flex: 3,
+    textAlign: 'left',
   },
 });
