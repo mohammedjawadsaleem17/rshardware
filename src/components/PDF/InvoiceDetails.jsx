@@ -235,6 +235,16 @@ const InvoiceDetails = () => {
           </PDFDownloadLink>
         </div>
       </div>
+      <div>
+        <div className="px-4 pt-8 flex justify-end">
+          <button
+            className="bg-indigo-500 hover:bg-indigo-700 text-white font-light py-2 px-5 rounded-lg transition-colors duration-300 flex items-center gap-2 mb-2"
+            onClick={() => navigate('/dashboard')}
+          >
+            Back
+          </button>
+        </div>
+      </div>
     </>
   );
 };
