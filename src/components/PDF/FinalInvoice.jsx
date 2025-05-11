@@ -139,7 +139,7 @@ export default function FinalInvoice({
     }
   };
 
-  console.log('customerDetails', invoiceNo);
+
 
   const handleReset = async () => {
     setInvoiceReady(false);

@@ -53,7 +53,6 @@ const InvoiceGenerator = () => {
     },
   ]);
 
-  console.log('iITEMS:', lineItems);
 
   const calculateValues = useCallback((row) => {
     const rate = parseFloat(row.rate) || 0;
@@ -85,7 +84,6 @@ const InvoiceGenerator = () => {
         prevItems.map((item) => {
           if (item.id === id) {
             const updatedItem = { ...item, [field]: value };
-            console.log(updatedItem);
             if (['rate', 'qty'].includes(field)) {
               const calculated = calculateValues(updatedItem);
               return { ...updatedItem, ...calculated };

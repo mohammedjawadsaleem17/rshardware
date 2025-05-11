@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import Loader from '../Loader/Loader';
 import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const customStyles = {
   headCells: {
@@ -32,19 +33,46 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [record, setRecord] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [adminMode, setAdminMode] = useState(false);
   async function fetchInvoiceRecords() {
-    setLoading(true);
-    const res = await fetch('https://rshardware.up.railway.app/users');
-    // const res = await fetch('http://localhost:8080/users');
-    const data = await res.json();
-    console.log(data);
-    setRecord(data);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const res = await fetch('https://rshardware.up.railway.app/users');
+      const data = await res.json();
+
+      setRecord(data);
+      setLoading(false);
+    } catch (e) {
+      console.log('Error Occured');
+      setLoading(false);
+      toast.error(`Backed Server is Down!! contact Developer`);
+    }
   }
 
   useEffect(() => {
     fetchInvoiceRecords();
   }, []);
+
+  async function handleDelete(rowId) {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `https://rshardware.up.railway.app/users/${rowId}`,
+        {
+          method: 'DELETE',
+        }
+      );
+      if (!res.ok) {
+        alert('Failed to Delete');
+      }
+      setRecord((prev) => prev?.filter((user) => user?._id !== rowId));
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+      toast.error(`Backed Server is Down!! contact Developer`);
+    }
+  }
 
   const columns = [
     {
@@ -80,6 +108,33 @@ export default function Dashboard() {
     },
   ];
 
+  if (adminMode) {
+    columns.push({
+      name: 'Actions',
+      cell: (row) => (
+        <button
+          onClick={() => handleDelete(row._id)}
+          className="text-red-600 hover:text-red-800 font-medium"
+        >
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            />
+          </svg>
+        </button>
+      ),
+    });
+  }
+
   let data = [
     {
       invoiceId: 1,
@@ -107,16 +162,23 @@ export default function Dashboard() {
       item.phoneNumber?.toString().includes(searchTerm)
   );
 
-  console.log(filteredData);
+
   return (
     <div className="mx-auto px-5">
+      <ToastContainer />
       {loading && <Loader />}
       <div className="px-4 pt-8 flex justify-end">
         <button
-          className="bg-indigo-500 hover:bg-indigo-700 text-white font-light py-2 px-5 rounded-lg transition-colors duration-300 flex items-center gap-2"
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-light py-2 px-5 rounded-lg transition-colors duration-300 flex items-center gap-2 mr-4"
           onClick={fetchInvoiceRecords}
         >
           Refresh Records
+        </button>
+        <button
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-light py-2 px-5 rounded-lg transition-colors duration-300 flex items-center gap-2"
+          onClick={() => setAdminMode(!adminMode)}
+        >
+          {adminMode ? 'Disable Admin Mode' : 'Admin Mode'}
         </button>
       </div>
       <div className="px-4 pt-8 flex justify-end">
