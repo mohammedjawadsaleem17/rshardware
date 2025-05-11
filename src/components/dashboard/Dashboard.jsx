@@ -37,17 +37,21 @@ export default function Dashboard() {
   async function fetchInvoiceRecords() {
     try {
       setLoading(true);
-      const res = await fetch('https://rshardware.up.railway.app/users');
+      const res = await fetch('https://rsjhardware.up.railway.app/users');
       const data = await res.json();
 
       setRecord(data);
       setLoading(false);
     } catch (e) {
-      console.log('Error Occured');
-      setLoading(false);
       toast.error(
         `Backed Server is Down!!\n Contact Support +91 8884760377 (Mohammed Shayaan)`
       );
+      const res = await fetch('https://rshardware-backend.onrender.com/users');
+      const data = await res.json();
+      setRecord(data);
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -72,9 +76,6 @@ export default function Dashboard() {
     } catch (e) {
       console.log(e);
       setLoading(false);
-      toast.error(
-        `Backed Server is Down!!\n Contact Support +91 8884760377 (Mohammed Shayaan)`
-      );
     }
   }
 

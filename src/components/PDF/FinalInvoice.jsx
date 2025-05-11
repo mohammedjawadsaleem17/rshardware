@@ -134,8 +134,27 @@ export default function FinalInvoice({
       setInvoiceReady(true);
     } catch (error) {
       console.error('Error updating invoice in database:', error);
-      toast.error('Failed to generate invoice');
-      toast.warn('Switching to Survival Mode');
+      toast.error('Failed to generate invoice, Switching to Survival Mode');
+      const response = await fetch(
+        'https://rshardware-backend.onrender.com/users',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            invoiceId: invoiceNo,
+            invoiceDate: customerDetails?.invoiceDate,
+            name: customerDetails?.name,
+            email: customerDetails?.email,
+            phoneNumber: customerDetails?.phone,
+            billingAddress: customerDetails?.customerAddress,
+            gstIn: customerDetails?.gstin,
+            placeOfSupply: customerDetails?.customerPlaceOfSupply,
+            dueDate: customerDetails?.dueDate,
+            items: customerDetails?.lineItems,
+          }),
+        }
+      );
+      await response.json();
       setInvoiceReady(true);
     } finally {
       setLoading(false);
