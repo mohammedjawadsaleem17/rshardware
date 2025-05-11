@@ -78,12 +78,6 @@ export default function Dashboard() {
       sortable: true,
       wrap: true,
     },
-    {
-      name: 'Total Amount',
-      selector: (row) => row.totalAmount,
-      sortable: true,
-      wrap: true,
-    },
   ];
 
   let data = [
@@ -112,6 +106,8 @@ export default function Dashboard() {
       item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.phoneNumber?.toString().includes(searchTerm)
   );
+
+  console.log(filteredData);
   return (
     <div className="mx-auto px-5">
       {loading && <Loader />}

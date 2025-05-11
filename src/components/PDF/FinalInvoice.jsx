@@ -139,6 +139,8 @@ export default function FinalInvoice({
     }
   };
 
+  console.log('customerDetails', invoiceNo);
+
   const handleReset = async () => {
     setInvoiceReady(false);
     toast.info('Reset to default');
@@ -311,12 +313,10 @@ export default function FinalInvoice({
           <>
             <PDFDownloadLink
               document={<InvoicePDF />}
-              fileName={`Invoice-${customerDetails.invoiceNum}.pdf`}
+              fileName={`${invoiceNo}.pdf`}
               className="bg-green-600 text-white p-3 rounded w-full block text-center font-bold my-7"
             >
-              {({ loading }) =>
-                loading ? 'Preparing document...' : 'Download Invoice'
-              }
+              {({ loading }) => 'Download Invoice'}
             </PDFDownloadLink>
             <button
               onClick={handleReset}
