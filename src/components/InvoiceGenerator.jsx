@@ -53,7 +53,6 @@ const InvoiceGenerator = () => {
     },
   ]);
 
-  console.log('iITEMS:', lineItems);
 
   const calculateValues = useCallback((row) => {
     const rate = parseFloat(row.rate) || 0;
