@@ -106,6 +106,8 @@ export default function FinalInvoice({
   setCustomerPlaceOfSupply,
   setDueDate,
   setLineItems,
+  invNo,
+  setinvNo,
 }) {
   const [loading, setLoading] = useState(false);
   const [invoiceReady, setInvoiceReady] = useState(false);
@@ -117,7 +119,7 @@ export default function FinalInvoice({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          invoiceId: invoiceNo,
+          invoiceId: invNo,
           invoiceDate: customerDetails?.invoiceDate,
           name: customerDetails?.name,
           email: customerDetails?.email,
@@ -134,14 +136,14 @@ export default function FinalInvoice({
       setInvoiceReady(true);
     } catch (error) {
       console.error('Error updating invoice in database:', error);
-      toast.error('Failed to generate invoice, Switching to Survival Mode');
+      toast.warn('Loading, Please wait for a Minute');
       const response = await fetch(
         'https://rshardware-backend.onrender.com/users',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            invoiceId: invoiceNo,
+            invoiceId: invNo,
             invoiceDate: customerDetails?.invoiceDate,
             name: customerDetails?.name,
             email: customerDetails?.email,
@@ -214,7 +216,10 @@ export default function FinalInvoice({
           <View style={styles.soldBy}>
             <Text style={styles.rs}>Sold By:</Text>
             <Text style={styles.rspace}>R S HARDWARE GLASS & ELECTRICALS</Text>
-            <Text>Building No-3/7, Shop No-6, Ground Floor...</Text>
+            <Text>
+              181/2 Shop 2 Ground Floor VP Road Old Madivala Near Gangamma
+              Temple Bangalore 560068.
+            </Text>
             <Text>Mob: 8147465517</Text>
             <Text>Email: abdulfahad1436@gmail.com</Text>
             <Text style={styles.pan}>PAN No:</Text>
@@ -222,10 +227,7 @@ export default function FinalInvoice({
               GST No: <Text style={styles.sr}>29FKLPP1223G1ZO</Text>
             </Text>
             <Text style={styles.invoice}>
-              Invoice Number:{' '}
-              <Text style={styles.sr}>
-                {connection ? invoiceNo : customerDetails.invoiceNum}
-              </Text>
+              Invoice Number: <Text style={styles.sr}>{invNo}</Text>
             </Text>
             <Text style={styles.pos}>
               Invoice Date:{' '}

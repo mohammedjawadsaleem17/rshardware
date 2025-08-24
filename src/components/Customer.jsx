@@ -26,6 +26,8 @@ export default function Customer() {
     setInvoiceNo,
     invoiceNo,
     connection,
+    invNo,
+    setInvNo,
   } = useContext(MainContext);
 
   return (
@@ -46,8 +48,8 @@ export default function Customer() {
               type="text"
               placeholder="INV-001"
               required
-              value={invoiceNo?.toUpperCase()}
-              onChange={(e) => setInvoiceNo(e.target.value)}
+              value={invNo?.toUpperCase()}
+              onChange={(e) => setInvNo(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
             />
           </div>
@@ -196,13 +198,13 @@ export default function Customer() {
                   d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              Building No- 3/7, Shop No-6, Ground Floor
+              181/2 Shop 2, Ground Floor VP Road
               <br />
-              Gowri Shankar Complex Arekere Main Road
+              Old Madivala Near Gangamma Temple
               <br />
               Bengaluru Karnataka, India
               <br />
-              PIN: 560076
+              PIN: 560068
             </p>
 
             <p className="flex items-center">

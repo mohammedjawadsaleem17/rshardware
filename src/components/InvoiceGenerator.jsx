@@ -37,6 +37,8 @@ const InvoiceGenerator = () => {
     setCustomerPlaceOfSupply,
     setDueDate,
     items,
+    invNo,
+    setInvNo,
   } = useContext(MainContext);
 
   const [lineItems, setLineItems] = useState([
@@ -52,9 +54,6 @@ const InvoiceGenerator = () => {
       total: 0,
     },
   ]);
-
-  
-
 
   const calculateValues = useCallback((row) => {
     const rate = parseFloat(row.rate) || 0;
@@ -467,6 +466,8 @@ const InvoiceGenerator = () => {
             setCustomerPlaceOfSupply={setCustomerPlaceOfSupply}
             setDueDate={setDueDate}
             setLineItems={setLineItems}
+            invNo={invNo}
+            setInvNo={setInvNo}
           />
           <br />
           {/* <button

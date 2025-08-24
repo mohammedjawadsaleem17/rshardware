@@ -19,6 +19,7 @@ export default function Invoice() {
   const [isLoading, SetIsLoading] = useState(false);
   const [connection, setConnection] = useState(false);
   const [items, setItems] = useState([]);
+  const [invNo, setInvNo] = useState('');
   async function fetchInvoiceNumber() {
     try {
       SetIsLoading(true);
@@ -59,6 +60,8 @@ export default function Invoice() {
     <div>
       <MainContext.Provider
         value={{
+          invNo,
+          setInvNo,
           invoiceNo,
           setInvoiceNo,
           invoiceNumber,
@@ -90,4 +93,3 @@ export default function Invoice() {
     </div>
   );
 }
-
