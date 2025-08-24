@@ -43,8 +43,8 @@ export default function Dashboard() {
       setRecord(data);
       setLoading(false);
     } catch (e) {
-      toast.error(
-        `Backed Server is Down!!\n Contact Support +91 8884760377 (Mohammed Shayaan)`
+      toast.success(
+        `Contacting Server Please wait\n For Support Contact:  +91 8884760377 (Mohammed Shayaan)`
       );
       const res = await fetch('https://rshardware-backend.onrender.com/users');
       const data = await res.json();
@@ -63,7 +63,7 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://rshardware.up.railway.app/users/${rowId}`,
+        `https://rshardware-backend.onrender.com/users/${rowId}`,
         {
           method: 'DELETE',
         }

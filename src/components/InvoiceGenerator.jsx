@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback, useMemo } from 'react';
 import DataTable from 'react-data-table-component';
 import { format } from 'date-fns';
-import Customer from './Customer';
+// import Customer from './Customer';
 import FinalDetails from './FinalDetails';
 import { MainContext } from './Invoice';
 import Payments from './Payments';
@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import ProformaInvoice from './PDF/ProformaInvoice';
 import Loader from './Loader/Loader';
 import { toast } from 'react-toastify';
+import Customer from '../assets/Beta-UI/Customer';
 
 const InvoiceGenerator = () => {
   const {
@@ -316,6 +317,7 @@ const InvoiceGenerator = () => {
 
       <div className="p-4 md:p-6">
         <div className="bg-white p-6 rounded-lg shadow mb-6">
+          {/* <Customer /> */}
           <Customer />
         </div>
 

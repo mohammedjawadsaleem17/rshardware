@@ -14,7 +14,7 @@ const InvoiceDetails = () => {
     async function getDetails() {
       try {
         const res = await fetch(
-          `https://rshardware.up.railway.app/users/${ID}`
+          `https://rshardware-backend.onrender.com/users/${ID}`
         );
         const data = await res.json();
         setUserData(data);
@@ -63,10 +63,9 @@ const InvoiceDetails = () => {
         <div className="mb-4">
           <p className="font-semibold">Sold By:</p>
           <p className="underline">R S HARDWARE GLASS & ELECTRICALS</p>
-          <p>
-            Building No- 3/7, Shop No-6, Ground Floor Gowri Shankar Complex
-            Arekere Main Road Bengaluru, Karnataka, India PIN: 560076
-          </p>
+          <p>181/2 Shop 2 Ground Floor VP Road</p>
+          <p>Old Madivala Near Gangamma Temple</p>
+          <p> Bangalore 560068</p>
           <p>Mob: 8147465517</p>
           <p>Email: abdulfahad1436@gmail.com</p>
           <p>PAN No: -</p>
