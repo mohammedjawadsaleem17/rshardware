@@ -116,8 +116,8 @@ export default function InvoicePDF({ userData }) {
             <Text style={styles.rs}>Sold By:</Text>
             <Text style={styles.rspace}>R S HARDWARE GLASS & ELECTRICALS</Text>
             <Text>
-              181/2 Shop 2 Ground Floor VP Road Old Madivala Near Gangamma
-              Temple Bangalore 560068
+               Building No- 3/7, Shop No-6, Ground Floor, Gowri Shankar Complex,
+              Arekere Main Road, Bengaluru, Karnataka, PIN: 560076
             </Text>
             <Text>Mob: 8147465517</Text>
             <Text>Email: abdulfahad1436@gmail.com</Text>

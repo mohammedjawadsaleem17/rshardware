@@ -63,12 +63,14 @@ const InvoiceDetails = () => {
         <div className="mb-4">
           <p className="font-semibold">Sold By:</p>
           <p className="underline">R S HARDWARE GLASS & ELECTRICALS</p>
-          <p>181/2 Shop 2 Ground Floor VP Road</p>
-          <p>Old Madivala Near Gangamma Temple</p>
-          <p> Bangalore 560068</p>
+            {/* Building No- 3/7, Shop No-6, Ground Floor, Gowri Shankar Complex,
+              Arekere Main Road, Bengaluru, Karnataka, PIN: 560076 */}
+          <p>Building No-3/7, Shop No-6,</p>
+          <p>Gowri Shankar Complex Arekere Main Road</p>
+          <p>Bengaluru, Karnataka, PIN: 560076</p>
           <p>Mob: 8147465517</p>
           <p>Email: abdulfahad1436@gmail.com</p>
-          <p>PAN No: -</p>
+          <p>PAN No: - </p>
           <p>GST Registration No: 29FKLPP1223G1ZO</p>
         </div>
 

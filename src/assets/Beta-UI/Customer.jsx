@@ -161,10 +161,11 @@ export default function Customer() {
               <strong>GSTIN:</strong> 29FKLPP1223G1ZO
             </p>
             <p>
-              181/2 Shop 2, Ground Floor VP Road <br />
-              Old Madivala Near Gangamma Temple <br />
-              Bengaluru Karnataka, India <br />
-              PIN: 560068
+              Buildin No-3/7, Shop No-6 <br />
+              Ground Floor <br />
+              Gowri Shankar Complex <br />
+              Arekere Main Road <br />
+              Bengaluru PIN: 560076
             </p>
             <p>📞 +91 8147465517</p>
             <p>✉️ abdulfahad1436@gmail.com</p>

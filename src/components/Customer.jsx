@@ -198,13 +198,11 @@ export default function Customer() {
                   d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              181/2 Shop 2, Ground Floor VP Road
-              <br />
-              Old Madivala Near Gangamma Temple
-              <br />
-              Bengaluru Karnataka, India
-              <br />
-              PIN: 560068
+              Buildin No-3/7, Shop No-6 <br />
+              Ground Floor <br />
+              Gowri Shankar Complex <br />
+              Arekere Main Road <br />
+              Bengaluru PIN: 560076
             </p>
 
             <p className="flex items-center">
