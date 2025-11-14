@@ -390,7 +390,7 @@ export default function FinalInvoice({
                 { justifyContent: 'space-between' },
               ]}
             >
-              <View style={[styles.infoRow, { marginTop: 0 }]}>
+              <View style={[styles.infoRow]}>
                 <Text style={styles.infoLabel}>Dated</Text>
                 <Text style={styles.infoValue}>{data.invoiceDate}</Text>
               </View>
@@ -410,7 +410,7 @@ export default function FinalInvoice({
                 <Text style={styles.infoLabel}>Delivery Note Date</Text>
                 <Text style={styles.infoValue}></Text>
               </View>
-              <View style={[styles.infoRowNoBorder, { borderBottomWidth: 0 }]}>
+              <View style={[styles.infoRowNoBorder]}>
                 <Text style={styles.infoLabel}>Destination</Text>
                 <Text style={styles.infoValue}></Text>
               </View>

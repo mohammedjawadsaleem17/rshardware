@@ -223,7 +223,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderLeftWidth: 1,
-    borderTopWidth: 0,
     borderColor: '#000',
   },
   amountInWords: {
@@ -251,7 +250,6 @@ export const styles = StyleSheet.create({
 
   // Tax summary table
   taxSummarySection: {
-    borderBottomWidth: 1,
     borderColor: '#000',
   },
   taxSummaryHeader: {
@@ -262,7 +260,8 @@ export const styles = StyleSheet.create({
   },
   taxSummaryRow: {
     flexDirection: 'row',
-    // borderBottomWidth: 1,
+    borderBottomWidth: 1,
+
     borderColor: '#000',
   },
   taxColHSN: {
