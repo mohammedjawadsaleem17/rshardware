@@ -192,10 +192,11 @@ export default function FinalInvoice({
   setLineItems,
   invNo,
   setinvNo,
+  deliveryNote,
 }) {
   const [loading, setLoading] = useState(false);
   const [invoiceReady, setInvoiceReady] = useState(false);
-
+  console.log('customerDetails', customerDetails);
   const handleGenerateInvoice = async () => {
     try {
       setLoading(true);
@@ -350,31 +351,45 @@ export default function FinalInvoice({
             <View style={styles.invoiceInfoSection}>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Invoice No.</Text>
-                <Text style={styles.infoValue}>{data.invoiceNo}</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails.invoiceNum}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Delivery Note</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.deliveryNote}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Reference No. & Date.</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.referenceNo}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Buyer's Order No.</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.buyersOrderNo}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Dispatch Doc No.</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.dispatchDocNo}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Dispatched through</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.dispatchedThrough}
+                </Text>
               </View>
               <View style={styles.infoRowNoBorder}>
                 <Text style={styles.infoLabel}>Terms of Delivery</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.termsOfDelivery}
+                </Text>
               </View>
             </View>
           </View>
@@ -383,13 +398,13 @@ export default function FinalInvoice({
           <View style={styles.headerTop}>
             <View style={[styles.sellerSection, { borderRightWidth: 0 }]}>
               <Text style={styles.boldText}>Buyer (Bill to)</Text>
-              <Text style={styles.companyName}>{data.buyerDetails.name}</Text>
-              <Text style={styles.normalText}>{data.buyerDetails.address}</Text>
+              <Text style={styles.companyName}>{customerDetails.name}</Text>
+              <Text style={styles.normalText}>{customerDetails.address}</Text>
               <Text style={styles.normalText}>
-                GSTIN/UIN: {data.buyerDetails.gstin}
+                GSTIN/UIN: {customerDetails.gstin}
               </Text>
               <Text style={styles.normalText}>
-                State Name : {data.buyerDetails.state}
+                State Name : {customerDetails.customerPlaceOfSupply}
               </Text>
             </View>
             <View
@@ -399,28 +414,36 @@ export default function FinalInvoice({
               ]}
             >
               <View style={[styles.infoRow]}>
-                <Text style={styles.infoLabel}>Dated</Text>
-                <Text style={styles.infoValue}>{data.invoiceDate}</Text>
+                <Text style={styles.infoLabel}>Payment Date</Text>
+                <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Mode/Terms of Payment</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.paymentTerms}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Other References</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.otherReferences}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Dated</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Delivery Note Date</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.deliveryNoteDate}
+                </Text>
               </View>
               <View style={[styles.infoRowNoBorder]}>
                 <Text style={styles.infoLabel}>Destination</Text>
-                <Text style={styles.infoValue}></Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.destination}
+                </Text>
               </View>
             </View>
           </View>

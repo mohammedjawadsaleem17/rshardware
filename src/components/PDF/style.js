@@ -33,6 +33,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 3,
+    marginTop: 3,
   },
   normalText: {
     fontSize: 8,

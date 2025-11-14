@@ -1,36 +1,48 @@
 /* eslint-disable no-unused-vars */
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import InvoiceTemplate from '../../InvoiceTemplate';
+import React, { createContext, useEffect, useState } from 'react';
 import InvoiceGenerator from './InvoiceGenerator';
 
 export const MainContext = createContext();
 
 export default function Invoice() {
-  const [customerName, setCustomerName] = React.useState('');
-  const [invoiceNumber, setInvoiceNumber] = React.useState('');
-  const [customerEmail, setCustomerEmail] = React.useState('');
-  const [customerPhone, setCustomerPhone] = React.useState('');
-  const [customerAddress, setCustomerAddress] = React.useState('');
-  const [customerGstin, setCustomerGstin] = React.useState('');
-  const [customerPlaceOfSupply, setCustomerPlaceOfSupply] = React.useState('');
-  const [invoiceDate, setInvoiceDate] = React.useState(new Date());
-  const [dueDate, setDueDate] = React.useState(new Date());
+  // Existing states
+  const [customerName, setCustomerName] = useState('');
+  const [invoiceNumber, setInvoiceNumber] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
+  const [customerGstin, setCustomerGstin] = useState('');
+  const [customerPlaceOfSupply, setCustomerPlaceOfSupply] = useState('');
+  const [invoiceDate, setInvoiceDate] = useState(new Date());
+  const [dueDate, setDueDate] = useState(new Date());
   const [invoiceNo, setInvoiceNo] = useState('');
+  const [invNo, setInvNo] = useState('');
   const [isLoading, SetIsLoading] = useState(false);
   const [connection, setConnection] = useState(false);
   const [items, setItems] = useState([]);
-  const [invNo, setInvNo] = useState('');
+
+  // ⭐ New Fields
+
+  const [deliveryNote, setDeliveryNote] = useState('');
+  const [referenceNo, setReferenceNo] = useState('');
+  const [buyersOrderNo, setBuyersOrderNo] = useState('');
+  const [dispatchDocNo, setDispatchDocNo] = useState('');
+  const [dispatchedThrough, setDispatchedThrough] = useState('');
+  const [termsOfDelivery, setTermsOfDelivery] = useState('');
+  const [paymentTerms, setPaymentTerms] = useState('');
+  const [otherReferences, setOtherReferences] = useState('');
+  const [dated, setDated] = useState('');
+  const [deliveryNoteDate, setDeliveryNoteDate] = useState('');
+  const [destination, setDestination] = useState('');
+
   async function fetchInvoiceNumber() {
     try {
       SetIsLoading(true);
       const res = await fetch('https://rshardware.up.railway.app/users');
-      // const res = await fetch('http://localhost:8080/users');
       const data = await res.json();
-
       setItems(data?.items);
       setConnection(true);
     } catch (e) {
-      SetIsLoading(false);
       setConnection(false);
     } finally {
       SetIsLoading(false);
@@ -43,7 +55,6 @@ export default function Invoice() {
       const res = await fetch('https://rshardware.up.railway.app/invoiceId');
       const data = await res.json();
       setInvoiceNo(`INV-${data}`);
-      SetIsLoading(false);
       setConnection(true);
     } catch (e) {
       console.log('Error');
@@ -51,45 +62,71 @@ export default function Invoice() {
       SetIsLoading(false);
     }
   }
+
   useEffect(() => {
     fetchInvoiceNo();
     fetchInvoiceNumber();
   }, []);
 
   return (
-    <div>
-      <MainContext.Provider
-        value={{
-          invNo,
-          setInvNo,
-          invoiceNo,
-          setInvoiceNo,
-          invoiceNumber,
-          setInvoiceNumber,
-          customerName,
-          setCustomerName,
-          customerEmail,
-          setCustomerEmail,
-          customerPhone,
-          setCustomerPhone,
-          customerAddress,
-          setCustomerAddress,
-          customerGstin,
-          setCustomerGstin,
-          customerPlaceOfSupply,
-          setCustomerPlaceOfSupply,
-          invoiceDate,
-          setInvoiceDate,
-          dueDate,
-          setDueDate,
-          isLoading,
-          fetchInvoiceNo,
-          connection,
-          items,
-        }}
-      >
-        <InvoiceGenerator />
-      </MainContext.Provider>
-    </div>
+    <MainContext.Provider
+      value={{
+        // Existing exports
+        referenceNo,
+        setReferenceNo,
+        invNo,
+        setInvNo,
+        invoiceNo,
+        setInvoiceNo,
+        invoiceNumber,
+        setInvoiceNumber,
+        customerName,
+        setCustomerName,
+        customerEmail,
+        setCustomerEmail,
+        customerPhone,
+        setCustomerPhone,
+        customerAddress,
+        setCustomerAddress,
+        customerGstin,
+        setCustomerGstin,
+        customerPlaceOfSupply,
+        setCustomerPlaceOfSupply,
+        invoiceDate,
+        setInvoiceDate,
+        dueDate,
+        setDueDate,
+        isLoading,
+        fetchInvoiceNo,
+        connection,
+        items,
+
+        // ⭐ New added fields
+
+        deliveryNote,
+        setDeliveryNote,
+
+        buyersOrderNo,
+        setBuyersOrderNo,
+        dispatchDocNo,
+        setDispatchDocNo,
+        dispatchedThrough,
+        setDispatchedThrough,
+        termsOfDelivery,
+        setTermsOfDelivery,
+        paymentTerms,
+        setPaymentTerms,
+        otherReferences,
+        setOtherReferences,
+        dated,
+        setDated,
+        deliveryNoteDate,
+        setDeliveryNoteDate,
+        destination,
+        setDestination,
+      }}
+    >
+      <InvoiceGenerator />
+    </MainContext.Provider>
   );
 }

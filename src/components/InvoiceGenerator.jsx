@@ -1,4 +1,10 @@
-import React, { useState, useContext, useCallback, useMemo } from 'react';
+import React, {
+  useState,
+  useContext,
+  useCallback,
+  useMemo,
+  useEffect,
+} from 'react';
 import DataTable from 'react-data-table-component';
 import { format } from 'date-fns';
 // import Customer from './Customer';
@@ -40,7 +46,32 @@ const InvoiceGenerator = () => {
     items,
     invNo,
     setInvNo,
+    deliveryNote,
+    setDeliveryNote,
+
+    referenceNo,
+    setReferenceNo,
+    buyersOrderNo,
+    setBuyersOrderNo,
+    dispatchDocNo,
+    setDispatchDocNo,
+    dispatchedThrough,
+    setDispatchedThrough,
+    termsOfDelivery,
+    setTermsOfDelivery,
+    paymentTerms,
+    setPaymentTerms,
+    otherReferences,
+    setOtherReferences,
+    dated,
+    setDated,
+    deliveryNoteDate,
+    setDeliveryNoteDate,
+    destination,
+    setDestination,
   } = useContext(MainContext);
+
+  console.log('Invocei sge', referenceNo);
 
   const [lineItems, setLineItems] = useState([
     {
@@ -287,26 +318,49 @@ const InvoiceGenerator = () => {
       address: customerAddress,
       gstin: customerGstin,
       place: customerPlaceOfSupply,
-      invoiceNum: invoiceNumber,
+      invoiceNum: invNo,
       invoiceDate: invoice,
       dueDate: due,
       customerAddress,
       customerPlaceOfSupply,
       lineItems,
+      deliveryNote,
+      referenceNo,
+      buyersOrderNo,
+      dispatchDocNo,
+      dispatchedThrough,
+      termsOfDelivery,
+      paymentTerms,
+      otherReferences,
+      dated,
+      deliveryNoteDate,
+      destination,
     }),
     [
+      referenceNo,
       customerName,
       customerEmail,
       customerPhone,
       customerAddress,
       customerGstin,
       customerPlaceOfSupply,
-      invoiceNumber,
       invoice,
       due,
       lineItems,
+      deliveryNote,
+      buyersOrderNo,
+      dispatchDocNo,
+      dispatchedThrough,
+      termsOfDelivery,
+      paymentTerms,
+      otherReferences,
+      dated,
+      deliveryNoteDate,
+      destination,
+      invNo,
     ]
   );
+  console.log('referenceNoDate', referenceNo);
 
   return (
     <div className="mx-auto bg-gray-100 min-h-screen pb-16">
