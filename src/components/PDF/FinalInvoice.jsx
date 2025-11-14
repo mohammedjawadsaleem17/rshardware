@@ -286,6 +286,44 @@ export default function FinalInvoice({
   const InvoicePDF = ({ data = sampleData }) => (
     <Document>
       <Page size="A4" style={styles.page}>
+        {/* Add Tax Invoice and ORIGINAL FOR RECIPIENT */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: 10,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 12, // Font size for Tax Invoice
+              fontWeight: 'bold',
+            }}
+          >
+            Tax Invoice
+          </Text>
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            margin: 10,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'right',
+              fontSize: 8, // Smaller than Tax Invoice
+              fontStyle: 'italic', // Italic style
+            }}
+          >
+            (ORIGINAL FOR RECIPIENT)
+          </Text>
+        </View>
+
         {/* Header Section */}
         <View style={styles.headerSection}>
           {/* Top Section - Seller and Invoice Info */}
@@ -384,7 +422,9 @@ export default function FinalInvoice({
         <View style={styles.table}>
           {/* Table Header */}
           <View style={styles.tableHeader}>
-            <Text style={styles.colSlNo}>Sl{'\n'}No</Text>
+            <Text style={[styles.colSlNo, { borderLeftWidth: 1 }]}>
+              Sl{'\n'}No
+            </Text>
             <Text style={styles.colDescription}>Description of Goods</Text>
             <Text style={styles.colHSN}>HSN/SAC</Text>
             <Text style={styles.colGST}>GST{'\n'}Rate</Text>
@@ -392,22 +432,37 @@ export default function FinalInvoice({
             <Text style={[styles.colRate, { width: 100, borderRightWidth: 1 }]}>
               Rate{'\n'}(Incl. of Tax)
             </Text>
-            <Text style={styles.colPer}>per</Text>
-            <Text style={styles.colAmount}>Amount</Text>
+            <Text style={[styles.colPer, { borderRightWidth: 1 }]}>per</Text>
+            <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
+              Amount
+            </Text>
           </View>
 
           {/* Table Rows */}
           {data.items.map((item, index) => (
             <View key={index} style={styles.tableRow}>
-              <Text style={styles.colSlNo}>{item.slNo}</Text>
+              <Text style={[styles.colSlNo, { borderLeftWidth: 1 }]}>
+                {item.slNo}
+              </Text>
               <Text style={styles.colDescription}>{item.description}</Text>
-              <Text style={styles.colHSN}>{item.hsn}</Text>
+              <Text
+                style={[
+                  styles.colHSN,
+                  { textAlign: 'center', paddingHorizontal: 1 },
+                ]}
+              >
+                {item.hsn}
+              </Text>
               <Text style={styles.colGST}>{item.gstRate}</Text>
               <Text style={styles.colQuantity}>{item.quantity}</Text>
               <Text style={styles.colRate}>{item.rate}</Text>
-              <Text style={styles.colRatePer}>{item.ratePerPiece}</Text>
-              <Text style={styles.colPer}>Pecs</Text>
-              <Text style={styles.colAmount}>{item.amount}</Text>
+              <Text style={[styles.colRatePer, { borderRightWidth: 1 }]}>
+                {item.ratePerPiece}
+              </Text>
+              <Text style={[styles.colPer, { borderRightWidth: 1 }]}>Pecs</Text>
+              <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
+                {item.amount}
+              </Text>
             </View>
           ))}
 

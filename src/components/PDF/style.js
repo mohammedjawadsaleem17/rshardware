@@ -99,6 +99,8 @@ export const styles = StyleSheet.create({
   table: {
     borderBottomWidth: 1,
     borderColor: '#000',
+    marginTop: 10, // Added margin to create space
+    borderTopWidth: 1, // Added top border to create a horizontal line at the top of the Items table
   },
   tableHeader: {
     flexDirection: 'row',
@@ -126,7 +128,7 @@ export const styles = StyleSheet.create({
   },
   colDescription: {
     flex: 1,
-    padding: 4,
+    padding: 5,
     borderRightWidth: 1,
     borderColor: '#000',
     fontSize: 8,
@@ -261,7 +263,7 @@ export const styles = StyleSheet.create({
   },
   taxColHSN: {
     width: 70,
-    padding: 4,
+    padding: 1,
     borderRightWidth: 1,
     borderColor: '#000',
     fontSize: 8,
