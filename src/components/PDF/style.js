@@ -190,10 +190,10 @@ export const styles = StyleSheet.create({
 
   // Tax breakdown section
   taxBreakdownSection: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0,
     borderColor: '#000',
     paddingVertical: 8,
-    paddingHorizontal: 50,
+    // paddingHorizontal: 50,
   },
   taxRow: {
     flexDirection: 'row',
@@ -204,11 +204,13 @@ export const styles = StyleSheet.create({
     fontSize: 8,
     width: 100,
     textAlign: 'right',
+    marginLeft: '365px',
   },
   taxValue: {
     fontSize: 8,
     width: 80,
     textAlign: 'right',
+    marginRight: '4px',
   },
   lessLabel: {
     fontSize: 8,

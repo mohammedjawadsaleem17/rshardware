@@ -57,7 +57,7 @@ const sampleData = {
     },
   ],
   taxBreakdown: {
-    cgst9: { rate: '9 %', amount: '51.10' },
+    cgst9: { rate: '9%', amount: '51.10' },
     sgst9: { rate: '9 %', amount: '51.10' },
     cgst2_5: { rate: '2.50 %', amount: '8.93' },
     sgst2_5: { rate: '2.50 %', amount: '8.93' },
@@ -464,7 +464,9 @@ export default function FinalInvoice({
               <Text style={[styles.colRatePer, { borderRightWidth: 1 }]}>
                 {item.ratePerPiece}
               </Text>
-              <Text style={[styles.colPer, { borderRightWidth: 1 }]}>Pecs</Text>
+              <Text style={[styles.colPer, { borderRightWidth: 1 }]}>
+                Piece
+              </Text>
               <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
                 {item.amount}
               </Text>
@@ -475,43 +477,21 @@ export default function FinalInvoice({
           <View style={styles.taxBreakdownSection}>
             <View style={styles.taxRow}>
               <Text style={styles.taxLabel}>CGST 9%</Text>
-              <Text style={styles.taxValue}>
-                {data.taxBreakdown.cgst9.rate}
-              </Text>
+
               <Text style={styles.taxValue}>
                 {data.taxBreakdown.cgst9.amount}
               </Text>
             </View>
             <View style={styles.taxRow}>
               <Text style={styles.taxLabel}>SGST 9%</Text>
-              <Text style={styles.taxValue}>
-                {data.taxBreakdown.sgst9.rate}
-              </Text>
+
               <Text style={styles.taxValue}>
                 {data.taxBreakdown.sgst9.amount}
               </Text>
             </View>
-            <View style={styles.taxRow}>
-              <Text style={styles.taxLabel}>CGST 2.5 %</Text>
-              <Text style={styles.taxValue}>
-                {data.taxBreakdown.cgst2_5.rate}
-              </Text>
-              <Text style={styles.taxValue}>
-                {data.taxBreakdown.cgst2_5.amount}
-              </Text>
-            </View>
-            <View style={styles.taxRow}>
-              <Text style={styles.taxLabel}>SGST 2.5 %</Text>
-              <Text style={styles.taxValue}>
-                {data.taxBreakdown.sgst2_5.rate}
-              </Text>
-              <Text style={styles.taxValue}>
-                {data.taxBreakdown.sgst2_5.amount}
-              </Text>
-            </View>
+
             <View style={[styles.taxRow, { justifyContent: 'flex-start' }]}>
-              <Text style={styles.lessLabel}>Less:</Text>
-              <Text style={[styles.taxLabel, { marginLeft: 20 }]}>
+              <Text style={[styles.taxLabel, { marginLeft: 366 }]}>
                 Round Off
               </Text>
               <Text style={[styles.taxValue, { marginLeft: 'auto' }]}>
