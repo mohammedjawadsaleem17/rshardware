@@ -222,6 +222,8 @@ export const styles = StyleSheet.create({
   footerSection: {
     flexDirection: 'row',
     borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    borderTopWidth: 0,
     borderColor: '#000',
   },
   amountInWords: {
@@ -260,7 +262,7 @@ export const styles = StyleSheet.create({
   },
   taxSummaryRow: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderColor: '#000',
   },
   taxColHSN: {
@@ -317,6 +319,9 @@ export const styles = StyleSheet.create({
   bottomSection: {
     flexDirection: 'row',
     minHeight: 100,
+    borderBottom: '1px solid #000',
+    borderLeft: '1px solid #000',
+    borderRight: '1px solid #000',
   },
   bankSection: {
     flex: 1,
@@ -325,8 +330,8 @@ export const styles = StyleSheet.create({
     borderColor: '#000',
   },
   signatureSection: {
-    width: 200,
-    padding: 1,
+    width: 158,
+    padding: 0,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },

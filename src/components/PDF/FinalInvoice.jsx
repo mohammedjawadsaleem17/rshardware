@@ -646,7 +646,7 @@ export default function FinalInvoice({
         </View>
 
         {/* Tax Amount in Words */}
-        <View style={[styles.footerSection, { borderBottomWidth: 0 }]}>
+        <View style={[styles.footerSection]}>
           <View style={styles.amountInWords}>
             <Text style={styles.normalText}>
               Tax Amount (in words) :{' '}
@@ -683,12 +683,7 @@ export default function FinalInvoice({
               described and that all particulars are true and correct.
             </Text>
           </View>
-          <View
-            style={[
-              styles.signatureSection,
-              { borderTopWidth: 1, borderColor: '#000', borderRightWidth: 1 },
-            ]}
-          >
+          <View style={[styles.signatureSection]}>
             {' '}
             {/* Added horizontal and vertical lines */}
             <Text style={styles.signatureText}>
@@ -701,7 +696,7 @@ export default function FinalInvoice({
         </View>
 
         {/* Jurisdiction */}
-        <View style={{ borderTopWidth: 1, borderColor: '#000', paddingTop: 5 }}>
+        <View style={{ borderTopWidth: 0, borderColor: '#000', paddingTop: 5 }}>
           <Text style={styles.jurisdictionText}>
             SUBJECT TO BENGALURU JURISDICTION
           </Text>
