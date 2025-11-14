@@ -17,19 +17,19 @@ import Loader from '../Loader/Loader';
 
 const sampleData = {
   sellerDetails: {
-    name: 'CAUVERY TRADERS',
-    address:
-      '# 3, 1st Cross, Mahadeshwara Layout,\n16th Main, BTM Layout, 2nd Stage,\nBangalore -560076',
-    phone: 'PH - 9845645910, 9008845910',
-    gstin: '29AAFFC1847A1ZS',
-    state: 'Karnataka, Code: 29',
-    email: 'cauverytraders09@gmail.com',
-  },
-  buyerDetails: {
     name: 'R S Hardware Glass & Electricals',
     address:
-      'Building No-3/7, Shop No-6\nGround Floor\nGown Shankar Complex\nArekere Main Road\nBengaluru- 560076',
+      'Building No-3/7, Shop No-6\nGround Floor, Gowri Shankar Complex\nArekere Main Road\nBangalore - 560076',
+    phone: 'PH - 8147465517, 9066309842',
     gstin: '29FKLPP1223G1Z0',
+    state: 'Karnataka, Code: 76',
+    email: 'rshardware2210@gmail.com',
+  },
+  buyerDetails: {
+    name: 'Cauvery Traders',
+    address:
+      '1st Cross Mahadeswara Layout\n16th Main Road BTM Layout\n2nd Stage Complex\nBengaluru - 560029',
+    gstin: '29AAFFC1847A1ZS',
     state: 'Karnataka, Code: 29',
   },
   invoiceNo: '6939',
@@ -90,11 +90,11 @@ const sampleData = {
   totalTax: '120.06',
   taxAmountWords: 'Indian Rupees One Hundred Twenty and Six paise Only',
   bankDetails: {
-    name: 'IDBI BANK',
-    accountNo: '0551653800000073',
-    ifsc: 'IBKL0000551',
-    branch: 'C/C-A/C',
-    address: 'Gandhinagar & IBKL0000551',
+    name: 'HDFC BANK',
+    accountNo: '50200093163651',
+    ifsc: 'HDFC0002841',
+    branch: '\nVijaya Bank Layout',
+    address: 'Bilekhalli, off Bannerghatta Road, Bangalore Karnataka 560076',
   },
 };
 
@@ -383,6 +383,14 @@ export default function FinalInvoice({
           <View style={styles.headerTop}>
             <View style={[styles.sellerSection, { borderRightWidth: 0 }]}>
               <Text style={styles.boldText}>Buyer (Bill to)</Text>
+              <Text style={styles.companyName}>{data.buyerDetails.name}</Text>
+              <Text style={styles.normalText}>{data.buyerDetails.address}</Text>
+              <Text style={styles.normalText}>
+                GSTIN/UIN: {data.buyerDetails.gstin}
+              </Text>
+              <Text style={styles.normalText}>
+                State Name : {data.buyerDetails.state}
+              </Text>
             </View>
             <View
               style={[
