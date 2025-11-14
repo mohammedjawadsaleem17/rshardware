@@ -15,6 +15,87 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
 
+
+const getAmountInWords = (amount) => {
+  const a = [
+    '',
+    'One',
+    'Two',
+    'Three',
+    'Four',
+    'Five',
+    'Six',
+    'Seven',
+    'Eight',
+    'Nine',
+    'Ten',
+    'Eleven',
+    'Twelve',
+    'Thirteen',
+    'Fourteen',
+    'Fifteen',
+    'Sixteen',
+    'Seventeen',
+    'Eighteen',
+    'Nineteen',
+  ];
+  const b = [
+    '',
+    '',
+    'Twenty',
+    'Thirty',
+    'Forty',
+    'Fifty',
+    'Sixty',
+    'Seventy',
+    'Eighty',
+    'Ninety',
+  ];
+
+  const inWords = (num) => {
+    if (num < 20) return a[num];
+    if (num < 100)
+      return b[Math.floor(num / 10)] + (num % 10 ? ' ' + a[num % 10] : '');
+    if (num < 1000)
+      return (
+        a[Math.floor(num / 100)] +
+        ' Hundred' +
+        (num % 100 ? ' ' + inWords(num % 100) : '')
+      );
+    if (num < 100000)
+      return (
+        inWords(Math.floor(num / 1000)) +
+        ' Thousand' +
+        (num % 1000 ? ' ' + inWords(num % 1000) : '')
+      );
+    if (num < 10000000)
+      return (
+        inWords(Math.floor(num / 100000)) +
+        ' Lakh' +
+        (num % 100000 ? ' ' + inWords(num % 100000) : '')
+      );
+    return (
+      inWords(Math.floor(num / 10000000)) +
+      ' Crore' +
+      (num % 10000000 ? ' ' + inWords(num % 10000000) : '')
+    );
+  };
+
+  // Split Rupees & Paise
+  const [rupeesStr, paiseStr] = amount.toFixed(2).split('.');
+  const rupees = parseInt(rupeesStr);
+  const paise = parseInt(paiseStr);
+
+  let result = '';
+
+  if (rupees > 0) result += inWords(rupees) + ' Rupees';
+
+  if (paise > 0)
+    result += (rupees > 0 ? ' and ' : '') + inWords(paise) + ' Paise';
+
+  return result + ' Only';
+};
+
 const sampleData = {
   sellerDetails: {
     name: 'R S Hardware Glass & Electricals',
@@ -197,6 +278,15 @@ export default function FinalInvoice({
   const [loading, setLoading] = useState(false);
   const [invoiceReady, setInvoiceReady] = useState(false);
   console.log('customerDetails', customerDetails);
+
+  //TAX CALCUALTION
+
+  const preTaxRatesArray = customerDetails?.lineItems.map((item) =>
+    (item.rate / 1.18).toFixed(2)
+  );
+
+  console.log('Pretax array', preTaxRatesArray);
+
   const handleGenerateInvoice = async () => {
     try {
       setLoading(true);
@@ -283,6 +373,35 @@ export default function FinalInvoice({
   const cgst = (taxAmt / 100) * 9;
   const totalPayable = taxAmt + cgst * 2;
   const wordsAmount = numberToWords(totalPayable);
+
+  const totalGSTAmount = customerDetails?.lineItems?.map(
+    (ele) => (Number(ele?.rate) - Number(ele?.rate / 1.18)) * ele?.qty
+  );
+  console.log('Total GST', totalGSTAmount);
+  const gstValue = totalGSTAmount
+    ?.reduce((acc, ele) => acc + ele, 0)
+    .toFixed(2);
+  console.log(gstValue);
+  const subTotal = customerDetails?.lineItems?.reduce(
+    (acc, ele) => acc + Number(ele.rate / 1.18) * Number(ele.qty),
+    0
+  );
+  const finalAmountBeforeRoundOff = Number(
+    (Number(subTotal) + Number(gstValue)).toFixed(2)
+  );
+  const roundedAmount = Math.round(finalAmountBeforeRoundOff);
+
+  const roundOff = Number(
+    (roundedAmount - finalAmountBeforeRoundOff).toFixed(2)
+  );
+
+  const totalProductAmount = customerDetails?.lineItems?.reduce(
+    (acc, ele) => acc + Number(ele?.rate) * Number(ele?.qty),
+    0
+  );
+
+  console.log('Final Amount', totalProductAmount);
+  const amountInWords = `Indian Rupees ${getAmountInWords(totalProductAmount)}`;
 
   const InvoicePDF = ({ data = sampleData }) => (
     <Document>
@@ -431,7 +550,9 @@ export default function FinalInvoice({
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Dated</Text>
-                <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.invoiceDate}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Delivery Note Date</Text>
@@ -475,12 +596,12 @@ export default function FinalInvoice({
           </View>
 
           {/* Table Rows */}
-          {data.items.map((item, index) => (
+          {customerDetails?.lineItems?.map((item, index) => (
             <View key={index} style={styles.tableRow}>
               <Text style={[styles.colSlNo, { borderLeftWidth: 1 }]}>
-                {item.slNo}
+                {item.sno}
               </Text>
-              <Text style={styles.colDescription}>{item.description}</Text>
+              <Text style={styles.colDescription}>{item.item}</Text>
               <Text
                 style={[
                   styles.colHSN,
@@ -489,17 +610,17 @@ export default function FinalInvoice({
               >
                 {item.hsn}
               </Text>
-              <Text style={styles.colGST}>{item.gstRate}</Text>
-              <Text style={styles.colQuantity}>{item.quantity}</Text>
+              <Text style={styles.colGST}>18%</Text>
+              <Text style={styles.colQuantity}>{item.qty} Piece</Text>
               <Text style={styles.colRate}>{item.rate}</Text>
               <Text style={[styles.colRatePer, { borderRightWidth: 1 }]}>
-                {item.ratePerPiece}
+                {preTaxRatesArray?.at(index)}
               </Text>
               <Text style={[styles.colPer, { borderRightWidth: 1 }]}>
                 Piece
               </Text>
               <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
-                {item.amount}
+                {preTaxRatesArray?.at(index) * Number(item?.qty)?.toFixed(2)}
               </Text>
             </View>
           ))}
@@ -509,16 +630,12 @@ export default function FinalInvoice({
             <View style={styles.taxRow}>
               <Text style={styles.taxLabel}>CGST 9%</Text>
 
-              <Text style={styles.taxValue}>
-                {data.taxBreakdown.cgst9.amount}
-              </Text>
+              <Text style={styles.taxValue}>{(gstValue / 2).toFixed(2)}</Text>
             </View>
             <View style={styles.taxRow}>
               <Text style={styles.taxLabel}>SGST 9%</Text>
 
-              <Text style={styles.taxValue}>
-                {data.taxBreakdown.sgst9.amount}
-              </Text>
+              <Text style={styles.taxValue}>{(gstValue / 2).toFixed(2)}</Text>
             </View>
 
             <View style={[styles.taxRow, { justifyContent: 'flex-start' }]}>
@@ -526,7 +643,7 @@ export default function FinalInvoice({
                 Round Off
               </Text>
               <Text style={[styles.taxValue, { marginLeft: 'auto' }]}>
-                {data.taxBreakdown.roundOff}
+                {roundOff}
               </Text>
             </View>
           </View>
@@ -542,16 +659,24 @@ export default function FinalInvoice({
           <View style={styles.amountInWords}>
             <Text style={styles.boldText}>Amount Chargeable (in words)</Text>
             <Text style={[styles.boldText, { fontSize: 9, marginTop: 3 }]}>
-              {data.amountInWords}
+              {amountInWords}
             </Text>
           </View>
           <View style={styles.totalSection}>
             <View style={styles.totalRow}>
               <Text style={styles.totalLabel}>Total</Text>
-              <Text style={styles.totalLabel}>50 Piece</Text>
+              <Text style={styles.totalLabel}>
+                {customerDetails?.lineItems?.reduce(
+                  (acc, value) => acc + Number(value?.qty),
+                  0
+                )}
+                {''} Piece
+              </Text>
             </View>
             <View style={[styles.totalRow, { marginTop: 10 }]}>
-              <Text style={styles.totalAmount}>₹ {data.totalAmount}</Text>
+              <Text style={styles.totalAmount}>
+                Rs: {totalProductAmount?.toFixed(2)}
+              </Text>
             </View>
             <Text
               style={[styles.normalText, { textAlign: 'right', fontSize: 7 }]}
