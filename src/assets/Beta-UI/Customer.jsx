@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { MainContext } from '../../../src/components/Invoice';
 
 export default function Customer() {
@@ -24,7 +24,6 @@ export default function Customer() {
     deliveryNote,
     setDeliveryNote,
     referenceNo,
-
     setReferenceNo,
     buyersOrderNo,
     setBuyersOrderNo,
@@ -47,24 +46,6 @@ export default function Customer() {
   } = useContext(MainContext);
 
   const isCash = mode === 'cash';
-
-  useEffect(() => {
-    if (isCash) {
-      setCustomerName('CASH');
-      setCustomerEmail('');
-      setCustomerPhone('');
-      setCustomerAddress('');
-      setCustomerGstin('');
-      setCustomerPlaceOfSupply('');
-      setDeliveryNote('');
-      setReferenceNo('');
-      setBuyersOrderNo('');
-      setDispatchDocNo('');
-      setDispatchedThrough('');
-      setTermsOfDelivery('');
-      setDestination('');
-    }
-  }, [isCash]);
 
   const statesOfIndia = [
     'Andhra Pradesh',
@@ -109,6 +90,31 @@ export default function Customer() {
   const inputClass =
     'w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none disabled:bg-gray-50 disabled:text-gray-400';
 
+  useEffect(() => {
+    if (isCash) {
+      const today = new Date();
+      const localDate = today.toLocaleDateString('en-CA');
+      setCustomerName('CASH');
+      setCustomerEmail('');
+      setCustomerPhone('');
+      setCustomerAddress('');
+      setCustomerGstin('');
+      setCustomerPlaceOfSupply('Karnataka');
+      setDeliveryNote('');
+      setReferenceNo('');
+      setBuyersOrderNo('');
+      setDispatchDocNo('');
+      setDispatchedThrough('');
+      setTermsOfDelivery('');
+      setDestination('Karnataka');
+      setInvoiceDate(localDate);
+      setDated(localDate);
+      setDeliveryNoteDate(localDate);
+      setPaymentTerms('');
+      setOtherReferences('');
+    }
+  }, [isCash]);
+
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
@@ -127,7 +133,11 @@ export default function Customer() {
 
               <div className="flex gap-2 bg-white rounded-lg p-1">
                 <label
-                  className={`px-4 py-2 rounded cursor-pointer text-sm font-medium ${mode === 'business' ? 'bg-blue-50 text-blue-600' : 'text-gray-600'}`}
+                  className={`px-4 py-2 rounded cursor-pointer text-sm font-medium ${
+                    mode === 'business'
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-gray-600'
+                  }`}
                 >
                   <input
                     type="radio"
@@ -139,7 +149,11 @@ export default function Customer() {
                   Business
                 </label>
                 <label
-                  className={`px-4 py-2 rounded cursor-pointer text-sm font-medium ${mode === 'cash' ? 'bg-blue-50 text-blue-600' : 'text-gray-600'}`}
+                  className={`px-4 py-2 rounded cursor-pointer text-sm font-medium ${
+                    mode === 'cash'
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-gray-600'
+                  }`}
                 >
                   <input
                     type="radio"
@@ -180,10 +194,10 @@ export default function Customer() {
                   Invoice No
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   value={invNo}
                   onChange={(e) => setInvNo(e.target.value)}
-                  placeholder="INV-001"
+                  placeholder="001"
                   className={inputClass}
                 />
               </div>
@@ -386,14 +400,20 @@ export default function Customer() {
                 <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase">
                   Mode of Payment
                 </label>
-                <input
-                  type="text"
+                <select
                   value={paymentTerms}
                   onChange={(e) => setPaymentTerms(e.target.value)}
                   disabled={isCash}
-                  placeholder="Mode of Payment"
                   className={inputClass}
-                />
+                >
+                  <option value="">Select Payment Mode</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Credit Card">Credit Card</option>
+                  <option value="Debit Card">Debit Card</option>
+                  <option value="Cheque">Cheque</option>
+                  <option value="UPI">UPI</option>
+                  <option value="NetBanking">NetBanking</option>
+                </select>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase">

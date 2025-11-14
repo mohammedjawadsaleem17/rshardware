@@ -286,596 +286,610 @@ export default function FinalInvoice({
   );
 
   console.log('Pretax array', preTaxRatesArray);
- const taxableTotalValue = customerDetails?.lineItems.map(
-   (item) => (item.rate / 1.18).toFixed(2) * item.qty
- );
- const totalTaxAmt = taxableTotalValue?.reduce((acc, value) => acc + value, 0);
+  const taxableTotalValue = customerDetails?.lineItems.map(
+    (item) => (item.rate / 1.18).toFixed(2) * item.qty
+  );
+  const totalTaxAmt = taxableTotalValue?.reduce((acc, value) => acc + value, 0);
 
- console.log('taxableTotalValue', totalTaxAmt);
+  console.log('taxableTotalValue', totalTaxAmt);
 
- const handleGenerateInvoice = async () => {
-   try {
-     setLoading(true);
-     const response = await fetch('https://rshardware.up.railway.app/users', {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({
-         invoiceId: invNo,
-         invoiceDate: customerDetails?.invoiceDate,
-         name: customerDetails?.name,
-         email: customerDetails?.email,
-         phoneNumber: customerDetails?.phone,
-         billingAddress: customerDetails?.customerAddress,
-         gstIn: customerDetails?.gstin,
-         placeOfSupply: customerDetails?.customerPlaceOfSupply,
-         dueDate: customerDetails?.dueDate,
-         items: customerDetails?.lineItems,
-       }),
-     });
-     await response.json();
-     toast.success(`Invoice Generated for ${customerDetails?.name}`);
-     setInvoiceReady(true);
-   } catch (error) {
-     console.error('Error updating invoice in database:', error);
-     toast.warn('Loading, Please wait for a Minute');
-     const response = await fetch(
-       'https://rshardware-backend.onrender.com/users',
-       {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({
-           invoiceId: invNo,
-           invoiceDate: customerDetails?.invoiceDate,
-           name: customerDetails?.name,
-           email: customerDetails?.email,
-           phoneNumber: customerDetails?.phone,
-           billingAddress: customerDetails?.customerAddress,
-           gstIn: customerDetails?.gstin,
-           placeOfSupply: customerDetails?.customerPlaceOfSupply,
-           dueDate: customerDetails?.dueDate,
-           items: customerDetails?.lineItems,
-         }),
-       }
-     );
-     await response.json();
-     setInvoiceReady(true);
-   } finally {
-     setLoading(false);
-   }
- };
+  const handleGenerateInvoice = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('https://rshardware.up.railway.app/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          invoiceId: invNo,
+          invoiceDate: customerDetails?.invoiceDate,
+          name: customerDetails?.name,
+          email: customerDetails?.email,
+          phoneNumber: customerDetails?.phone,
+          billingAddress: customerDetails?.customerAddress,
+          gstIn: customerDetails?.gstin,
+          placeOfSupply: customerDetails?.customerPlaceOfSupply,
+          dueDate: customerDetails?.dueDate,
+          items: customerDetails?.lineItems,
+        }),
+      });
+      await response.json();
+      toast.success(`Invoice Generated for ${customerDetails?.name}`);
+      setInvoiceReady(true);
+    } catch (error) {
+      console.error('Error updating invoice in database:', error);
+      toast.warn('Loading, Please wait for a Minute');
+      const response = await fetch(
+        'https://rshardware-backend.onrender.com/users',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            invoiceId: invNo,
+            invoiceDate: customerDetails?.invoiceDate,
+            name: customerDetails?.name,
+            email: customerDetails?.email,
+            phoneNumber: customerDetails?.phone,
+            billingAddress: customerDetails?.customerAddress,
+            gstIn: customerDetails?.gstin,
+            placeOfSupply: customerDetails?.customerPlaceOfSupply,
+            dueDate: customerDetails?.dueDate,
+            items: customerDetails?.lineItems,
+          }),
+        }
+      );
+      await response.json();
+      setInvoiceReady(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
- const handleReset = async () => {
-   setInvoiceReady(false);
-   toast.info('Reset to default');
-   await fetchInvoiceNo();
-   setCustomerName('');
-   setCustomerEmail('');
-   setCustomerPhone('');
-   setCustomerAddress('');
-   setCustomerGstin('');
-   setCustomerPlaceOfSupply('');
-   setInvoiceDate('');
-   setDueDate('');
+  const handleReset = async () => {
+    setInvoiceReady(false);
+    toast.info('Reset to default');
+    await fetchInvoiceNo();
+    setCustomerName('');
+    setCustomerEmail('');
+    setCustomerPhone('');
+    setCustomerAddress('');
+    setCustomerGstin('');
+    setCustomerPlaceOfSupply('');
+    setInvoiceDate('');
+    setDueDate('');
 
-   setLineItems([
-     {
-       id: 1,
-       sno: 1,
-       item: '',
-       hsn: '',
-       rate: '',
-       qty: '',
-       taxableValue: 0,
-       taxAmount: 0,
-       total: 0,
-     },
-   ]);
- };
+    setLineItems([
+      {
+        id: 1,
+        sno: 1,
+        item: '',
+        hsn: '',
+        rate: '',
+        qty: '',
+        taxableValue: 0,
+        taxAmount: 0,
+        total: 0,
+      },
+    ]);
+  };
 
- const taxAmt = items?.reduce(
-   (acc, item) => acc + parseFloat(item.taxableValue || 0),
-   0
- );
- const cgst = (taxAmt / 100) * 9;
- const totalPayable = taxAmt + cgst * 2;
- const wordsAmount = numberToWords(totalPayable);
+  const taxAmt = items?.reduce(
+    (acc, item) => acc + parseFloat(item.taxableValue || 0),
+    0
+  );
+  const cgst = (taxAmt / 100) * 9;
+  const totalPayable = taxAmt + cgst * 2;
+  const wordsAmount = numberToWords(totalPayable);
 
- const totalGSTAmount = customerDetails?.lineItems?.map(
-   (ele) => (Number(ele?.rate) - Number(ele?.rate / 1.18)) * ele?.qty
- );
- console.log('Total GST', totalGSTAmount);
+  const totalGSTAmount = customerDetails?.lineItems?.map((ele) => {
+    const taxable = Number(ele.rate) / 1.18;
 
- const totalCGST_SGST = totalGSTAmount?.reduce((acc, val) => acc + val, 0);
- const totalGST = (totalCGST_SGST / 2).toFixed(2);
- console.log('Total CGST', totalGST);
- const gstValue = totalGSTAmount?.reduce((acc, ele) => acc + ele, 0).toFixed(2);
- console.log('gstValue', gstValue);
- const subTotal = customerDetails?.lineItems?.reduce(
-   (acc, ele) => acc + Number(ele.rate / 1.18) * Number(ele.qty),
-   0
- );
- const finalAmountBeforeRoundOff = Number(
-   (Number(subTotal) + Number(gstValue)).toFixed(2)
- );
- const roundedAmount = Math.round(finalAmountBeforeRoundOff);
+    const cgst = Number((taxable * 0.09).toFixed(2));
+    const sgst = Number((taxable * 0.09).toFixed(2));
 
- const roundOff = Number(
-   (roundedAmount - finalAmountBeforeRoundOff).toFixed(2)
- );
+    return (cgst + sgst) * ele.qty;
+  });
+  console.log('Total GST', totalGSTAmount);
 
- const totalProductAmount = customerDetails?.lineItems?.reduce(
-   (acc, ele) => acc + Number(ele?.rate) * Number(ele?.qty),
-   0
- );
+  const totalCGST_SGST = totalGSTAmount?.reduce((acc, val) => acc + val, 0);
+  const totalGST = (totalCGST_SGST / 2).toFixed(2);
 
- console.log('Final Amount', totalProductAmount);
- const amountInWords = `Indian Rupees ${getAmountInWords(totalProductAmount)}`;
+  console.log('Total CGST', totalGST);
+  const gstValue = totalGSTAmount
+    ?.reduce((acc, ele) => acc + ele, 0)
+    .toFixed(2);
+  console.log('gstValue', gstValue);
+  const subTotal = customerDetails?.lineItems?.reduce(
+    (acc, ele) => acc + Number(ele.rate / 1.18) * Number(ele.qty),
+    0
+  );
+  const finalAmountBeforeRoundOff = Number(
+    (Number(subTotal) + Number(gstValue)).toFixed(2)
+  );
+  const roundedAmount = Math.round(finalAmountBeforeRoundOff);
 
- const taxAmountInWords = `Indian Rupees ${getAmountInWords(totalGST * 2)}`;
+  const roundOff = Number(
+    (roundedAmount - finalAmountBeforeRoundOff).toFixed(2)
+  );
 
- const InvoicePDF = ({ data = sampleData }) => (
-   <Document>
-     <Page size="A4" style={styles.page}>
-       {/* Add Tax Invoice and ORIGINAL FOR RECIPIENT */}
-       <View
-         style={{
-           flexDirection: 'row',
-           justifyContent: 'center',
-           alignItems: 'center',
-           marginBottom: 10,
-         }}
-       >
-         <Text
-           style={{
-             textAlign: 'center',
-             fontSize: 12, // Font size for Tax Invoice
-             fontWeight: 'bold',
-           }}
-         >
-           Tax Invoice
-         </Text>
-       </View>
-       <View
-         style={{
-           position: 'absolute',
-           top: 0,
-           right: 0,
-           margin: 10,
-         }}
-       >
-         <Text
-           style={{
-             textAlign: 'right',
-             fontSize: 8, // Smaller than Tax Invoice
-             fontStyle: 'italic', // Italic style
-           }}
-         >
-           (ORIGINAL FOR RECIPIENT)
-         </Text>
-       </View>
+  const totalProductAmount = customerDetails?.lineItems?.reduce(
+    (acc, ele) => acc + Number(ele?.rate) * Number(ele?.qty),
+    0
+  );
 
-       {/* Header Section */}
-       <View style={styles.headerSection}>
-         {/* Top Section - Seller and Invoice Info */}
-         <View style={styles.headerTop}>
-           {/* Seller Details */}
-           <View style={styles.sellerSection}>
-             <Text style={styles.companyName}>{data.sellerDetails.name}</Text>
-             <Text style={styles.normalText}>{data.sellerDetails.address}</Text>
-             <Text style={styles.normalText}>{data.sellerDetails.phone}</Text>
-             <Text style={styles.normalText}>
-               GSTIN/UIN: {data.sellerDetails.gstin}
-             </Text>
-             <Text style={styles.normalText}>
-               State Name : {data.sellerDetails.state}
-             </Text>
-             <Text style={styles.normalText}>
-               E-Mail : {data.sellerDetails.email}
-             </Text>
-           </View>
+  console.log('Final Amount', totalProductAmount);
+  const amountInWords = `Indian Rupees ${getAmountInWords(totalProductAmount)}`;
 
-           {/* Invoice Info Grid */}
-           <View style={styles.invoiceInfoSection}>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Invoice No.</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails.invoiceNum}
-               </Text>
-             </View>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Delivery Note</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.deliveryNote}
-               </Text>
-             </View>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Reference No. & Date.</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.referenceNo}
-               </Text>
-             </View>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Buyer's Order No.</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.buyersOrderNo}
-               </Text>
-             </View>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Dispatch Doc No.</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.dispatchDocNo}
-               </Text>
-             </View>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Dispatched through</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.dispatchedThrough}
-               </Text>
-             </View>
-             <View style={styles.infoRowNoBorder}>
-               <Text style={styles.infoLabel}>Terms of Delivery</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.termsOfDelivery}
-               </Text>
-             </View>
-           </View>
-         </View>
+  const taxAmountInWords = `Indian Rupees ${getAmountInWords(totalGST * 2)}`;
 
-         {/* Invoice Info Right Side */}
-         <View style={styles.headerTop}>
-           <View style={[styles.sellerSection, { borderRightWidth: 0 }]}>
-             <Text style={styles.boldText}>Buyer (Bill to)</Text>
-             <Text style={styles.companyName}>{customerDetails.name}</Text>
-             <Text style={styles.normalText}>{customerDetails.address}</Text>
-             <Text style={styles.normalText}>
-               GSTIN/UIN: {customerDetails.gstin}
-             </Text>
-             <Text style={styles.normalText}>
-               State Name : {customerDetails.customerPlaceOfSupply}
-             </Text>
-           </View>
-           <View
-             style={[
-               styles.invoiceInfoSection,
-               { justifyContent: 'space-between' },
-             ]}
-           >
-             <View style={[styles.infoRow]}>
-               <Text style={styles.infoLabel}>Payment Date</Text>
-               <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
-             </View>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Mode/Terms of Payment</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.paymentTerms}
-               </Text>
-             </View>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Other References</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.otherReferences}
-               </Text>
-             </View>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Dated</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.invoiceDate}
-               </Text>
-             </View>
-             <View style={styles.infoRow}>
-               <Text style={styles.infoLabel}>Delivery Note Date</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.deliveryNoteDate}
-               </Text>
-             </View>
-             <View style={[styles.infoRowNoBorder]}>
-               <Text style={styles.infoLabel}>Destination</Text>
-               <Text style={styles.infoValue}>
-                 {customerDetails?.destination}
-               </Text>
-             </View>
-           </View>
-         </View>
-       </View>
+  const InvoicePDF = ({ data = sampleData }) => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        {/* Add Tax Invoice and ORIGINAL FOR RECIPIENT */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: 10,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 12, // Font size for Tax Invoice
+              fontWeight: 'bold',
+            }}
+          >
+            Tax Invoice
+          </Text>
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            margin: 10,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'right',
+              fontSize: 8, // Smaller than Tax Invoice
+              fontStyle: 'italic', // Italic style
+            }}
+          >
+            (ORIGINAL FOR RECIPIENT)
+          </Text>
+        </View>
 
-       {/* Items Table */}
-       <View style={styles.table}>
-         {/* Table Header */}
-         <View style={styles.tableHeader}>
-           <Text style={[styles.colSlNo, { borderLeftWidth: 1 }]}>
-             Sl{'\n'}No
-           </Text>
-           <Text style={styles.colDescription}>Description of Goods</Text>
-           <Text style={[styles.colHSN]}>HSN/SAC</Text>
-           <Text style={[styles.colGST]}>GST{'\n'}Rate</Text>
-           <Text style={[styles.colQuantity]}>Quantity</Text>
-           <Text
-             style={[
-               styles.colRate,
-               { width: 100, borderRightWidth: 1, marginLeft: -5 },
-             ]}
-           >
-             Rate{'\n'}(Incl. of Tax)
-           </Text>
-           <Text style={[styles.colPer, { borderRightWidth: 1 }]}>per</Text>
-           <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
-             Amount
-           </Text>
-         </View>
+        {/* Header Section */}
+        <View style={styles.headerSection}>
+          {/* Top Section - Seller and Invoice Info */}
+          <View style={styles.headerTop}>
+            {/* Seller Details */}
+            <View style={styles.sellerSection}>
+              <Text style={styles.companyName}>{data.sellerDetails.name}</Text>
+              <Text style={styles.normalText}>
+                {data.sellerDetails.address}
+              </Text>
+              <Text style={styles.normalText}>{data.sellerDetails.phone}</Text>
+              <Text style={styles.normalText}>
+                GSTIN/UIN: {data.sellerDetails.gstin}
+              </Text>
+              <Text style={styles.normalText}>
+                State Name : {data.sellerDetails.state}
+              </Text>
+              <Text style={styles.normalText}>
+                E-Mail : {data.sellerDetails.email}
+              </Text>
+            </View>
 
-         {/* Table Rows */}
-         {customerDetails?.lineItems?.map((item, index) => (
-           <View key={index} style={styles.tableRow}>
-             <Text style={[styles.colSlNo, { borderLeftWidth: 1 }]}>
-               {item.sno}
-             </Text>
-             <Text style={styles.colDescription}>{item.item}</Text>
-             <Text
-               style={[
-                 styles.colHSN,
-                 { textAlign: 'center', paddingHorizontal: 1 },
-               ]}
-             >
-               {item.hsn}
-             </Text>
-             <Text style={styles.colGST}>18%</Text>
-             <Text style={styles.colQuantity}>{item.qty} Piece</Text>
-             <Text style={styles.colRate}>{item.rate}</Text>
-             <Text style={[styles.colRatePer, { borderRightWidth: 1 }]}>
-               {preTaxRatesArray?.at(index)}
-             </Text>
-             <Text style={[styles.colPer, { borderRightWidth: 1 }]}>Piece</Text>
-             <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
-               {preTaxRatesArray?.at(index) * Number(item?.qty)?.toFixed(2)}
-             </Text>
-           </View>
-         ))}
+            {/* Invoice Info Grid */}
+            <View style={styles.invoiceInfoSection}>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Invoice No.</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails.invoiceNum}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Delivery Note</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.deliveryNote}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Reference No. & Date.</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.referenceNo}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Buyer's Order No.</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.buyersOrderNo}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Dispatch Doc No.</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.dispatchDocNo}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Dispatched through</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.dispatchedThrough}
+                </Text>
+              </View>
+              <View style={styles.infoRowNoBorder}>
+                <Text style={styles.infoLabel}>Terms of Delivery</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.termsOfDelivery}
+                </Text>
+              </View>
+            </View>
+          </View>
 
-         {/* Tax Breakdown Rows */}
-         <View style={styles.taxBreakdownSection}>
-           <View style={styles.taxRow}>
-             <Text style={styles.taxLabel}>CGST 9%</Text>
+          {/* Invoice Info Right Side */}
+          <View style={styles.headerTop}>
+            <View style={[styles.sellerSection, { borderRightWidth: 0 }]}>
+              <Text style={styles.boldText}>Buyer (Bill to)</Text>
+              <Text style={styles.companyName}>{customerDetails.name}</Text>
+              <Text style={styles.normalText}>{customerDetails.address}</Text>
+              <Text style={styles.normalText}>
+                GSTIN/UIN: {customerDetails.gstin}
+              </Text>
+              <Text style={styles.normalText}>
+                State Name : {customerDetails.customerPlaceOfSupply}
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.invoiceInfoSection,
+                { justifyContent: 'space-between' },
+              ]}
+            >
+              <View style={[styles.infoRow]}>
+                <Text style={styles.infoLabel}>Payment Date</Text>
+                <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Mode/Terms of Payment</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.paymentTerms}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Other References</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.otherReferences}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Dated</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.invoiceDate}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Delivery Note Date</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.deliveryNoteDate}
+                </Text>
+              </View>
+              <View style={[styles.infoRowNoBorder]}>
+                <Text style={styles.infoLabel}>Destination</Text>
+                <Text style={styles.infoValue}>
+                  {customerDetails?.destination}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
 
-             <Text style={styles.taxValue}>{(gstValue / 2).toFixed(2)}</Text>
-           </View>
-           <View style={styles.taxRow}>
-             <Text style={styles.taxLabel}>SGST 9%</Text>
+        {/* Items Table */}
+        <View style={styles.table}>
+          {/* Table Header */}
+          <View style={styles.tableHeader}>
+            <Text style={[styles.colSlNo, { borderLeftWidth: 1 }]}>
+              Sl{'\n'}No
+            </Text>
+            <Text style={styles.colDescription}>Description of Goods</Text>
+            <Text style={[styles.colHSN]}>HSN/SAC</Text>
+            <Text style={[styles.colGST]}>GST{'\n'}Rate</Text>
+            <Text style={[styles.colQuantity]}>Quantity</Text>
+            <Text
+              style={[
+                styles.colRate,
+                { width: 100, borderRightWidth: 1, marginLeft: -5 },
+              ]}
+            >
+              Rate{'\n'}(Incl. of Tax)
+            </Text>
+            <Text style={[styles.colPer, { borderRightWidth: 1 }]}>per</Text>
+            <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
+              Amount
+            </Text>
+          </View>
 
-             <Text style={styles.taxValue}>{(gstValue / 2).toFixed(2)}</Text>
-           </View>
+          {/* Table Rows */}
+          {customerDetails?.lineItems?.map((item, index) => (
+            <View key={index} style={styles.tableRow}>
+              <Text style={[styles.colSlNo, { borderLeftWidth: 1 }]}>
+                {item.sno}
+              </Text>
+              <Text style={styles.colDescription}>{item.item}</Text>
+              <Text
+                style={[
+                  styles.colHSN,
+                  { textAlign: 'center', paddingHorizontal: 1 },
+                ]}
+              >
+                {item.hsn}
+              </Text>
+              <Text style={styles.colGST}>18%</Text>
+              <Text style={styles.colQuantity}>{item.qty} Piece</Text>
+              <Text style={styles.colRate}>{item.rate}</Text>
+              <Text style={[styles.colRatePer, { borderRightWidth: 1 }]}>
+                {preTaxRatesArray?.at(index)}
+              </Text>
+              <Text style={[styles.colPer, { borderRightWidth: 1 }]}>
+                Piece
+              </Text>
+              <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
+                {preTaxRatesArray?.at(index) * Number(item?.qty)?.toFixed(2)}
+              </Text>
+            </View>
+          ))}
 
-           <View style={[styles.taxRow, { justifyContent: 'flex-start' }]}>
-             <Text style={[styles.taxLabel, { marginLeft: 366 }]}>
-               Round Off
-             </Text>
-             <Text style={[styles.taxValue, { marginLeft: 'auto' }]}>
-               {roundOff}
-             </Text>
-           </View>
-         </View>
-       </View>
+          {/* Tax Breakdown Rows */}
+          <View style={styles.taxBreakdownSection}>
+            <View style={styles.taxRow}>
+              <Text style={styles.taxLabel}>CGST 9%</Text>
 
-       {/* Total and Amount in Words */}
-       <View
-         style={[
-           styles.footerSection,
-           { borderLeftWidth: 1, borderRightWidth: 1, borderColor: '#000' },
-         ]}
-       >
-         <View style={styles.amountInWords}>
-           <Text style={styles.boldText}>Amount Chargeable (in words)</Text>
-           <Text style={[styles.boldText, { fontSize: 9, marginTop: 3 }]}>
-             {amountInWords}
-           </Text>
-         </View>
-         <View style={styles.totalSection}>
-           <View style={styles.totalRow}>
-             <Text style={styles.totalLabel}>Total</Text>
-             <Text style={styles.totalLabel}>
-               {customerDetails?.lineItems?.reduce(
-                 (acc, value) => acc + Number(value?.qty),
-                 0
-               )}
-               {''} Piece
-             </Text>
-           </View>
-           <View style={[styles.totalRow, { marginTop: 10 }]}>
-             <Text style={styles.totalAmount}>
-               Rs: {totalProductAmount?.toFixed(2)}
-             </Text>
-           </View>
-           <Text
-             style={[styles.normalText, { textAlign: 'right', fontSize: 7 }]}
-           >
-             E. & O.E
-           </Text>
-         </View>
-       </View>
+              <Text style={styles.taxValue}>{(gstValue / 2).toFixed(2)}</Text>
+            </View>
+            <View style={styles.taxRow}>
+              <Text style={styles.taxLabel}>SGST 9%</Text>
 
-       {/* Tax Summary Table */}
-       <View
-         style={[
-           styles.taxSummarySection,
-           { borderLeftWidth: 1, borderRightWidth: 1, borderColor: '#000' },
-         ]}
-       >
-         {/* Header */}
-         <View style={styles.taxSummaryHeader}>
-           <Text style={styles.taxColHSN}>HSN/SAC</Text>
-           <Text style={styles.taxColTaxable}>Taxable{'\n'}Value</Text>
-           <View style={styles.taxColCGST}>
-             <Text
-               style={[styles.boldText, { textAlign: 'center', padding: 2 }]}
-             >
-               CGST
-             </Text>
-             <View style={styles.taxSubCol}>
-               <Text
-                 style={[
-                   styles.taxSubColRate,
-                   { borderTopWidth: 1, borderColor: '#000' },
-                 ]}
-               >
-                 Rate
-               </Text>
-               <Text
-                 style={[
-                   styles.taxSubColAmount,
-                   { borderTopWidth: 1, borderColor: '#000' },
-                 ]}
-               >
-                 Amount
-               </Text>
-             </View>
-           </View>
-           <View style={styles.taxColSGST}>
-             <Text
-               style={[styles.boldText, { textAlign: 'center', padding: 2 }]}
-             >
-               SGST/UTGST
-             </Text>
-             <View style={styles.taxSubCol}>
-               <Text
-                 style={[
-                   styles.taxSubColRate,
-                   { borderTopWidth: 1, borderColor: '#000' },
-                 ]}
-               >
-                 Rate
-               </Text>
-               <Text
-                 style={[
-                   styles.taxSubColAmount,
-                   { borderTopWidth: 1, borderColor: '#000' },
-                 ]}
-               >
-                 Amount
-               </Text>
-             </View>
-           </View>
-           <Text style={styles.taxColTotal}>Total{'\n'}Tax Amount</Text>
-         </View>
+              <Text style={styles.taxValue}>{(gstValue / 2).toFixed(2)}</Text>
+            </View>
 
-         {/* Data Rows */}
-         {customerDetails?.lineItems?.map((item, index) => (
-           <View key={index} style={styles.taxSummaryRow}>
-             <Text style={styles.taxColHSN}>{item.hsn}</Text>
-             <Text style={styles.taxColTaxable}>
-               {preTaxRatesArray?.at(index) * Number(item?.qty)?.toFixed(2)}
-             </Text>
-             <View style={styles.taxColCGST}>
-               <View style={styles.taxSubCol}>
-                 <Text style={styles.taxSubColRate}>9%</Text>
-                 <Text style={styles.taxSubColAmount}>
-                   {(totalGSTAmount?.at(index) / 2).toFixed(2)}
-                 </Text>
-               </View>
-             </View>
-             <View style={styles.taxColSGST}>
-               <View style={styles.taxSubCol}>
-                 <Text style={styles.taxSubColRate}>9%</Text>
-                 <Text style={styles.taxSubColAmount}>
-                   {(totalGSTAmount?.at(index) / 2).toFixed(2)}
-                 </Text>
-               </View>
-             </View>
-             <Text style={styles.taxColTotal}>
-               {' '}
-               {totalGSTAmount?.at(index).toFixed(2)}
-             </Text>
-           </View>
-         ))}
+            <View style={[styles.taxRow, { justifyContent: 'flex-start' }]}>
+              <Text style={[styles.taxLabel, { marginLeft: 366 }]}>
+                Round Off
+              </Text>
+              <Text style={[styles.taxValue, { marginLeft: 'auto' }]}>
+                {roundOff}
+              </Text>
+            </View>
+          </View>
+        </View>
 
-         {/* Total Row */}
-         <View style={styles.taxSummaryRow}>
-           <Text style={[styles.taxColHSN, { fontWeight: 'bold' }]}>Total</Text>
-           <Text style={[styles.taxColTaxable, { fontWeight: 'bold' }]}>
-             {totalTaxAmt?.toFixed(2)}
-           </Text>
-           <View style={styles.taxColCGST}>
-             <View style={styles.taxSubCol}>
-               <Text style={styles.taxSubColRate}></Text>
-               <Text style={[styles.taxSubColAmount, { fontWeight: 'bold' }]}>
-                 {totalGST}
-               </Text>
-             </View>
-           </View>
-           <View style={styles.taxColSGST}>
-             <View style={styles.taxSubCol}>
-               <Text style={styles.taxSubColRate}></Text>
-               <Text style={[styles.taxSubColAmount, { fontWeight: 'bold' }]}>
-                 {totalGST}
-               </Text>
-             </View>
-           </View>
-           <Text style={[styles.taxColTotal, { fontWeight: 'bold' }]}>
-             {totalGST * 2}
-           </Text>
-         </View>
-       </View>
+        {/* Total and Amount in Words */}
+        <View
+          style={[
+            styles.footerSection,
+            { borderLeftWidth: 1, borderRightWidth: 1, borderColor: '#000' },
+          ]}
+        >
+          <View style={styles.amountInWords}>
+            <Text style={styles.boldText}>Amount Chargeable (in words)</Text>
+            <Text style={[styles.boldText, { fontSize: 9, marginTop: 3 }]}>
+              {amountInWords}
+            </Text>
+          </View>
+          <View style={styles.totalSection}>
+            <View style={styles.totalRow}>
+              <Text style={styles.totalLabel}>Total</Text>
+              <Text style={styles.totalLabel}>
+                {customerDetails?.lineItems?.reduce(
+                  (acc, value) => acc + Number(value?.qty),
+                  0
+                )}
+                {''} Piece
+              </Text>
+            </View>
+            <View style={[styles.totalRow, { marginTop: 10 }]}>
+              <Text style={styles.totalAmount}>
+                Rs: {totalProductAmount?.toFixed(2)}
+              </Text>
+            </View>
+            <Text
+              style={[styles.normalText, { textAlign: 'right', fontSize: 7 }]}
+            >
+              E. & O.E
+            </Text>
+          </View>
+        </View>
 
-       {/* Tax Amount in Words */}
-       <View style={[styles.footerSection]}>
-         <View style={styles.amountInWords}>
-           <Text style={styles.normalText}>
-             Tax Amount (in words) :{' '}
-             <Text style={styles.boldText}>{taxAmountInWords}</Text>
-           </Text>
-         </View>
-       </View>
+        {/* Tax Summary Table */}
+        <View
+          style={[
+            styles.taxSummarySection,
+            { borderLeftWidth: 1, borderRightWidth: 1, borderColor: '#000' },
+          ]}
+        >
+          {/* Header */}
+          <View style={styles.taxSummaryHeader}>
+            <Text style={styles.taxColHSN}>HSN/SAC</Text>
+            <Text style={styles.taxColTaxable}>Taxable{'\n'}Value</Text>
+            <View style={styles.taxColCGST}>
+              <Text
+                style={[styles.boldText, { textAlign: 'center', padding: 2 }]}
+              >
+                CGST
+              </Text>
+              <View style={styles.taxSubCol}>
+                <Text
+                  style={[
+                    styles.taxSubColRate,
+                    { borderTopWidth: 1, borderColor: '#000' },
+                  ]}
+                >
+                  Rate
+                </Text>
+                <Text
+                  style={[
+                    styles.taxSubColAmount,
+                    { borderTopWidth: 1, borderColor: '#000' },
+                  ]}
+                >
+                  Amount
+                </Text>
+              </View>
+            </View>
+            <View style={styles.taxColSGST}>
+              <Text
+                style={[styles.boldText, { textAlign: 'center', padding: 2 }]}
+              >
+                SGST/UTGST
+              </Text>
+              <View style={styles.taxSubCol}>
+                <Text
+                  style={[
+                    styles.taxSubColRate,
+                    { borderTopWidth: 1, borderColor: '#000' },
+                  ]}
+                >
+                  Rate
+                </Text>
+                <Text
+                  style={[
+                    styles.taxSubColAmount,
+                    { borderTopWidth: 1, borderColor: '#000' },
+                  ]}
+                >
+                  Amount
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.taxColTotal}>Total{'\n'}Tax Amount</Text>
+          </View>
 
-       {/* Bottom Section - Declaration and Signature */}
+          {/* Data Rows */}
+          {customerDetails?.lineItems?.map((item, index) => (
+            <View key={index} style={styles.taxSummaryRow}>
+              <Text style={styles.taxColHSN}>{item.hsn}</Text>
+              <Text style={styles.taxColTaxable}>
+                {preTaxRatesArray?.at(index) * Number(item?.qty)?.toFixed(2)}
+              </Text>
+              <View style={styles.taxColCGST}>
+                <View style={styles.taxSubCol}>
+                  <Text style={styles.taxSubColRate}>9%</Text>
+                  <Text style={styles.taxSubColAmount}>
+                    {(totalGSTAmount?.at(index) / 2).toFixed(2)}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.taxColSGST}>
+                <View style={styles.taxSubCol}>
+                  <Text style={styles.taxSubColRate}>9%</Text>
+                  <Text style={styles.taxSubColAmount}>
+                    {(totalGSTAmount?.at(index) / 2).toFixed(2)}
+                  </Text>
+                </View>
+              </View>
+              <Text style={styles.taxColTotal}>
+                {' '}
+                {totalGSTAmount?.at(index).toFixed(2)}
+              </Text>
+            </View>
+          ))}
 
-       <View style={styles.bottomSection}>
-         <View style={[styles.totalSection]}>
-           <Text style={[styles.boldText, { fontSize: 8 }]}>
-             Company's Bank Details
-           </Text>
-           <Text style={styles.normalText}>
-             Bank Name : {data.bankDetails.name}
-           </Text>
-           <Text style={styles.normalText}>
-             A/c No. : {data.bankDetails.accountNo}
-           </Text>
-           <Text style={styles.normalText}>
-             Branch & IFS Code : {data.bankDetails.branch}
-             {'\n'}
-             {data.bankDetails.ifsc}
-             {'\n'}
-             {data.bankDetails.address}
-           </Text>
-         </View>
-         <View style={styles.bankSection}>
-           <Text style={styles.boldText}>Declaration</Text>
-           <Text style={styles.declarationText}>
-             We declare that this Invoice shows the actual price of the goods
-             described and that all particulars are true and correct.
-           </Text>
-         </View>
-         <View style={[styles.signatureSection]}>
-           {' '}
-           {/* Added horizontal and vertical lines */}
-           <Text style={styles.signatureText}>
-             for {data.sellerDetails.name}
-           </Text>
-           <Text style={[styles.normalText, { marginTop: 40 }]}>
-             Authorised Signatory
-           </Text>
-         </View>
-       </View>
+          {/* Total Row */}
+          <View style={styles.taxSummaryRow}>
+            <Text style={[styles.taxColHSN, { fontWeight: 'bold' }]}>
+              Total
+            </Text>
+            <Text style={[styles.taxColTaxable, { fontWeight: 'bold' }]}>
+              {totalTaxAmt?.toFixed(2)}
+            </Text>
+            <View style={styles.taxColCGST}>
+              <View style={styles.taxSubCol}>
+                <Text style={styles.taxSubColRate}></Text>
+                <Text style={[styles.taxSubColAmount, { fontWeight: 'bold' }]}>
+                  {totalGST}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.taxColSGST}>
+              <View style={styles.taxSubCol}>
+                <Text style={styles.taxSubColRate}></Text>
+                <Text style={[styles.taxSubColAmount, { fontWeight: 'bold' }]}>
+                  {totalGST}
+                </Text>
+              </View>
+            </View>
+            <Text style={[styles.taxColTotal, { fontWeight: 'bold' }]}>
+              {totalGST * 2}
+            </Text>
+          </View>
+        </View>
 
-       {/* Jurisdiction */}
-       <View style={{ borderTopWidth: 0, borderColor: '#000', paddingTop: 5 }}>
-         <Text style={styles.jurisdictionText}>
-           SUBJECT TO BENGALURU JURISDICTION
-         </Text>
-         <Text style={styles.computerGenerated}>
-           This is a Computer Generated Invoice
-         </Text>
-       </View>
-     </Page>
-   </Document>
- );
+        {/* Tax Amount in Words */}
+        <View style={[styles.footerSection]}>
+          <View style={styles.amountInWords}>
+            <Text style={styles.normalText}>
+              Tax Amount (in words) :{' '}
+              <Text style={styles.boldText}>{taxAmountInWords}</Text>
+            </Text>
+          </View>
+        </View>
+
+        {/* Bottom Section - Declaration and Signature */}
+
+        <View style={styles.bottomSection}>
+          <View style={[styles.totalSection]}>
+            <Text style={[styles.boldText, { fontSize: 8 }]}>
+              Company's Bank Details
+            </Text>
+            <Text style={styles.normalText}>
+              Bank Name : {data.bankDetails.name}
+            </Text>
+            <Text style={styles.normalText}>
+              A/c No. : {data.bankDetails.accountNo}
+            </Text>
+            <Text style={styles.normalText}>
+              Branch & IFS Code : {data.bankDetails.branch}
+              {'\n'}
+              {data.bankDetails.ifsc}
+              {'\n'}
+              {data.bankDetails.address}
+            </Text>
+          </View>
+          <View style={styles.bankSection}>
+            <Text style={styles.boldText}>Declaration</Text>
+            <Text style={styles.declarationText}>
+              We declare that this Invoice shows the actual price of the goods
+              described and that all particulars are true and correct.
+            </Text>
+          </View>
+          <View style={[styles.signatureSection]}>
+            {' '}
+            {/* Added horizontal and vertical lines */}
+            <Text style={styles.signatureText}>
+              for {data.sellerDetails.name}
+            </Text>
+            <Text style={[styles.normalText, { marginTop: 40 }]}>
+              Authorised Signatory
+            </Text>
+          </View>
+        </View>
+
+        {/* Jurisdiction */}
+        <View style={{ borderTopWidth: 0, borderColor: '#000', paddingTop: 5 }}>
+          <Text style={styles.jurisdictionText}>
+            SUBJECT TO BENGALURU JURISDICTION
+          </Text>
+          <Text style={styles.computerGenerated}>
+            This is a Computer Generated Invoice
+          </Text>
+        </View>
+      </Page>
+    </Document>
+  );
 
   return (
     <div>
