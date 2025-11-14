@@ -426,10 +426,15 @@ export default function FinalInvoice({
               Sl{'\n'}No
             </Text>
             <Text style={styles.colDescription}>Description of Goods</Text>
-            <Text style={styles.colHSN}>HSN/SAC</Text>
-            <Text style={styles.colGST}>GST{'\n'}Rate</Text>
-            <Text style={styles.colQuantity}>Quantity</Text>
-            <Text style={[styles.colRate, { width: 100, borderRightWidth: 1 }]}>
+            <Text style={[styles.colHSN]}>HSN/SAC</Text>
+            <Text style={[styles.colGST]}>GST{'\n'}Rate</Text>
+            <Text style={[styles.colQuantity]}>Quantity</Text>
+            <Text
+              style={[
+                styles.colRate,
+                { width: 100, borderRightWidth: 1, marginLeft: -5 },
+              ]}
+            >
               Rate{'\n'}(Incl. of Tax)
             </Text>
             <Text style={[styles.colPer, { borderRightWidth: 1 }]}>per</Text>
