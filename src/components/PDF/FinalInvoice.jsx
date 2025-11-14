@@ -502,7 +502,12 @@ export default function FinalInvoice({
         </View>
 
         {/* Total and Amount in Words */}
-        <View style={styles.footerSection}>
+        <View
+          style={[
+            styles.footerSection,
+            { borderLeftWidth: 1, borderRightWidth: 1, borderColor: '#000' },
+          ]}
+        >
           <View style={styles.amountInWords}>
             <Text style={styles.boldText}>Amount Chargeable (in words)</Text>
             <Text style={[styles.boldText, { fontSize: 9, marginTop: 3 }]}>
@@ -526,7 +531,12 @@ export default function FinalInvoice({
         </View>
 
         {/* Tax Summary Table */}
-        <View style={styles.taxSummarySection}>
+        <View
+          style={[
+            styles.taxSummarySection,
+            { borderLeftWidth: 1, borderRightWidth: 1, borderColor: '#000' },
+          ]}
+        >
           {/* Header */}
           <View style={styles.taxSummaryHeader}>
             <Text style={styles.taxColHSN}>HSN/SAC</Text>
@@ -538,8 +548,22 @@ export default function FinalInvoice({
                 CGST
               </Text>
               <View style={styles.taxSubCol}>
-                <Text style={styles.taxSubColRate}>Rate</Text>
-                <Text style={styles.taxSubColAmount}>Amount</Text>
+                <Text
+                  style={[
+                    styles.taxSubColRate,
+                    { borderTopWidth: 1, borderColor: '#000' },
+                  ]}
+                >
+                  Rate
+                </Text>
+                <Text
+                  style={[
+                    styles.taxSubColAmount,
+                    { borderTopWidth: 1, borderColor: '#000' },
+                  ]}
+                >
+                  Amount
+                </Text>
               </View>
             </View>
             <View style={styles.taxColSGST}>
@@ -549,8 +573,22 @@ export default function FinalInvoice({
                 SGST/UTGST
               </Text>
               <View style={styles.taxSubCol}>
-                <Text style={styles.taxSubColRate}>Rate</Text>
-                <Text style={styles.taxSubColAmount}>Amount</Text>
+                <Text
+                  style={[
+                    styles.taxSubColRate,
+                    { borderTopWidth: 1, borderColor: '#000' },
+                  ]}
+                >
+                  Rate
+                </Text>
+                <Text
+                  style={[
+                    styles.taxSubColAmount,
+                    { borderTopWidth: 1, borderColor: '#000' },
+                  ]}
+                >
+                  Amount
+                </Text>
               </View>
             </View>
             <Text style={styles.taxColTotal}>Total{'\n'}Tax Amount</Text>
@@ -615,12 +653,12 @@ export default function FinalInvoice({
               <Text style={styles.boldText}>{data.taxAmountWords}</Text>
             </Text>
           </View>
-          <View
-            style={[
-              styles.totalSection,
-              { borderLeftWidth: 1, borderColor: '#000' },
-            ]}
-          >
+        </View>
+
+        {/* Bottom Section - Declaration and Signature */}
+
+        <View style={styles.bottomSection}>
+          <View style={[styles.totalSection]}>
             <Text style={[styles.boldText, { fontSize: 8 }]}>
               Company's Bank Details
             </Text>
@@ -638,19 +676,21 @@ export default function FinalInvoice({
               {data.bankDetails.address}
             </Text>
           </View>
-        </View>
-
-        {/* Bottom Section - Declaration and Signature */}
-        <View style={styles.bottomSection}>
           <View style={styles.bankSection}>
             <Text style={styles.boldText}>Declaration</Text>
             <Text style={styles.declarationText}>
               We declare that this Invoice shows the actual price of the goods
-              {'\n'}
               described and that all particulars are true and correct.
             </Text>
           </View>
-          <View style={styles.signatureSection}>
+          <View
+            style={[
+              styles.signatureSection,
+              { borderTopWidth: 1, borderColor: '#000', borderRightWidth: 1 },
+            ]}
+          >
+            {' '}
+            {/* Added horizontal and vertical lines */}
             <Text style={styles.signatureText}>
               for {data.sellerDetails.name}
             </Text>

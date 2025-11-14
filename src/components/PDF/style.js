@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
   },
   boldText: {
     fontWeight: 'bold',
-    fontSize: 8,
+    fontSize: 7,
   },
 
   // Invoice info grid
@@ -231,7 +231,7 @@ export const styles = StyleSheet.create({
     borderColor: '#000',
   },
   totalSection: {
-    width: 155,
+    width: 158,
     padding: 8,
   },
   totalRow: {
@@ -326,7 +326,7 @@ export const styles = StyleSheet.create({
   },
   signatureSection: {
     width: 200,
-    padding: 8,
+    padding: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
@@ -338,7 +338,6 @@ export const styles = StyleSheet.create({
   signatureText: {
     fontSize: 9,
     fontWeight: 'bold',
-    marginTop: 30,
   },
   jurisdictionText: {
     fontSize: 8,
