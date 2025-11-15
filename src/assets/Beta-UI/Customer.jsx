@@ -117,7 +117,7 @@ export default function Customer() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-sm mb-6 border border-gray-200">
           <div className="bg-slate-600 px-6 py-4">

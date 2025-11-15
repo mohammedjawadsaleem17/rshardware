@@ -899,23 +899,16 @@ export default function FinalInvoice({
         {!invoiceReady && (
           <button
             onClick={handleGenerateInvoice}
-            className="bg-indigo-600 text-white p-3 rounded w-full block text-center font-bold"
+            className="bg-green-600 text-white p-3 rounded w-full block text-center font-bold"
           >
             Generate Invoice
           </button>
         )}
         {invoiceReady && (
           <>
-            {/* Inline preview for testing without downloading */}
-            <div style={{ height: '800px', margin: '1rem 0' }}>
-              <PDFViewer style={{ width: '100%', height: '100%' }}>
-                <InvoicePDF />
-              </PDFViewer>
-            </div>
-
             <PDFDownloadLink
               document={<InvoicePDF />}
-              fileName={`${invoiceNo}.pdf`}
+              fileName={`RSHGE-${invNo}.pdf`}
               className="bg-green-600 text-white p-3 rounded w-full block text-center font-bold my-7"
             >
               {({ loading }) => 'Download Invoice'}
