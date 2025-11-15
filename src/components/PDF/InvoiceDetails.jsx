@@ -14,7 +14,7 @@ const InvoiceDetails = () => {
     async function getDetails() {
       try {
         const res = await fetch(
-          `http://localhost:8080/invoice/${ID}`
+          `https://rs-hardware-glass-and-electrical.onrender.com/invoice/${ID}`
           // `https://rshardware-backend.onrender.com/users/${ID}`
         );
         const data = await res.json();

@@ -37,7 +37,9 @@ export default function Dashboard() {
   async function fetchInvoiceRecords() {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:8080/invoice');
+      const res = await fetch(
+        'https://rs-hardware-glass-and-electrical.onrender.com/invoice'
+      );
       // const res = await fetch('https://rshardware.up.railway.app/users');
       const data = await res.json();
       setRecord(data);
@@ -62,7 +64,7 @@ export default function Dashboard() {
     try {
       const res = await fetch(
         // `https://rshardware-backend.onrender.com/users/${rowId}`,
-        `http://localhost:8080/invoice/${rowId}`,
+        `https://rs-hardware-glass-and-electrical.onrender.com/invoice/${rowId}`,
         {
           method: 'DELETE',
         }
