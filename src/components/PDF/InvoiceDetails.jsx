@@ -1,5 +1,5 @@
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import InvoicePDF from './InvoicePDF';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../Loader/Loader';
@@ -14,9 +14,11 @@ const InvoiceDetails = () => {
     async function getDetails() {
       try {
         const res = await fetch(
-          `https://rshardware-backend.onrender.com/users/${ID}`
+          `https://rs-hardware-glass-and-electrical.onrender.com/invoice/${ID}`
+          // `https://rshardware-backend.onrender.com/users/${ID}`
         );
         const data = await res.json();
+        console.log('Received data', data);
         setUserData(data);
       } catch (error) {
         console.error('Failed to fetch invoice data:', error);
@@ -32,6 +34,8 @@ const InvoiceDetails = () => {
     return <Loader />;
   }
 
+  console.log('User data', userData);
+
   const amount = userData?.items?.reduce(
     (acc, ele) => acc + Number(ele?.taxableValue || 0),
     0
@@ -40,6 +44,33 @@ const InvoiceDetails = () => {
     (acc, ele) => acc + Number(ele?.taxAmount || 0),
     0
   );
+
+  ////////////////////////888
+  const customerDetails = {
+    name: userData?.name,
+    email: userData?.email,
+    phone: userData?.phoneNumber,
+    address: userData?.billingAddress,
+    gstin: userData?.gstIn,
+    place: userData?.placeOfSupply,
+    invoiceNum: userData?.invoiceId,
+    invoiceDate: userData?.dated,
+    dueDate: userData?.dueDate,
+    lineItems: userData?.items,
+    deliveryNote: userData?.deliveryNote,
+    referenceNo: userData?.referenceNumber,
+    buyersOrderNo: userData?.buyerOrderNumber,
+    dispatchDocNo: userData?.dispatchDocNumber,
+    dispatchedThrough: userData?.dispatchedThrough,
+    termsOfDelivery: userData?.termsOfDelivery,
+    paymentTerms: userData?.paymentTerms,
+    otherReferences: userData?.name,
+    dated: userData?.dated,
+    deliveryNoteDate: userData?.deliveryNoteDate,
+    destination: userData?.destination,
+  };
+
+  console.log('----------------', customerDetails);
 
   return (
     <>
@@ -63,7 +94,7 @@ const InvoiceDetails = () => {
         <div className="mb-4">
           <p className="font-semibold">Sold By:</p>
           <p className="underline">R S HARDWARE GLASS & ELECTRICALS</p>
-            {/* Building No- 3/7, Shop No-6, Ground Floor, Gowri Shankar Complex,
+          {/* Building No- 3/7, Shop No-6, Ground Floor, Gowri Shankar Complex,
               Arekere Main Road, Bengaluru, Karnataka, PIN: 560076 */}
           <p>Building No-3/7, Shop No-6,</p>
           <p>Gowri Shankar Complex Arekere Main Road</p>
@@ -78,33 +109,34 @@ const InvoiceDetails = () => {
           <div>
             <p>
               <span className="font-semibold">Invoice Number: </span>
-              {userData?.invoiceId}
+              {customerDetails?.invoiceNum}
             </p>
             <p>
               <span className="font-semibold">Invoice Date: </span>
-              {userData?.invoiceDate}
+              {customerDetails?.invoiceDate}
             </p>
             <p>
               <span className="font-semibold">Due Date: </span>
-              {userData?.dueDate}
+              {customerDetails?.dueDate}
             </p>
           </div>
 
           <div>
             <p>
               <span className="font-semibold">Billing Address: </span>
-              {userData?.billingAddress}
+              {customerDetails?.billingAddress}
             </p>
             <p>
               <span className="font-semibold">GST Registration No: </span>
-              {userData?.gstIn}
+              {customerDetails?.gstin}
             </p>
             <p>
-              <span className="font-semibold">Email: </span> {userData?.email}
+              <span className="font-semibold">Email: </span>{' '}
+              {customerDetails?.email}
             </p>
             <p>
               <span className="font-semibold">Ph: </span>
-              {userData?.phoneNumber}
+              {customerDetails?.phone}
             </p>
           </div>
         </div>
@@ -112,17 +144,17 @@ const InvoiceDetails = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-4">
           <div>
             <p className="font-semibold">Shipping Address: </p>
-            {userData?.billingAddress}
+            {customerDetails?.billingAddress}
           </div>
           <div>
             <p>
               <span className="font-semibold">
-                Place of Supply: {userData?.placeOfSupply}
+                Place of Supply: {customerDetails?.place}
               </span>
             </p>
             <p>
               <span className="font-semibold">
-                Place of Delivery: {userData?.placeOfSupply}
+                Place of Delivery: {userData?.place}
               </span>
             </p>
           </div>
@@ -222,7 +254,7 @@ const InvoiceDetails = () => {
           <PDFDownloadLink
             document={
               <InvoicePDF
-                userData={userData}
+                customerDetails={customerDetails}
                 taxAbleAmount={amount}
                 taxAmt={taxAmt / 2}
               />

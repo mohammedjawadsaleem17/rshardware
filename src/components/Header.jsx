@@ -113,7 +113,7 @@ const Header = () => {
                         to="/dashboard"
                         className="relative text-gray-600 hover:text-indigo-600 font-medium px-3 py-2 transition-colors"
                       >
-                        Dashboard
+                        Invoice History
                         <motion.div
                           className="absolute bottom-0 left-0 h-0.5 bg-indigo-600"
                           initial={{ width: 0 }}
@@ -130,7 +130,7 @@ const Header = () => {
                         to="/invoice"
                         className="relative text-gray-600 hover:text-indigo-600 font-medium px-3 py-2 transition-colors"
                       >
-                        Invoice
+                        Generate Invoice
                         <motion.div
                           className="absolute bottom-0 left-0 h-0.5 bg-indigo-600"
                           initial={{ width: 0 }}

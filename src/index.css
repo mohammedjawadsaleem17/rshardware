@@ -198,3 +198,15 @@ html{
   text-decoration: overline;
   margin-top: 7px;
 }
+
+.premium-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white outline-none transition-all;
+}
+
+.premium-input:focus {
+  @apply border-blue-500 shadow-md;
+}
+
+.disabled-field {
+  @apply bg-gray-200 cursor-not-allowed text-gray-600 border-gray-300;
+}

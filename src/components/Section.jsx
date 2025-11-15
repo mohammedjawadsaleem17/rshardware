@@ -223,20 +223,6 @@ const SpaceSection = () => {
           textAlign: 'center',
         }}
       >
-        <img
-          className="logo-img"
-          src="https://lh3.googleusercontent.com/p/AF1QipPwq1gXy2YNyyUnwsu_j5IfB708HK0cX1LgeIb4=s1360-w1360-h1020-rw"
-          alt="RS Hardware Logo"
-          style={{
-            height: 175,
-            marginBottom: 37,
-            animation: 'pulse 5s ease-in-out infinite',
-            display: 'block',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        />
-
         <h1
           style={{
             fontSize: '2rem',

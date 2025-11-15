@@ -270,7 +270,7 @@ export default function Landing() {
             <div className="w-full md:w-1/2">
               <FadeInSection direction="left">
                 <img
-                  src="https://lh3.googleusercontent.com/p/AF1QipPkpYbIIjAIjpTS83-ECSHDFpVnpL5I5GOTA2mv=s1360-w1360-h1020-rw"
+                  src="https://lh3.googleusercontent.com/p/AF1QipNJbxVq9MYE5FRWBafaIPddKEMKt_xOp1-E3sKH=s1360-w1360-h1020-rw"
                   alt="RS Hardware Store"
                   className="rounded-lg shadow-xl w-full"
                 />
