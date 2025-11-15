@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import DataTable from 'react-data-table-component';
 import Loader from '../Loader/Loader';
 import { Link } from 'react-router-dom';
@@ -34,22 +34,19 @@ export default function Dashboard() {
   const [record, setRecord] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [adminMode, setAdminMode] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState('');
+
   async function fetchInvoiceRecords() {
     try {
       setLoading(true);
       const res = await fetch(
         'https://rs-hardware-glass-and-electrical.onrender.com/invoice'
       );
-      // const res = await fetch('https://rshardware.up.railway.app/users');
       const data = await res.json();
       setRecord(data);
       setLoading(false);
     } catch (e) {
       console.log(e);
-      // const res = await fetch('https://rshardware-backend.onrender.com/users');
-      // const data = await res.json();
-      // setRecord(data);
-      // setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -63,16 +60,15 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const res = await fetch(
-        // `https://rshardware-backend.onrender.com/users/${rowId}`,
         `https://rs-hardware-glass-and-electrical.onrender.com/invoice/${rowId}`,
-        {
-          method: 'DELETE',
-        }
+        { method: 'DELETE' }
       );
+
       if (!res.ok) {
         alert('Failed to Delete');
       }
-      setRecord((prev) => prev?.filter((user) => user?.id !== rowId));
+
+      setRecord((prev) => prev?.filter((item) => item?.id !== rowId));
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -80,6 +76,63 @@ export default function Dashboard() {
     }
   }
 
+  // ------------------------------
+  // DATE LOGIC
+  // ------------------------------
+
+  const getMonthYear = (item) => {
+    let dateStr =
+      item?.dated?.trim() !== '' && item?.dated
+        ? item.dated
+        : item?.dueDate || '';
+
+    if (!dateStr) return null;
+
+    const parsedDate = new Date(dateStr);
+    if (isNaN(parsedDate)) return null;
+
+    return parsedDate.toLocaleString('en-US', {
+      month: 'short',
+      year: 'numeric',
+    });
+  };
+
+  const getDisplayDate = (item) => {
+    return item?.dated?.trim() ? item.dated : item?.dueDate || '—';
+  };
+
+  // Build unique month list
+  const monthOptions = useMemo(() => {
+    const setVal = new Set();
+    record.forEach((r) => {
+      const m = getMonthYear(r);
+      if (m) setVal.add(m.toUpperCase());
+    });
+    return [...setVal];
+  }, [record]);
+
+  // ------------------------------
+  // FILTERING
+  // ------------------------------
+  const filteredData = useMemo(() => {
+    return record.filter((item) => {
+      const matchesSearch =
+        searchTerm === '' ||
+        item?.invoiceId?.toString().includes(searchTerm) ||
+        item?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item?.phoneNumber?.toString().includes(searchTerm);
+
+      const itemMonth = getMonthYear(item)?.toUpperCase() || '';
+      const matchesMonth = selectedMonth === '' || itemMonth === selectedMonth;
+
+      return matchesSearch && matchesMonth;
+    });
+  }, [record, searchTerm, selectedMonth]);
+
+  // ------------------------------
+  // TABLE COLUMNS
+  // ------------------------------
   const columns = [
     {
       name: 'Invoice ID',
@@ -94,21 +147,19 @@ export default function Dashboard() {
       sortable: true,
       wrap: true,
     },
-    {
-      name: 'Name',
-      selector: (row) => row.name,
-      sortable: true,
-      wrap: true,
-    },
-    {
-      name: 'Email',
-      selector: (row) => row.email,
-      sortable: true,
-      wrap: true,
-    },
+    { name: 'Name', selector: (row) => row.name, sortable: true, wrap: true },
+    { name: 'Email', selector: (row) => row.email, sortable: true, wrap: true },
     {
       name: 'Ph No',
       selector: (row) => row.phoneNumber,
+      sortable: true,
+      wrap: true,
+    },
+
+    // NEW COLUMN — Dated
+    {
+      name: 'Dated',
+      selector: (row) => getDisplayDate(row),
       sortable: true,
       wrap: true,
     },
@@ -119,11 +170,7 @@ export default function Dashboard() {
       name: 'Actions',
       cell: (row) => (
         <button
-          onClick={() => {
-            console.log('ROw', row);
-            handleDelete(row.id);
-            console.log('Rows id ', row.id);
-          }}
+          onClick={() => handleDelete(row.id)}
           className="text-red-600 hover:text-red-800 font-medium"
         >
           <svg
@@ -131,7 +178,6 @@ export default function Dashboard() {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               strokeLinecap="round"
@@ -145,61 +191,55 @@ export default function Dashboard() {
     });
   }
 
-  let data = [
-    {
-      invoiceId: 1,
-      name: 'Fahad',
-      email: '1988',
-      phoneNumber: 8702549715,
-      totalAmount: '100',
-    },
-    {
-      invoiceId: 2,
-      name: 'Jawad',
-      email: '1988',
-      phoneNumber: 8702549715,
-      totalAmount: '100',
-    },
-  ];
-
-  data = record;
-
-  const filteredData = data?.filter(
-    (item) =>
-      item?.invoiceId?.toString().includes(searchTerm) ||
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.phoneNumber?.toString().includes(searchTerm)
-  );
-
   return (
     <div className="mx-auto px-5">
       <ToastContainer />
       {loading && <Loader />}
-      <div className="px-4 pt-8 flex justify-end">
+
+      {/* SEARCH + MONTH FILTER BAR */}
+      <div className="px-4 pt-8 flex justify-between items-center">
+        {/* LEFT - SEARCH */}
+        <input
+          type="text"
+          placeholder="Search invoices"
+          className="border p-2 rounded-md shadow-sm w-1/2"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        {/* RIGHT - MONTH SELECT */}
+        <select
+          className="border p-2 ml-3 rounded-md shadow-sm w-40 bg-white cursor-pointer"
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+        >
+          <option value="">All Months</option>
+          {monthOptions.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* REFRESH + ADMIN MODE */}
+      <div className="px-4 pt-6 flex justify-end">
         <button
           className="bg-indigo-500 hover:bg-indigo-700 text-white font-light py-2 px-5 rounded-lg transition-colors duration-300 flex items-center gap-2 mr-4"
           onClick={fetchInvoiceRecords}
         >
           Refresh Records
         </button>
+
         <button
-          className="bg-indigo-500 hover:bg-indigo-700 text-white font-extralight py-2 px-2  rounded-lg transition-colors duration-300 flex items-center gap-2"
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-extralight py-2 px-2 rounded-lg transition-colors duration-300 flex items-center gap-2"
           onClick={() => setAdminMode(!adminMode)}
         >
           {adminMode ? 'Disable Admin Mode' : 'Admin Mode'}
         </button>
       </div>
-      <div className="px-4 pt-8 flex justify-end">
-        <input
-          type="text"
-          placeholder="Search Invoices"
-          className="border-1 p-1 border- rounded-md"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
 
+      {/* DATA TABLE */}
       <DataTable
         columns={columns}
         data={filteredData}

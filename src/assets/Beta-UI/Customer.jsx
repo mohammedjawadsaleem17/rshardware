@@ -47,6 +47,15 @@ export default function Customer() {
 
   const isCash = mode === 'cash';
 
+  // -------------------------------------------
+  // ✅ Always generate IST date in YYYY-MM-DD
+  // -------------------------------------------
+  const getISTDate = () => {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Kolkata',
+    }).format(new Date());
+  };
+
   const statesOfIndia = [
     'Andhra Pradesh',
     'Arunachal Pradesh',
@@ -90,10 +99,13 @@ export default function Customer() {
   const inputClass =
     'w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none disabled:bg-gray-50 disabled:text-gray-400';
 
+  // -------------------------------------------
+  // ✅ Auto-fill CASH mode with IST dates
+  // -------------------------------------------
   useEffect(() => {
     if (isCash) {
-      const today = new Date();
-      const localDate = today.toLocaleDateString('en-CA');
+      const todayIST = getISTDate();
+
       setCustomerName('CASH');
       setCustomerEmail('');
       setCustomerPhone('');
@@ -107,9 +119,12 @@ export default function Customer() {
       setDispatchedThrough('');
       setTermsOfDelivery('');
       setDestination('Karnataka');
-      setInvoiceDate(localDate);
-      setDated(localDate);
-      setDeliveryNoteDate(localDate);
+
+      // All dates set properly in IST
+      setInvoiceDate(todayIST);
+      setDated(todayIST);
+      setDeliveryNoteDate(todayIST);
+
       setPaymentTerms('');
       setOtherReferences('');
     }
