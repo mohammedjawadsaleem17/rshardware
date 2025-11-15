@@ -43,9 +43,6 @@ export default function Dashboard() {
       setRecord(data);
       setLoading(false);
     } catch (e) {
-      toast.success(
-        `Contacting Server Please wait\n For Support Contact:  +91 8884760377 (Mohammed Shayaan)`
-      );
       const res = await fetch('https://rshardware-backend.onrender.com/users');
       const data = await res.json();
       setRecord(data);
