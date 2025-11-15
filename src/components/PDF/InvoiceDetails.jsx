@@ -109,33 +109,34 @@ const InvoiceDetails = () => {
           <div>
             <p>
               <span className="font-semibold">Invoice Number: </span>
-              {userData?.invoiceId}
+              {customerDetails?.invoiceNum}
             </p>
             <p>
               <span className="font-semibold">Invoice Date: </span>
-              {userData?.invoiceDate}
+              {customerDetails?.invoiceDate}
             </p>
             <p>
               <span className="font-semibold">Due Date: </span>
-              {userData?.invoiceDate}
+              {customerDetails?.dueDate}
             </p>
           </div>
 
           <div>
             <p>
               <span className="font-semibold">Billing Address: </span>
-              {userData?.billingAddress}
+              {customerDetails?.billingAddress}
             </p>
             <p>
               <span className="font-semibold">GST Registration No: </span>
-              {userData?.gstIn}
+              {customerDetails?.gstin}
             </p>
             <p>
-              <span className="font-semibold">Email: </span> {userData?.email}
+              <span className="font-semibold">Email: </span>{' '}
+              {customerDetails?.email}
             </p>
             <p>
               <span className="font-semibold">Ph: </span>
-              {userData?.phoneNumber}
+              {customerDetails?.phone}
             </p>
           </div>
         </div>
@@ -143,17 +144,17 @@ const InvoiceDetails = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-4">
           <div>
             <p className="font-semibold">Shipping Address: </p>
-            {userData?.billingAddress}
+            {customerDetails?.billingAddress}
           </div>
           <div>
             <p>
               <span className="font-semibold">
-                Place of Supply: {userData?.placeOfSupply}
+                Place of Supply: {customerDetails?.place}
               </span>
             </p>
             <p>
               <span className="font-semibold">
-                Place of Delivery: {userData?.placeOfSupply}
+                Place of Delivery: {userData?.place}
               </span>
             </p>
           </div>

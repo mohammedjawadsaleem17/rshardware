@@ -222,8 +222,8 @@ export default function Customer() {
                 </label>
                 <input
                   type="date"
-                  value={invoiceDate}
-                  onChange={(e) => setInvoiceDate(e.target.value)}
+                  value={dated}
+                  onChange={(e) => setDated(e.target.value)}
                   className={inputClass}
                 />
               </div>

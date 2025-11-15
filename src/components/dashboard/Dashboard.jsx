@@ -141,7 +141,7 @@ export default function Dashboard() {
           to={`/dashboard/${row.id}`}
           className="underline text-indigo-400 break-all"
         >
-          {row.invoiceId}
+          INV-{row.invoiceId}
         </Link>
       ),
       sortable: true,
