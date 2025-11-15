@@ -274,6 +274,18 @@ export default function FinalInvoice({
   invNo,
   setinvNo,
   deliveryNote,
+  //
+  setDeliveryNote,
+  setReferenceNo,
+  setBuyersOrderNo,
+  setDispatchDocNo,
+  setDispatchedThrough,
+  setTermsOfDelivery,
+  setPaymentTerms,
+  setOtherReferences,
+  setDated,
+  setDeliveryNoteDate,
+  setDestination,
 }) {
   const [loading, setLoading] = useState(false);
   const [invoiceReady, setInvoiceReady] = useState(false);
@@ -296,22 +308,41 @@ export default function FinalInvoice({
   const handleGenerateInvoice = async () => {
     try {
       setLoading(true);
-      const response = await fetch('https://rshardware.up.railway.app/users', {
+      const response = await fetch('http://localhost:8080/invoice/create', {
+        // const response = await fetch('https://rshardware.up.railway.app/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           invoiceId: invNo,
           invoiceDate: customerDetails?.invoiceDate,
+
+          // BASIC DETAILS
           name: customerDetails?.name,
           email: customerDetails?.email,
           phoneNumber: customerDetails?.phone,
-          billingAddress: customerDetails?.customerAddress,
+          billingAddress: customerDetails?.address,
           gstIn: customerDetails?.gstin,
-          placeOfSupply: customerDetails?.customerPlaceOfSupply,
+          placeOfSupply: customerDetails?.place,
           dueDate: customerDetails?.dueDate,
+
+          // NEW EXTRA FIELDS YOU ADDED
+          deliveryNote: customerDetails?.deliveryNote,
+          referenceNumber: customerDetails?.referenceNo,
+          buyerOrderNumber: customerDetails?.buyersOrderNo,
+          dispatchDocNumber: customerDetails?.dispatchDocNo,
+          dispatchedThrough: customerDetails?.dispatchedThrough,
+          termsOfDelivery: customerDetails?.termsOfDelivery,
+          paymentTerms: customerDetails?.paymentTerms,
+          otherReferences: customerDetails?.otherReferences,
+          dated: customerDetails?.dated,
+          deliveryNoteDate: customerDetails?.deliveryNoteDate,
+          destination: customerDetails?.destination,
+
+          // ITEMS
           items: customerDetails?.lineItems,
         }),
       });
+      console.log('Writtened Address');
       await response.json();
       toast.success(`Invoice Generated for ${customerDetails?.name}`);
       setInvoiceReady(true);
@@ -356,7 +387,17 @@ export default function FinalInvoice({
     setCustomerPlaceOfSupply('');
     setInvoiceDate('');
     setDueDate('');
-
+    setDeliveryNote('');
+    setReferenceNo('');
+    setBuyersOrderNo('');
+    setDispatchDocNo('');
+    setDispatchedThrough('');
+    setTermsOfDelivery('');
+    setPaymentTerms('');
+    setOtherReferences('');
+    setDated('');
+    setDeliveryNoteDate('');
+    setDestination('');
     setLineItems([
       {
         id: 1,

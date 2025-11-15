@@ -37,16 +37,17 @@ export default function Dashboard() {
   async function fetchInvoiceRecords() {
     try {
       setLoading(true);
-      const res = await fetch('https://rshardware.up.railway.app/users');
+      const res = await fetch('http://localhost:8080/invoice');
+      // const res = await fetch('https://rshardware.up.railway.app/users');
       const data = await res.json();
-
       setRecord(data);
       setLoading(false);
     } catch (e) {
-      const res = await fetch('https://rshardware-backend.onrender.com/users');
-      const data = await res.json();
-      setRecord(data);
-      setLoading(false);
+      console.log(e);
+      // const res = await fetch('https://rshardware-backend.onrender.com/users');
+      // const data = await res.json();
+      // setRecord(data);
+      // setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -60,7 +61,8 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://rshardware-backend.onrender.com/users/${rowId}`,
+        // `https://rshardware-backend.onrender.com/users/${rowId}`,
+        `http://localhost:8080/invoice/${rowId}`,
         {
           method: 'DELETE',
         }
@@ -68,7 +70,7 @@ export default function Dashboard() {
       if (!res.ok) {
         alert('Failed to Delete');
       }
-      setRecord((prev) => prev?.filter((user) => user?._id !== rowId));
+      setRecord((prev) => prev?.filter((user) => user?.id !== rowId));
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -81,7 +83,7 @@ export default function Dashboard() {
       name: 'Invoice ID',
       selector: (row) => (
         <Link
-          to={`/dashboard/${row._id}`}
+          to={`/dashboard/${row.id}`}
           className="underline text-indigo-400 break-all"
         >
           {row.invoiceId}
@@ -115,7 +117,11 @@ export default function Dashboard() {
       name: 'Actions',
       cell: (row) => (
         <button
-          onClick={() => handleDelete(row._id)}
+          onClick={() => {
+            console.log('ROw', row);
+            handleDelete(row.id);
+            console.log('Rows id ', row.id);
+          }}
           className="text-red-600 hover:text-red-800 font-medium"
         >
           <svg

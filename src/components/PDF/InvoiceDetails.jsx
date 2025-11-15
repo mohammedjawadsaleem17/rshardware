@@ -14,9 +14,11 @@ const InvoiceDetails = () => {
     async function getDetails() {
       try {
         const res = await fetch(
-          `https://rshardware-backend.onrender.com/users/${ID}`
+          `http://localhost:8080/invoice/${ID}`
+          // `https://rshardware-backend.onrender.com/users/${ID}`
         );
         const data = await res.json();
+        console.log('Received data', data);
         setUserData(data);
       } catch (error) {
         console.error('Failed to fetch invoice data:', error);
@@ -31,6 +33,8 @@ const InvoiceDetails = () => {
   if (loading || !userData) {
     return <Loader />;
   }
+
+  console.log('User data', userData);
 
   const amount = userData?.items?.reduce(
     (acc, ele) => acc + Number(ele?.taxableValue || 0),
@@ -63,7 +67,7 @@ const InvoiceDetails = () => {
         <div className="mb-4">
           <p className="font-semibold">Sold By:</p>
           <p className="underline">R S HARDWARE GLASS & ELECTRICALS</p>
-            {/* Building No- 3/7, Shop No-6, Ground Floor, Gowri Shankar Complex,
+          {/* Building No- 3/7, Shop No-6, Ground Floor, Gowri Shankar Complex,
               Arekere Main Road, Bengaluru, Karnataka, PIN: 560076 */}
           <p>Building No-3/7, Shop No-6,</p>
           <p>Gowri Shankar Complex Arekere Main Road</p>
@@ -86,7 +90,7 @@ const InvoiceDetails = () => {
             </p>
             <p>
               <span className="font-semibold">Due Date: </span>
-              {userData?.dueDate}
+              {userData?.invoiceDate}
             </p>
           </div>
 

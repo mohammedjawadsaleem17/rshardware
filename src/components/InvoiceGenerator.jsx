@@ -461,6 +461,18 @@ const InvoiceGenerator = () => {
             setLineItems={setLineItems}
             invNo={invNo}
             setInvNo={setInvNo}
+            //
+            setDeliveryNote={setDeliveryNote}
+            setReferenceNo={setReferenceNo}
+            setBuyersOrderNo={setBuyersOrderNo}
+            setDispatchDocNo={setDispatchDocNo}
+            setDispatchedThrough={setDispatchedThrough}
+            setTermsOfDelivery={setTermsOfDelivery}
+            setPaymentTerms={setPaymentTerms}
+            setOtherReferences={setOtherReferences}
+            setDated={setDated}
+            setDeliveryNoteDate={setDeliveryNoteDate}
+            setDestination={setDestination}
           />
         </div>
 
