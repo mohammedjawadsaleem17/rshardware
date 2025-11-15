@@ -1,5 +1,5 @@
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import InvoicePDF from './InvoicePDF';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../Loader/Loader';
@@ -44,6 +44,33 @@ const InvoiceDetails = () => {
     (acc, ele) => acc + Number(ele?.taxAmount || 0),
     0
   );
+
+  ////////////////////////888
+  const customerDetails = {
+    name: userData?.name,
+    email: userData?.email,
+    phone: userData?.phoneNumber,
+    address: userData?.billingAddress,
+    gstin: userData?.gstIn,
+    place: userData?.placeOfSupply,
+    invoiceNum: userData?.invoiceId,
+    invoiceDate: userData?.dated,
+    dueDate: userData?.dueDate,
+    lineItems: userData?.items,
+    deliveryNote: userData?.deliveryNote,
+    referenceNo: userData?.referenceNumber,
+    buyersOrderNo: userData?.buyerOrderNumber,
+    dispatchDocNo: userData?.dispatchDocNumber,
+    dispatchedThrough: userData?.dispatchedThrough,
+    termsOfDelivery: userData?.termsOfDelivery,
+    paymentTerms: userData?.paymentTerms,
+    otherReferences: userData?.name,
+    dated: userData?.dated,
+    deliveryNoteDate: userData?.deliveryNoteDate,
+    destination: userData?.destination,
+  };
+
+  console.log('----------------', customerDetails);
 
   return (
     <>
@@ -226,7 +253,7 @@ const InvoiceDetails = () => {
           <PDFDownloadLink
             document={
               <InvoicePDF
-                userData={userData}
+                customerDetails={customerDetails}
                 taxAbleAmount={amount}
                 taxAmt={taxAmt / 2}
               />
