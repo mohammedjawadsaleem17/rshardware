@@ -259,6 +259,7 @@ export default function FinalInvoice({
   items,
   total,
   invoiceNo,
+  setInvNo,
   setInvoiceNo,
   connection,
   fetchInvoiceNo,
@@ -378,7 +379,8 @@ export default function FinalInvoice({
   const handleReset = async () => {
     setInvoiceReady(false);
     toast.info('Reset to default');
-    await fetchInvoiceNo();
+    // await fetchInvoiceNo();
+    setInvNo('');
     setCustomerName('');
     setCustomerEmail('');
     setCustomerPhone('');
@@ -398,6 +400,7 @@ export default function FinalInvoice({
     setDated('');
     setDeliveryNoteDate('');
     setDestination('');
+    setInvoiceNo('');
     setLineItems([
       {
         id: 1,

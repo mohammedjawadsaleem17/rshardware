@@ -54,19 +54,6 @@ export default function FinalDetails() {
           <h1>Billing Address:</h1>
           <p>{customerAddress}</p>
         </div>
-        <div className="...">
-          <div className="flex flex-col md:flex-row md:items-center">
-            <label className="font-light mb-2 md:mb-0 md:mr-2 w-33">
-              Due Date:
-            </label>
-            <DatePicker
-              selected={dueDate}
-              onChange={(date) => setDueDate(date)}
-              dateFormat="dd/MM/yyyy"
-              className="border border-gray-300 p-2 rounded w-full md:w-auto"
-            />
-          </div>
-        </div>
       </div>
     </div>
   );
