@@ -653,12 +653,13 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
             <Text style={styles.normalText}>
               A/c No. : {data.bankDetails.accountNo}
             </Text>
+            <Text style={styles.normalText}>Branch : Vijaya Bank Layout</Text>
+            <Text style={styles.normalText}>IFS Code : HDFC0002841</Text>
             <Text style={styles.normalText}>
-              Branch & IFS Code : {data.bankDetails.branch}
-              {'\n'}
-              {data.bankDetails.ifsc}
-              {'\n'}
-              {data.bankDetails.address}
+              Address : Bilekhalli, off Bannerghatta
+            </Text>
+            <Text style={styles.normalText}>
+              Road, Bangalore Karnataka 560076
             </Text>
           </View>
           <View style={styles.bankSection}>
