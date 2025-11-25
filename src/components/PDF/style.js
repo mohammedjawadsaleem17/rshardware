@@ -15,6 +15,14 @@ export const styles = StyleSheet.create({
   },
   headerTop: {
     flexDirection: 'row',
+    // borderBottomWidth: 1,
+    borderColor: '#000',
+    minHeight: 100,
+  },
+
+  //TESTING
+  headerTopWithBorder: {
+    flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#000',
     minHeight: 100,
@@ -22,17 +30,19 @@ export const styles = StyleSheet.create({
   sellerSection: {
     flex: 1,
     padding: 8,
-    borderRightWidth: 0,
+    // borderRightWidth: 1,
     borderColor: '#000',
-    flexShrink: 1,
-    flexGrow: 1,
+    flexShrink: 0,
+    height: 130, // fixed height
+    overflow: 'hidden',
   },
   invoiceInfoSection: {
     width: 240,
-    padding: 0,
     borderLeftWidth: 1,
     borderColor: '#000',
     flexShrink: 0,
+    height: 130, // same height
+    overflow: 'hidden',
   },
   companyName: {
     fontSize: 14,
@@ -45,6 +55,7 @@ export const styles = StyleSheet.create({
     marginBottom: 1,
     whiteSpace: 'wrap',
     wordBreak: 'break-word',
+    maxLines: 1,
     lineHeight: 1.3,
   },
   boldText: {
@@ -65,7 +76,7 @@ export const styles = StyleSheet.create({
   },
   infoLabel: {
     width: '50%',
-    padding: 3,
+    padding: 7,
     paddingLeft: 2,
     fontSize: 8,
     borderRightWidth: 1,
@@ -73,10 +84,12 @@ export const styles = StyleSheet.create({
   },
   infoValue: {
     width: '50%',
-    padding: 3,
+    padding: 7,
     fontSize: 8,
     fontWeight: 'bold',
     whiteSpace: 'wrap',
+    maxLines: 1,
+    overflow: 'hidden',
     wordBreak: 'break-word',
   },
 

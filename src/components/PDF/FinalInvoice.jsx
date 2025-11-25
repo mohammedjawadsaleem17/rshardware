@@ -511,10 +511,9 @@ export default function FinalInvoice({
           </Text>
         </View>
 
-        {/* Header Section */}
-        <View style={styles.headerSection}>
+        <View style={styles.headerSection} wrap={false}>
           {/* Top Section - Seller and Invoice Info */}
-          <View style={styles.headerTop}>
+          <View style={styles.headerTopWithBorder}>
             {/* Seller Details */}
             <View style={styles.sellerSection}>
               <Text style={styles.companyName}>{data.sellerDetails.name}</Text>
@@ -580,7 +579,7 @@ export default function FinalInvoice({
             </View>
           </View>
 
-          {/* Invoice Info Right Side */}
+          {/* Invoice Info Right Side - Buyer Section */}
           <View style={styles.headerTop}>
             <View style={[styles.sellerSection, { borderRightWidth: 0 }]}>
               <Text style={styles.boldText}>Buyer (Bill to)</Text>
@@ -590,16 +589,21 @@ export default function FinalInvoice({
                 GSTIN/UIN: {customerDetails.gstin}
               </Text>
               <Text style={styles.normalText}>
-                State Name : {customerDetails.customerPlaceOfSupply}
+                State Name : {customerDetails.place}
               </Text>
             </View>
+
             <View
               style={[
                 styles.invoiceInfoSection,
                 { justifyContent: 'space-between' },
               ]}
             >
-              <View style={[styles.infoRow]}>
+              {/* <View style={[styles.infoRow]}>
+                <Text style={styles.infoLabel}>Payment Date</Text>
+                <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
+              </View> */}
+              <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Payment Date</Text>
                 <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
               </View>
@@ -902,12 +906,13 @@ export default function FinalInvoice({
             <Text style={styles.normalText}>
               A/c No. : {data.bankDetails.accountNo}
             </Text>
+            <Text style={styles.normalText}>Branch : Vijaya Bank Layout</Text>
+            <Text style={styles.normalText}>IFS Code : HDFC0002841</Text>
             <Text style={styles.normalText}>
-              Branch & IFS Code : {data.bankDetails.branch}
-              {'\n'}
-              {data.bankDetails.ifsc}
-              {'\n'}
-              {data.bankDetails.address}
+              Address : Bilekhalli, off Bannerghatta
+            </Text>
+            <Text style={styles.normalText}>
+              Road, Bangalore Karnataka 560076
             </Text>
           </View>
           <View style={styles.bankSection}>
