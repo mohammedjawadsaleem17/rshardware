@@ -5,12 +5,14 @@ import { newStyle } from './newStyles';
 import logo from '../../components/assets/logo.png';
 import qr from '../../components/assets/qr.png';
 
+const formatAmount = (num) => Number(num).toFixed(2);
+
 const sampleData = {
   sellerDetails: {
     name: 'R S Hardware Glass & Electricals',
     address:
       'Building No-3/7, Shop No-6\nGround Floor, Gowri Shankar Complex\nArekere Main Road\nBangalore - 560076',
-    phone: 'PH - 8147465517, 9066309842',
+    phone: '8147465517, 9066309842',
     gstin: '29FKLPP1223G1Z0',
     state: 'Karnataka, Code: 76',
     email: 'rshardware2210@gmail.com',
@@ -271,7 +273,9 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
               <Text style={styles.normalText}>
                 {data.sellerDetails.address}
               </Text>
-              <Text style={styles.normalText}>{data.sellerDetails.phone}</Text>
+              <Text style={styles.normalText1}>
+                Phone Number: {data.sellerDetails.phone}
+              </Text>
               <Text style={styles.normalText}>
                 GSTIN/UIN: {data.sellerDetails.gstin}
               </Text>
@@ -425,19 +429,19 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
                   { textAlign: 'center', paddingHorizontal: 1 },
                 ]}
               >
-                {item.hsn}
+                {String(item.hsn).slice(0, 8)}
               </Text>
               <Text style={styles.colGST}>18%</Text>
               <Text style={styles.colQuantity}>{item.qty} Piece</Text>
-              <Text style={styles.colRate}>{item.rate}</Text>
+              <Text style={styles.colRate}>{formatAmount(item.rate)}</Text>
               <Text style={[styles.colRatePer, { borderRightWidth: 1 }]}>
-                {preTaxRatesArray?.at(index)}
+                {formatAmount(preTaxRatesArray?.at(index))}
               </Text>
               <Text style={[styles.colPer, { borderRightWidth: 1 }]}>
                 Piece
               </Text>
               <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
-                {preTaxRatesArray?.at(index) * Number(item?.qty)?.toFixed(2)}
+                {formatAmount(preTaxRatesArray?.at(index) * Number(item?.qty))}
               </Text>
             </View>
           ))}
@@ -447,12 +451,12 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
             <View style={styles.taxRow}>
               <Text style={styles.taxLabel}>CGST 9%</Text>
 
-              <Text style={styles.taxValue}>{(gstValue / 2).toFixed(2)}</Text>
+              <Text style={styles.taxValue}>{formatAmount(gstValue / 2)}</Text>
             </View>
             <View style={styles.taxRow}>
               <Text style={styles.taxLabel}>SGST 9%</Text>
 
-              <Text style={styles.taxValue}>{(gstValue / 2).toFixed(2)}</Text>
+              <Text style={styles.taxValue}>{formatAmount(gstValue / 2)}</Text>
             </View>
 
             <View style={[styles.taxRow, { justifyContent: 'flex-start' }]}>
@@ -492,7 +496,7 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
             </View>
             <View style={[styles.totalRow, { marginTop: 10 }]}>
               <Text style={styles.totalAmount}>
-                Rs: {totalProductAmount?.toFixed(2)}
+                Rs: {formatAmount(totalProductAmount)}
               </Text>
             </View>
             <Text
@@ -572,13 +576,13 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
             <View key={index} style={styles.taxSummaryRow}>
               <Text style={styles.taxColHSN}>{item.hsn}</Text>
               <Text style={styles.taxColTaxable}>
-                {preTaxRatesArray?.at(index) * Number(item?.qty)?.toFixed(2)}
+                {formatAmount(preTaxRatesArray?.at(index) * Number(item?.qty))}
               </Text>
               <View style={styles.taxColCGST}>
                 <View style={styles.taxSubCol}>
                   <Text style={styles.taxSubColRate}>9%</Text>
                   <Text style={styles.taxSubColAmount}>
-                    {(totalGSTAmount?.at(index) / 2).toFixed(2)}
+                    {formatAmount(totalGSTAmount?.at(index) / 2)}
                   </Text>
                 </View>
               </View>
@@ -586,13 +590,13 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
                 <View style={styles.taxSubCol}>
                   <Text style={styles.taxSubColRate}>9%</Text>
                   <Text style={styles.taxSubColAmount}>
-                    {(totalGSTAmount?.at(index) / 2).toFixed(2)}
+                    {formatAmount(totalGSTAmount?.at(index) / 2)}
                   </Text>
                 </View>
               </View>
               <Text style={styles.taxColTotal}>
                 {' '}
-                {totalGSTAmount?.at(index).toFixed(2)}
+                {formatAmount(totalGSTAmount?.at(index))}
               </Text>
             </View>
           ))}
@@ -603,13 +607,13 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
               Total
             </Text>
             <Text style={[styles.taxColTaxable, { fontWeight: 'bold' }]}>
-              {totalTaxAmt?.toFixed(2)}
+              {formatAmount(totalTaxAmt)}
             </Text>
             <View style={styles.taxColCGST}>
               <View style={styles.taxSubCol}>
                 <Text style={styles.taxSubColRate}></Text>
                 <Text style={[styles.taxSubColAmount, { fontWeight: 'bold' }]}>
-                  {totalGST}
+                  {formatAmount(totalGST)}
                 </Text>
               </View>
             </View>
@@ -617,12 +621,12 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
               <View style={styles.taxSubCol}>
                 <Text style={styles.taxSubColRate}></Text>
                 <Text style={[styles.taxSubColAmount, { fontWeight: 'bold' }]}>
-                  {totalGST}
+                  {formatAmount(totalGST)}
                 </Text>
               </View>
             </View>
             <Text style={[styles.taxColTotal, { fontWeight: 'bold' }]}>
-              {totalGST * 2}
+              {formatAmount(totalGST * 2)}
             </Text>
           </View>
         </View>

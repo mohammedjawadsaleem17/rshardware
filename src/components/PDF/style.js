@@ -11,23 +11,28 @@ export const styles = StyleSheet.create({
   headerSection: {
     borderWidth: 1,
     borderColor: '#000',
+    flexShrink: 0,
   },
   headerTop: {
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#000',
+    minHeight: 100,
   },
   sellerSection: {
     flex: 1,
     padding: 8,
     borderRightWidth: 0,
     borderColor: '#000',
+    flexShrink: 1,
+    flexGrow: 1,
   },
   invoiceInfoSection: {
     width: 240,
     padding: 0,
     borderLeftWidth: 1,
     borderColor: '#000',
+    flexShrink: 0,
   },
   companyName: {
     fontSize: 14,
@@ -38,6 +43,8 @@ export const styles = StyleSheet.create({
   normalText: {
     fontSize: 8,
     marginBottom: 1,
+    whiteSpace: 'wrap',
+    wordBreak: 'break-word',
     lineHeight: 1.3,
   },
   boldText: {
@@ -69,6 +76,8 @@ export const styles = StyleSheet.create({
     padding: 3,
     fontSize: 8,
     fontWeight: 'bold',
+    whiteSpace: 'wrap',
+    wordBreak: 'break-word',
   },
 
   // Buyer section
@@ -343,6 +352,7 @@ export const styles = StyleSheet.create({
   signatureText: {
     fontSize: 9,
     fontWeight: 'bold',
+    marginTop: 15,
   },
   jurisdictionText: {
     fontSize: 8,
@@ -353,5 +363,19 @@ export const styles = StyleSheet.create({
     fontSize: 7,
     textAlign: 'center',
     marginTop: 2,
+  },
+  normalText1: {
+    fontSize: 8,
+    marginBottom: 1,
+    marginTop: 5,
+    whiteSpace: 'wrap',
+    wordBreak: 'break-word',
+    lineHeight: 1.3,
+  },
+  signatureImage: {
+    width: 100, // you can increase or decrease
+    height: 57,
+    marginTop: 5,
+    objectFit: 'contain',
   },
 });
