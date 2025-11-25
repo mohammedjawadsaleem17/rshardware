@@ -14,7 +14,9 @@ import qr from '../../components/assets/qr.png';
 import { ToastContainer, toast } from 'react-toastify';
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
+import signatureImg from './fahad.png';
 
+const formatAmount = (num) => Number(num).toFixed(2);
 
 const getAmountInWords = (amount) => {
   const a = [
@@ -673,19 +675,19 @@ export default function FinalInvoice({
                   { textAlign: 'center', paddingHorizontal: 1 },
                 ]}
               >
-                {item.hsn}
+                {String(item.hsn || '').slice(0, 8)}
               </Text>
               <Text style={styles.colGST}>18%</Text>
               <Text style={styles.colQuantity}>{item.qty} Piece</Text>
-              <Text style={styles.colRate}>{item.rate}</Text>
+              <Text style={styles.colRate}>{formatAmount(item.rate)}</Text>
               <Text style={[styles.colRatePer, { borderRightWidth: 1 }]}>
-                {preTaxRatesArray?.at(index)}
+                {formatAmount(preTaxRatesArray?.at(index))}
               </Text>
               <Text style={[styles.colPer, { borderRightWidth: 1 }]}>
                 Piece
               </Text>
               <Text style={[styles.colAmount, { borderRightWidth: 1 }]}>
-                {preTaxRatesArray?.at(index) * Number(item?.qty)?.toFixed(2)}
+                {formatAmount(preTaxRatesArray?.at(index) * Number(item?.qty))}
               </Text>
             </View>
           ))}
@@ -740,7 +742,7 @@ export default function FinalInvoice({
             </View>
             <View style={[styles.totalRow, { marginTop: 10 }]}>
               <Text style={styles.totalAmount}>
-                Rs: {totalProductAmount?.toFixed(2)}
+                Rs: {formatAmount(totalProductAmount)}
               </Text>
             </View>
             <Text
@@ -818,15 +820,17 @@ export default function FinalInvoice({
           {/* Data Rows */}
           {customerDetails?.lineItems?.map((item, index) => (
             <View key={index} style={styles.taxSummaryRow}>
-              <Text style={styles.taxColHSN}>{item.hsn}</Text>
+              <Text style={styles.taxColHSN}>
+                {String(item.hsn || '').slice(0, 8)}
+              </Text>
               <Text style={styles.taxColTaxable}>
-                {preTaxRatesArray?.at(index) * Number(item?.qty)?.toFixed(2)}
+                {formatAmount(preTaxRatesArray?.at(index) * Number(item?.qty))}
               </Text>
               <View style={styles.taxColCGST}>
                 <View style={styles.taxSubCol}>
                   <Text style={styles.taxSubColRate}>9%</Text>
                   <Text style={styles.taxSubColAmount}>
-                    {(totalGSTAmount?.at(index) / 2).toFixed(2)}
+                    {formatAmount(totalGSTAmount?.at(index) / 2)}
                   </Text>
                 </View>
               </View>
@@ -834,13 +838,13 @@ export default function FinalInvoice({
                 <View style={styles.taxSubCol}>
                   <Text style={styles.taxSubColRate}>9%</Text>
                   <Text style={styles.taxSubColAmount}>
-                    {(totalGSTAmount?.at(index) / 2).toFixed(2)}
+                    {formatAmount(totalGSTAmount?.at(index) / 2)}
                   </Text>
                 </View>
               </View>
               <Text style={styles.taxColTotal}>
                 {' '}
-                {totalGSTAmount?.at(index).toFixed(2)}
+                {formatAmount(totalGSTAmount?.at(index))}
               </Text>
             </View>
           ))}
@@ -851,7 +855,7 @@ export default function FinalInvoice({
               Total
             </Text>
             <Text style={[styles.taxColTaxable, { fontWeight: 'bold' }]}>
-              {totalTaxAmt?.toFixed(2)}
+              {formatAmount(totalTaxAmt)}
             </Text>
             <View style={styles.taxColCGST}>
               <View style={styles.taxSubCol}>
@@ -865,12 +869,12 @@ export default function FinalInvoice({
               <View style={styles.taxSubCol}>
                 <Text style={styles.taxSubColRate}></Text>
                 <Text style={[styles.taxSubColAmount, { fontWeight: 'bold' }]}>
-                  {totalGST}
+                  {formatAmount(totalGST)}
                 </Text>
               </View>
             </View>
             <Text style={[styles.taxColTotal, { fontWeight: 'bold' }]}>
-              {totalGST * 2}
+              {formatAmount(totalGST * 2)}
             </Text>
           </View>
         </View>
@@ -913,13 +917,15 @@ export default function FinalInvoice({
               described and that all particulars are true and correct.
             </Text>
           </View>
-          <View style={[styles.signatureSection]}>
-            {' '}
-            {/* Added horizontal and vertical lines */}
+          <View style={styles.signatureSection}>
             <Text style={styles.signatureText}>
               for {data.sellerDetails.name}
             </Text>
-            <Text style={[styles.normalText, { marginTop: 40 }]}>
+
+            {/* Signature Image */}
+            <Image src={signatureImg} style={styles.signatureImage} />
+
+            <Text style={[styles.normalText, { marginTop: 5 }]}>
               Authorised Signatory
             </Text>
           </View>
@@ -942,6 +948,7 @@ export default function FinalInvoice({
     <div>
       <ToastContainer />
       {loading && <Loader />}
+
       <div className="mt-7 space-y-4">
         {!invoiceReady && (
           <button
@@ -951,6 +958,7 @@ export default function FinalInvoice({
             Generate Invoice
           </button>
         )}
+
         {invoiceReady && (
           <>
             <PDFDownloadLink
@@ -961,6 +969,7 @@ export default function FinalInvoice({
               {({ loading }) => 'Download Invoice'}
             </PDFDownloadLink>
 
+            {/* RESET BUTTON */}
             <button
               onClick={handleReset}
               className="bg-red-600 text-white p-3 rounded w-full block text-center font-bold "
