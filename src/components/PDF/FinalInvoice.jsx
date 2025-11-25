@@ -518,9 +518,14 @@ export default function FinalInvoice({
             <View style={styles.sellerSection}>
               <Text style={styles.companyName}>{data.sellerDetails.name}</Text>
               <Text style={styles.normalText}>
-                {data.sellerDetails.address}
+                Building No-3/7, Shop No-6 Ground Floor, Gowri Shankar Complex
               </Text>
-              <Text style={styles.normalText}>{data.sellerDetails.phone}</Text>
+              <Text style={styles.normalText}>
+                Arekere Main Road, Bangalore - 560076
+              </Text>
+              <Text style={styles.normalText}>
+                Phone Number: {data.sellerDetails.phone}
+              </Text>
               <Text style={styles.normalText}>
                 GSTIN/UIN: {data.sellerDetails.gstin}
               </Text>
@@ -584,6 +589,12 @@ export default function FinalInvoice({
             <View style={[styles.sellerSection, { borderRightWidth: 0 }]}>
               <Text style={styles.boldText}>Buyer (Bill to)</Text>
               <Text style={styles.companyName}>{customerDetails.name}</Text>
+              <Text style={styles.normalText}>
+                Phone Number: {customerDetails.phone}
+              </Text>
+              <Text style={styles.normalText}>
+                E-Mail: {customerDetails.email}
+              </Text>
               <Text style={styles.normalText}>{customerDetails.address}</Text>
               <Text style={styles.normalText}>
                 GSTIN/UIN: {customerDetails.gstin}

@@ -386,7 +386,7 @@ export const styles = StyleSheet.create({
     lineHeight: 1.3,
   },
   signatureImage: {
-    width: 100, // you can increase or decrease
+    width: 150, // you can increase or decrease
     height: 57,
     marginTop: 5,
     objectFit: 'contain',
