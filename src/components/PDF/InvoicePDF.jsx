@@ -4,6 +4,7 @@ import { styles } from './style';
 import { newStyle } from './newStyles';
 import logo from '../../components/assets/logo.png';
 import qr from '../../components/assets/qr.png';
+import signatureImg from './fahad.png';
 
 const formatAmount = (num) => Number(num).toFixed(2);
 
@@ -264,18 +265,16 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
         </View>
 
         {/* Header Section */}
-        <View style={styles.headerSection}>
+        <View style={styles.headerSection} wrap={false}>
           {/* Top Section - Seller and Invoice Info */}
-          <View style={styles.headerTop}>
+          <View style={styles.headerTopWithBorder}>
             {/* Seller Details */}
             <View style={styles.sellerSection}>
               <Text style={styles.companyName}>{data.sellerDetails.name}</Text>
               <Text style={styles.normalText}>
                 {data.sellerDetails.address}
               </Text>
-              <Text style={styles.normalText1}>
-                Phone Number: {data.sellerDetails.phone}
-              </Text>
+              <Text style={styles.normalText}>{data.sellerDetails.phone}</Text>
               <Text style={styles.normalText}>
                 GSTIN/UIN: {data.sellerDetails.gstin}
               </Text>
@@ -344,7 +343,7 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
                 GSTIN/UIN: {customerDetails.gstin}
               </Text>
               <Text style={styles.normalText}>
-                State Name : {customerDetails.customerPlaceOfSupply}
+                State Name : {customerDetails.place}
               </Text>
             </View>
             <View
@@ -353,7 +352,7 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
                 { justifyContent: 'space-between' },
               ]}
             >
-              <View style={[styles.infoRow]}>
+              <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Payment Date</Text>
                 <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
               </View>
@@ -429,7 +428,7 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
                   { textAlign: 'center', paddingHorizontal: 1 },
                 ]}
               >
-                {String(item.hsn).slice(0, 8)}
+                {String(item.hsn || '').slice(0, 8)}
               </Text>
               <Text style={styles.colGST}>18%</Text>
               <Text style={styles.colQuantity}>{item.qty} Piece</Text>
@@ -669,13 +668,15 @@ export default function InvoicePDF({ customerDetails, data = sampleData }) {
               described and that all particulars are true and correct.
             </Text>
           </View>
-          <View style={[styles.signatureSection]}>
-            {' '}
-            {/* Added horizontal and vertical lines */}
+          <View style={styles.signatureSection}>
             <Text style={styles.signatureText}>
               for {data.sellerDetails.name}
             </Text>
-            <Text style={[styles.normalText, { marginTop: 40 }]}>
+
+            {/* Signature Image */}
+            <Image src={signatureImg} style={styles.signatureImage} />
+
+            <Text style={[styles.normalText, { marginTop: 5 }]}>
               Authorised Signatory
             </Text>
           </View>
