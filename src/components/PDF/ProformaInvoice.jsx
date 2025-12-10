@@ -111,7 +111,6 @@ export default function ProformaInvoice({
   invoiceNo,
   setInvoiceNo,
   connection,
-  fetchInvoiceNo,
   setCustomerName,
   setCustomerEmail,
   setCustomerPhone,

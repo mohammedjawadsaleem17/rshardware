@@ -35,38 +35,6 @@ export default function Invoice() {
   const [deliveryNoteDate, setDeliveryNoteDate] = useState('');
   const [destination, setDestination] = useState('');
 
-  async function fetchInvoiceNumber() {
-    try {
-      SetIsLoading(true);
-      const res = await fetch('https://rshardware.up.railway.app/users');
-      const data = await res.json();
-      setItems(data?.items);
-      setConnection(true);
-    } catch (e) {
-      setConnection(false);
-    } finally {
-      SetIsLoading(false);
-    }
-  }
-
-  async function fetchInvoiceNo() {
-    try {
-      SetIsLoading(true);
-      const res = await fetch('https://rshardware.up.railway.app/invoiceId');
-      const data = await res.json();
-      setInvoiceNo(`INV-${data}`);
-      setConnection(true);
-    } catch (e) {
-      console.log('Error');
-    } finally {
-      SetIsLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchInvoiceNo();
-    fetchInvoiceNumber();
-  }, []);
 
   return (
     <MainContext.Provider
@@ -97,7 +65,6 @@ export default function Invoice() {
         dueDate,
         setDueDate,
         isLoading,
-        fetchInvoiceNo,
         connection,
         items,
 

@@ -264,7 +264,6 @@ export default function FinalInvoice({
   setInvNo,
   setInvoiceNo,
   connection,
-  fetchInvoiceNo,
   setCustomerName,
   setCustomerEmail,
   setCustomerPhone,
@@ -310,7 +309,8 @@ export default function FinalInvoice({
 
   const handleGenerateInvoice = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
+      setInvoiceReady(true);
       const response = await fetch(
         'https://rs-hardware-glass-and-electrical.onrender.com/invoice/create',
         {
@@ -348,10 +348,9 @@ export default function FinalInvoice({
           }),
         }
       );
-      console.log('Writtened Address');
+
       await response.json();
-      toast.success(`Invoice Generated for ${customerDetails?.name}`);
-      setInvoiceReady(true);
+      toast.success(`Invoice Generated!`);
     } catch (error) {
       console.error('Error updating invoice in database:', error);
       toast.warn('Loading, Please wait for a Minute');
@@ -384,7 +383,6 @@ export default function FinalInvoice({
   const handleReset = async () => {
     setInvoiceReady(false);
     toast.info('Reset to default');
-    // await fetchInvoiceNo();
     setInvNo('');
     setCustomerName('');
     setCustomerEmail('');
