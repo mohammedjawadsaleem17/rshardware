@@ -13,7 +13,6 @@ const InvoiceGenerator = () => {
   const {
     isLoading,
     connection,
-    fetchInvoiceNo,
     invoiceDate = new Date(),
     dueDate = new Date(),
     invoiceNo = '',
@@ -449,7 +448,6 @@ const InvoiceGenerator = () => {
             invoiceNo={invoiceNo}
             setInvoiceNo={setInvoiceNo}
             connection={connection}
-            fetchInvoiceNo={fetchInvoiceNo}
             setCustomerName={setCustomerName}
             setCustomerEmail={setCustomerEmail}
             setCustomerPhone={setCustomerPhone}

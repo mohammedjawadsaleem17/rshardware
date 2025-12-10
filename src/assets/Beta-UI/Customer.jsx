@@ -47,14 +47,6 @@ export default function Customer() {
 
   const isCash = mode === 'cash';
 
-  // -------------------------------------------
-  // ✅ Always generate IST date in YYYY-MM-DD
-  // -------------------------------------------
-  const getISTDate = () => {
-    return new Intl.DateTimeFormat('en-CA', {
-      timeZone: 'Asia/Kolkata',
-    }).format(new Date());
-  };
 
   const statesOfIndia = [
     'Andhra Pradesh',
@@ -104,8 +96,6 @@ export default function Customer() {
   // -------------------------------------------
   useEffect(() => {
     if (isCash) {
-      const todayIST = getISTDate();
-
       setCustomerName('CASH');
       setCustomerEmail('');
       setCustomerPhone('');
@@ -119,12 +109,6 @@ export default function Customer() {
       setDispatchedThrough('');
       setTermsOfDelivery('');
       setDestination('Karnataka');
-
-      // All dates set properly in IST
-      setInvoiceDate(todayIST);
-      setDated(todayIST);
-      setDeliveryNoteDate(todayIST);
-
       setPaymentTerms('');
       setOtherReferences('');
     }
@@ -377,13 +361,7 @@ export default function Customer() {
                 <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase">
                   Payment Date
                 </label>
-                <input
-                  type="date"
-                  value={dated}
-                  onChange={(e) => setDated(e.target.value)}
-                  disabled={isCash}
-                  className={inputClass}
-                />
+                <input value={dated} disabled={isCash} className={inputClass} />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase">
@@ -461,13 +439,7 @@ export default function Customer() {
                 <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase">
                   Delivery Note Date
                 </label>
-                <input
-                  type="date"
-                  value={deliveryNoteDate}
-                  onChange={(e) => setDeliveryNoteDate(e.target.value)}
-                  disabled={isCash}
-                  className={inputClass}
-                />
+                <input value={dated} disabled={isCash} className={inputClass} />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase">
