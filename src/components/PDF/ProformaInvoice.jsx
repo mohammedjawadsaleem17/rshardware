@@ -284,15 +284,11 @@ export default function ProformaInvoice({
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Dated</Text>
-                <Text style={styles.infoValue}>
-                  {customerDetails?.invoiceDate}
-                </Text>
+                <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Delivery Note Date</Text>
-                <Text style={styles.infoValue}>
-                  {customerDetails?.deliveryNoteDate}
-                </Text>
+                <Text style={styles.infoValue}>{customerDetails?.dated}</Text>
               </View>
               <View style={[styles.infoRowNoBorder]}>
                 <Text style={styles.infoLabel}>Destination</Text>
