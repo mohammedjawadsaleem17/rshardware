@@ -1,5 +1,5 @@
+# Block netlify subdomain - MUST use force
+https://rshardware.netlify.app/*  https://rshardwares.in/:splat  301!
+
 # Redirect all routes to index.html for client-side routing
 /*    /index.html   200
-
-# Block netlify subdomain (add this at the end)
-https://rshardware.netlify.app/*  https://rshardwares.in/:splat  301!
